@@ -3,18 +3,31 @@
 buildscript {
     repositories {
         jcenter()
+//        mavenLocal()
+        maven {
+            url uri('/repo')
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.build:plugin:1.0'
+
+        classpath 'com.android.tools.build:gradle:2.3.0'
+//        classpath 'com.mcxiaoke.gradle:packer-ng:1.0.4'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+//        classpath "com.tencent.tinker:tinker-patch-gradle-plugin:${TINKER_VERSION}"
+
+        classpath 'com.leon.channel:plugin:1.0.2' //多渠道打包
+
+        classpath 'com.tencent.bugly:tinker-support:1.0.7'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
-
 allprojects {
     repositories {
         jcenter()
+//        mavenLocal()
     }
 }
 
