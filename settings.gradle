@@ -1,1 +1,1 @@
-include ':app', ':alllib'
+include ':app', ':alllib', ':DroidPlugin'

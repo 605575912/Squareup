@@ -8,6 +8,7 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.morgoo.droidplugin.PluginHelper;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
@@ -34,7 +35,7 @@ public class BaseApplication extends Application {
         Beta.canNotifyUserRestart = false;
         // 设置是否自动合成补丁
         Beta.canAutoPatch = true;
-
+        PluginHelper.getInstance().applicationOnCreate(getBaseContext());
         /**
          *  全量升级状态回调
          */
@@ -126,10 +127,11 @@ public class BaseApplication extends Application {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        // you must install multiDex whatever tinker is installed!
         MultiDex.install(base);
+        PluginHelper.getInstance().applicationAttachBaseContext(base);
+        super.attachBaseContext(base);
 
+        // you must install multiDex whatever tinker is installed!
         // 安装tinker
         Beta.installTinker();
     }

@@ -8,7 +8,7 @@ import android.util.Log;
  */
 
 public class LogUtil {
-    private static String TAG = "LibLog";
+    private static String TAG = "LogUtilLIB";
     private final static boolean islog = true;
 
     public static void i(String log) {

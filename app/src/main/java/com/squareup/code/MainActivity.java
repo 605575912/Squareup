@@ -1,10 +1,15 @@
 package com.squareup.code;
 
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.morgoo.droidplugin.pm.PluginManager;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
@@ -33,8 +38,8 @@ public class MainActivity extends BaseActivity {
 //                            public void onPermissionsResult(String[] grantedpermissions, String[] denied_permissions) {
 //                                url = "file:///android_asset/per.txt";
 //                                url = "/sdcard/per.txt";
-                File file = FileUtils.getFile("name");
-
+//                File file = FileUtils.getFile("/mnt/sdcard/GooglePlay_1.1.0.apk");
+                startapk("/sdcard/app-debug.apk");
                 url = "http://yangleilt.iteye.com/blog/710412";
 //                                HttpUtils.getInstance(getApplication()).getAsynMainHttp(url, Per.class);//返回根据JSON解析的对象
                 HttpUtils.getInstance(getApplication()).getAsynMainHttp(url, String.class);//返回根据JSON解析的对象
@@ -55,6 +60,48 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    /**
+     * 360 插件化
+     *
+     * @param apkpath
+     */
+    protected void startapk(final String apkpath) {
+        File apk = new File(apkpath);
+        if (apk.exists() && apk.getPath().toLowerCase().endsWith(".apk")) {
+            if (!PluginManager.getInstance().isConnected()) {
+                Toast.makeText(MainActivity.this, "插件服务正在初始化，请稍后再试。。。", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            PackageManager pm = getPackageManager();
+            final PackageInfo info = pm.getPackageArchiveInfo(apk.getPath(), 0);
+            if (info != null) {
+                String packageName = info.packageName;
+                try {
+                    if (PluginManager.getInstance().getPackageInfo(packageName, 0) != null) {
+                        Intent intent = pm.getLaunchIntentForPackage(packageName);//包名
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } else {
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    int re = PluginManager.getInstance().installPackage(apkpath, 0);
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }.start();
+                    }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
     @Override
     public void onEventMain(EventMainObject event) {
         if (event.getCommand().equals(url)) {
@@ -64,8 +111,9 @@ public class MainActivity extends BaseActivity {
                     Toast.makeText(MainActivity.this, String.valueOf(per.getResult()), Toast.LENGTH_LONG).show();
                     LogUtil.i(per.getResult());
                 } else {
+                    FileUtils.saveFile("cache.txt", event.getData().toString());
                     Toast.makeText(MainActivity.this, event.getData().toString(), Toast.LENGTH_LONG).show();
-                    LogUtil.i(event.getData().toString());
+                    LogUtil.i(FileUtils.readFile("cache.txt"));
                 }
 
             } else {
