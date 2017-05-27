@@ -60,8 +60,19 @@ android {
         }
     }
     buildTypes {
+        debug {
+            minifyEnabled true//混淆编译
+            zipAlignEnabled true
+            //移除无用的资源文件
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true//混淆编译
+            zipAlignEnabled true
+            //移除无用的资源文件
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }

@@ -16,6 +16,11 @@ import java.io.IOException;
  */
 
 public class FileUtils {
+    /**
+     * 不需要权限
+     *
+     * @return
+     */
     public static String getDiskCacheDir() {
         String cachePath;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
@@ -30,6 +35,13 @@ public class FileUtils {
         }
         return cachePath;
     }
+
+    /**
+     * 非录下的 文件 不需要权限的
+     *
+     * @param name
+     * @return
+     */
 
     public static File getFile(String name) {
         File file = new File(getDiskCacheDir() + File.separator + name);
@@ -50,6 +62,15 @@ public class FileUtils {
 
     public static String readFile(String name) {
         File file = getFile(name);
+        return readFile(file);
+    }
+
+    public static void saveFile(String name, String data) {
+        File file = getFile(name);
+        saveFile(file, data);
+    }
+
+    public static String readFile(File file) {
         if (file == null) {
             return null;
         }
@@ -81,8 +102,13 @@ public class FileUtils {
         return null;
     }
 
-    public static void saveFile(String name, String data) {
-        File file = getFile(name);
+    /**
+     * 非目录下的 文件 需要权限的
+     *
+     * @param file
+     * @param data
+     */
+    public static void saveFile(File file, String data) {
         if (file == null) {
             return;
         }
