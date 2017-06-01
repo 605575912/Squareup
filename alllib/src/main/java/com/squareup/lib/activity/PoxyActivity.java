@@ -113,6 +113,12 @@ public class PoxyActivity extends BaseActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onRestart();
+        simpleFactroy.onBackPressed();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         simpleFactroy.onStart();

@@ -36,6 +36,18 @@ public class SimpleFactroy implements IProguard.ProtectClass {
         mactivity.setContentView(view);
     }
 
+    protected void finish() {
+        mactivity.finish();
+    }
+
+    protected void startActivity(Intent intent) {
+        mactivity.startActivity(intent);
+    }
+
+    protected Intent getIntent() {
+        return mactivity.getIntent();
+    }
+
     protected View findViewById(int id) {
         return mactivity.findViewById(id);
     }
@@ -77,7 +89,9 @@ public class SimpleFactroy implements IProguard.ProtectClass {
     protected void onRestart() {
 
     }
+    protected void onBackPressed() {
 
+    }
 
     protected void onStart() {
 
