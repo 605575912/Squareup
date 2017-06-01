@@ -16,7 +16,7 @@ import com.squareup.lib.viewfactory.RecyclerViewHolder;
  * Created by Administrator on 2017/05/27 0027.
  */
 
-public class MainItemView implements BaseViewItem {
+public class DoubleItemView implements BaseViewItem {
     ItemData itemData;
 
     public void setItemData(ItemData itemData) {

@@ -28,6 +28,37 @@
 #-keep  class android.util.**{*;}
 #-keepclassmembers class android.util.**{*;}
 
+
+
+-keep interface com.squareup.lib.utils.IProguard {*;}
+-keep interface com.squareup.lib.utils.IProguard$* {*;}
+
+-keep class * implements com.squareup.lib.utils.IProguard$ProtectClassAndMembers {*;}
+-keepclassmembers class * implements com.squareup.lib.utils.IProguard$ProtectClassAndMembers {*;}
+#-keepclassmembers class * implements android.view.View$* {*;}
+
+#��������Ա��������
+-keepclassmembers class * implements com.squareup.lib.utils.IProguard$ProtectMembers {*;}
+
+#������������������
+
+-keep class * implements com.squareup.lib.utils.IProguard$ProtectClassAndConstruct
+-keepclassmembers class * implements com.squareup.lib.utils.IProguard$ProtectClassAndConstruct{
+	<init>(...);
+}
+
+#������������, ������...)��ʾ���������Ĳ���; *** -- ��ʾ�������ͣ���һ������; **��ʾ�����������ַ�;
+#*��ʾ�����������ַ��������������ķָ��; ? ��ʾ�����ַ��� %��ʾ�����������
+-keepclassmembers class * implements com.squareup.lib.utils.IProguard$ProtectConstructs{
+	<init>(...);
+}
+
+#����������
+-keep class * implements com.squareup.lib.utils.IProguard$ProtectClass {*;}
+-keep interface * extends com.squareup.lib.utils.IProguard$ProtectClass {*;}
+
+
+
 #DroidPlugin
 -dontwarn com.morgoo.**
 -keep class com.morgoo.**{*;}

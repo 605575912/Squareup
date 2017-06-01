@@ -10,9 +10,11 @@ import android.view.ViewGroup;
  */
 
 public interface BaseViewItem {
-     int getViewType();
+    int getViewType();
 
-     View createView(ViewGroup parent);
+    View createView(ViewGroup parent);
 
-     void onBindViewHolder(RecyclerView.ViewHolder holder);
+    void onBindViewHolder(RecyclerView.ViewHolder holder, int position);
+
+    RecyclerViewHolder createViewHolder(ViewGroup parent);
 }

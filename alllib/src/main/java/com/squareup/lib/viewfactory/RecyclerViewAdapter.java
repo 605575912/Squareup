@@ -30,8 +30,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         for (BaseViewItem viewItem : mdata) {
-            if (viewItem.getViewType() == viewType) {
-                return new RecyclerViewHolder(viewItem.createView(parent));
+            if (viewItem != null && viewItem.getViewType() == viewType) {
+                RecyclerViewHolder holder = viewItem.createViewHolder(parent);
+                if (holder == null) {
+                    View contentview = viewItem.createView(parent);
+                    if (contentview != null) {
+                        return new RecyclerViewHolder(contentview);
+                    }
+                } else {
+                    return holder;
+                }
             }
         }
         return new RecyclerViewHolder(new View(mContext));
@@ -39,7 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        mdata.get(position).onBindViewHolder(holder);
+        mdata.get(position).onBindViewHolder(holder, position);
     }
 
 

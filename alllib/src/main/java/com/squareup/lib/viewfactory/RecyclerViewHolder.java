@@ -9,10 +9,7 @@ import android.view.View;
  */
 
 public class RecyclerViewHolder extends RecyclerView.ViewHolder {
-
-
     public RecyclerViewHolder(View view) {
         super(view);
-
     }
 }
