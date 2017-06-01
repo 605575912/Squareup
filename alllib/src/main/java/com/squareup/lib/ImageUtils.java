@@ -3,6 +3,7 @@ package com.squareup.lib;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -21,6 +22,9 @@ public class ImageUtils {
     }
 
     public static void loadImage(Context context, String url, ImageView imageView, int defaultResId) {
+        if (TextUtils.isEmpty(url)){
+            return;
+        }
         if (defaultResId == 0) {
             HttpUtils.getInstance(context).getPicasso().load(url).into(imageView);
         } else {

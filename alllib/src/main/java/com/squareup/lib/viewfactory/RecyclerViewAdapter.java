@@ -1,9 +1,12 @@
 package com.squareup.lib.viewfactory;
 
 import android.content.Context;
+import android.support.v4.util.LongSparseArray;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.squareup.lib.utils.LogUtil;
 
 import java.util.List;
 
@@ -27,19 +30,29 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mContext = mContext;
     }
 
+    LongSparseArray sparseArray = new LongSparseArray();
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (sparseArray == null) {
+            sparseArray = new LongSparseArray();
+        }
         for (BaseViewItem viewItem : mdata) {
             if (viewItem != null && viewItem.getViewType() == viewType) {
-                RecyclerViewHolder holder = viewItem.createViewHolder(parent);
-                if (holder == null) {
-                    View contentview = viewItem.createView(parent);
-                    if (contentview != null) {
-                        return new RecyclerViewHolder(contentview);
+                LogUtil.i("==="+viewType);
+                int index = sparseArray.indexOfKey(viewType);
+//                if (index == -1) {
+                    RecyclerViewHolder holder = viewItem.createViewHolder(parent);
+                    if (holder == null) {
+                        View contentview = viewItem.createView(parent);
+                        if (contentview != null) {
+                            return new RecyclerViewHolder(contentview);
+                        }
+                    } else {
+                        return holder;
                     }
-                } else {
-                    return holder;
-                }
+//                }
+
             }
         }
         return new RecyclerViewHolder(new View(mContext));

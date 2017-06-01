@@ -28,10 +28,10 @@ import java.util.List;
 
 public class MainFactory extends SimpleFactroy {
     String url;
-    SwipeRefreshLayout swipeRefreshLayout;
+//    SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
     List<BaseViewItem> list;
-
+    RecyclerViewAdapter adapter;
     public MainFactory(Activity activity) {
         super(activity);
     }
@@ -39,31 +39,32 @@ public class MainFactory extends SimpleFactroy {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiprefresh);
+//        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiprefresh);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         list = new ArrayList<BaseViewItem>();
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), list);
+        adapter = new RecyclerViewAdapter(getActivity(), list);
         recyclerView.setAdapter(adapter);
-        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
-                        .getDisplayMetrics()));
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 1000);
 
-
-            }
-        });
+//        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
+//                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+//                        .getDisplayMetrics()));
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        swipeRefreshLayout.setRefreshing(false);
+//                    }
+//                }, 1000);
+//
+//
+//            }
+//        });
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
             @Override
             public void onLoadMore(int currentPage) {

@@ -11,7 +11,12 @@ public class ItemData {
      */
 
     private String content;
+    private String imgurl;
     private int count;
+
+    public String getImgurl() {
+        return imgurl;
+    }
 
     public String getContent() {
         return content;

@@ -4,10 +4,13 @@ import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.code.ItemData;
+import com.squareup.code.MyApplication;
+import com.squareup.lib.ImageUtils;
 import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewHolder;
@@ -26,7 +29,6 @@ public class MainItemView implements BaseViewItem {
     @Override
     public int getViewType() {
         int hashcode = getClass().getName().hashCode();
-        LogUtil.i(hashcode + "============"+getClass().getName());
         return hashcode;
     }
 
@@ -39,6 +41,7 @@ public class MainItemView implements BaseViewItem {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.textView.setText(itemData.getContent());
+        ImageUtils.loadImage(MyApplication.application, itemData.getImgurl(), viewHolder.imageView);
     }
 
     @Override
@@ -49,13 +52,16 @@ public class MainItemView implements BaseViewItem {
 
     private class ViewHolder extends RecyclerViewHolder {
         TextView textView;
+        ImageView imageView;
 
         private ViewHolder(LinearLayout linearLayout) {
             super(linearLayout);
-            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
             textView = new TextView(linearLayout.getContext());
+            imageView = new ImageView(linearLayout.getContext());
             textView.setText("");
             textView.setTextColor(Color.GREEN);
+            linearLayout.addView(imageView);
             linearLayout.addView(textView);
         }
     }

@@ -1,13 +1,16 @@
 package com.squareup.code.home;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.code.ItemData;
+import com.squareup.code.MyApplication;
+import com.squareup.code.R;
+import com.squareup.lib.ImageUtils;
 import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewHolder;
@@ -25,9 +28,7 @@ public class DoubleItemView implements BaseViewItem {
 
     @Override
     public int getViewType() {
-        int hashcode = getClass().getName().hashCode();
-        LogUtil.i(hashcode + "============"+getClass().getName());
-        return hashcode;
+        return getClass().getName().hashCode();
     }
 
     @Override
@@ -38,25 +39,31 @@ public class DoubleItemView implements BaseViewItem {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.textView.setText(itemData.getContent());
+        viewHolder.tv_.setText(itemData.getContent());
+        ImageUtils.loadImage(MyApplication.application, itemData.getImgurl(), viewHolder.iv_);
     }
+
+    ViewHolder viewHolder;
 
     @Override
     public RecyclerViewHolder createViewHolder(ViewGroup parent) {
-        LinearLayout linearLayout = new LinearLayout(parent.getContext());
-        return new ViewHolder(linearLayout);
+//        if (viewHolder != null) {
+//            return viewHolder;
+//        }
+        View contentview = LayoutInflater.from(parent.getContext()).inflate(R.layout.douitem_layout, parent, false);
+        viewHolder = new ViewHolder(contentview);
+        return viewHolder;
     }
 
     private class ViewHolder extends RecyclerViewHolder {
-        TextView textView;
+        ImageView iv_;
+        TextView tv_;
 
-        private ViewHolder(LinearLayout linearLayout) {
-            super(linearLayout);
-            linearLayout.setOrientation(LinearLayout.VERTICAL);
-            textView = new TextView(linearLayout.getContext());
-            textView.setText("");
-            textView.setTextColor(Color.GREEN);
-            linearLayout.addView(textView);
+        private ViewHolder(View contentview) {
+            super(contentview);
+            tv_ = (TextView) contentview.findViewById(R.id.tv_);
+            iv_ = (ImageView) contentview.findViewById(R.id.iv_);
         }
     }
+
 }

@@ -36,12 +36,19 @@ public class HttpUtils {
     private static HttpUtils httpUtils;
     private Context application;
     private OkHttpClient mOkHttpClient = new OkHttpClient();
+    Picasso picasso;
 
-    protected Picasso getPicasso() {
-        OkHttpClient client = getProgressBarClient();
-        return new Picasso.Builder(application)
-                .downloader(new ImageDownLoader(client))
-                .build();
+    protected synchronized Picasso getPicasso() {
+        if (picasso != null) {
+            return picasso;
+        }
+        synchronized (this){
+            OkHttpClient client = getProgressBarClient();
+            picasso = new Picasso.Builder(application)
+                    .downloader(new ImageDownLoader(client))
+                    .build();
+        }
+        return picasso;
     }
 
     private OkHttpClient getProgressBarClient() {

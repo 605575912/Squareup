@@ -14,17 +14,8 @@ public class LauncherActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Intent intent = PoxyActivity.startIntent(this, MainFactory.class.getName());
-        Intent intent = PoxyActivity.startIntent(this, WebViewFactory.class.getName());
-        intent.putExtra(WebViewFactory.EXTRA_NAME_URL,"https://www.baidu.com");
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        Intent intent = PoxyActivity.startIntent(this, MainFactory.class.getName());
         startActivity(intent);
-
-
-        Intent intent1 = PoxyActivity.startIntent(this, WebViewFactory.class.getName());
-        intent1.putExtra(WebViewFactory.EXTRA_NAME_URL,"https://www.baidu.com");
-        intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent1);
         finish();
 
     }
