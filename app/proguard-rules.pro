@@ -58,6 +58,7 @@
 -keep interface * extends com.squareup.lib.utils.IProguard$ProtectClass {*;}
 
 
+-keep public class * implements com.bumptech.glide.module.GlideModule
 
 #DroidPlugin
 -dontwarn com.morgoo.**

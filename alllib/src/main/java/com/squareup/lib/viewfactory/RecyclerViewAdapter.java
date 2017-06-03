@@ -16,8 +16,9 @@ import java.util.List;
  */
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    List<BaseViewItem> mdata;
-    Context mContext;
+    private List<BaseViewItem> mdata;
+    private Context mContext;
+//    private LongSparseArray sparseArray = new LongSparseArray();
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -30,32 +31,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mContext = mContext;
     }
 
-    LongSparseArray sparseArray = new LongSparseArray();
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (sparseArray == null) {
-            sparseArray = new LongSparseArray();
-        }
+        RecyclerView.ViewHolder viewHolder = null;
         for (BaseViewItem viewItem : mdata) {
             if (viewItem != null && viewItem.getViewType() == viewType) {
-                LogUtil.i("==="+viewType);
-                int index = sparseArray.indexOfKey(viewType);
-//                if (index == -1) {
-                    RecyclerViewHolder holder = viewItem.createViewHolder(parent);
-                    if (holder == null) {
-                        View contentview = viewItem.createView(parent);
-                        if (contentview != null) {
-                            return new RecyclerViewHolder(contentview);
-                        }
-                    } else {
-                        return holder;
+                viewHolder = viewItem.createViewHolder(parent);
+                if (viewHolder == null) {
+                    View contentview = viewItem.createView(parent);
+                    if (contentview != null) {
+                        viewHolder = new RecyclerViewHolder(contentview);
+                        break;
                     }
-//                }
-
+                } else {
+                    break;
+                }
             }
         }
-        return new RecyclerViewHolder(new View(mContext));
+        if (viewHolder == null) {
+            viewHolder = new RecyclerViewHolder(new View(mContext));
+        }
+        return viewHolder;
     }
 
     @Override

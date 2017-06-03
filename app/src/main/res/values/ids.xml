@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tv_hotname_id" type="id"></item>
+    <item name="tv_hotstatus_id" type="id"></item>
+
+
+    <item name="searcgtitle_id" type="id" />
+    <item name="searchfeed_id" type="id" />
+</resources>

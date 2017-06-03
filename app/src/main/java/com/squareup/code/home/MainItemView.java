@@ -1,17 +1,23 @@
 package com.squareup.code.home;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.request.target.ViewTarget;
 import com.squareup.code.ItemData;
 import com.squareup.code.MyApplication;
+import com.squareup.code.R;
+import com.squareup.code.WebViewFactory;
 import com.squareup.lib.ImageUtils;
-import com.squareup.lib.utils.LogUtil;
+import com.squareup.lib.activity.PoxyActivity;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewHolder;
 
@@ -21,6 +27,11 @@ import com.squareup.lib.viewfactory.RecyclerViewHolder;
 
 public class MainItemView implements BaseViewItem {
     ItemData itemData;
+    Activity activity;
+
+    public MainItemView(Activity activity) {
+        this.activity = activity;
+    }
 
     public void setItemData(ItemData itemData) {
         this.itemData = itemData;
@@ -28,8 +39,7 @@ public class MainItemView implements BaseViewItem {
 
     @Override
     public int getViewType() {
-        int hashcode = getClass().getName().hashCode();
-        return hashcode;
+        return getClass().getName().hashCode();
     }
 
     @Override
@@ -41,7 +51,7 @@ public class MainItemView implements BaseViewItem {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.textView.setText(itemData.getContent());
-        ImageUtils.loadImage(MyApplication.application, itemData.getImgurl(), viewHolder.imageView);
+        ImageUtils.loadImage(MyApplication.application, itemData.getImgurl(), viewHolder.imageView, R.mipmap.ic_launcher_round);
     }
 
     @Override
@@ -56,13 +66,22 @@ public class MainItemView implements BaseViewItem {
 
         private ViewHolder(LinearLayout linearLayout) {
             super(linearLayout);
-            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
             textView = new TextView(linearLayout.getContext());
             imageView = new ImageView(linearLayout.getContext());
-            textView.setText("");
             textView.setTextColor(Color.GREEN);
-            linearLayout.addView(imageView);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(400, 400);
+            params.gravity = Gravity.CENTER_HORIZONTAL;
+            linearLayout.addView(imageView, params);
             linearLayout.addView(textView);
+            linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = PoxyActivity.startIntent(activity, WebViewFactory.class.getName());
+                    intent.putExtra(WebViewFactory.EXTRA_NAME_URL, "https://www.baidu.com");
+                    activity.startActivity(intent);
+                }
+            });
         }
     }
 }

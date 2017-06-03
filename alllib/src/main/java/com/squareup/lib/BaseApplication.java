@@ -8,6 +8,7 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.bumptech.glide.request.target.ViewTarget;
 import com.morgoo.droidplugin.PluginHelper;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
@@ -25,6 +26,8 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ViewTarget.setTagId(com.squareup.lib.R.id.glide_id);
+
         application = this;
         setStrictMode();
         // 设置是否关闭热更新能力，默认为true

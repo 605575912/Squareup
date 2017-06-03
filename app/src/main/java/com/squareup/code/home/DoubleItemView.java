@@ -1,17 +1,15 @@
 package com.squareup.code.home;
 
+import android.app.Activity;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.code.ItemData;
-import com.squareup.code.MyApplication;
 import com.squareup.code.R;
-import com.squareup.lib.ImageUtils;
-import com.squareup.lib.utils.LogUtil;
+import com.squareup.code.databinding.DouitemLayoutBinding;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewHolder;
 
@@ -21,6 +19,11 @@ import com.squareup.lib.viewfactory.RecyclerViewHolder;
 
 public class DoubleItemView implements BaseViewItem {
     ItemData itemData;
+    Activity activity;
+
+    public DoubleItemView(Activity activity) {
+        this.activity = activity;
+    }
 
     public void setItemData(ItemData itemData) {
         this.itemData = itemData;
@@ -38,31 +41,27 @@ public class DoubleItemView implements BaseViewItem {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.tv_.setText(itemData.getContent());
-        ImageUtils.loadImage(MyApplication.application, itemData.getImgurl(), viewHolder.iv_);
+//        ViewHolder viewHolder = (ViewHolder) holder;
     }
-
-    ViewHolder viewHolder;
 
     @Override
     public RecyclerViewHolder createViewHolder(ViewGroup parent) {
-//        if (viewHolder != null) {
-//            return viewHolder;
-//        }
-        View contentview = LayoutInflater.from(parent.getContext()).inflate(R.layout.douitem_layout, parent, false);
-        viewHolder = new ViewHolder(contentview);
-        return viewHolder;
+        DouitemLayoutBinding activityMainBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.douitem_layout, parent, false);
+        activityMainBinding.setDoubleonclick(new DoubleOnClick(activity,itemData));
+        activityMainBinding.setItemdata(itemData);
+        return new ViewHolder(activityMainBinding);
     }
 
     private class ViewHolder extends RecyclerViewHolder {
-        ImageView iv_;
-        TextView tv_;
+        DouitemLayoutBinding activityMainBinding;
 
-        private ViewHolder(View contentview) {
-            super(contentview);
-            tv_ = (TextView) contentview.findViewById(R.id.tv_);
-            iv_ = (ImageView) contentview.findViewById(R.id.iv_);
+        private ViewHolder(DouitemLayoutBinding activityMainBinding) {
+            super(activityMainBinding.getRoot());
+            this.activityMainBinding = activityMainBinding;
+        }
+
+        public DouitemLayoutBinding getActivityMainBinding() {
+            return activityMainBinding;
         }
     }
 

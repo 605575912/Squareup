@@ -2,14 +2,18 @@ package com.squareup.lib;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.ViewTarget;
 
 
 public class ImageUtils {
+
     /**
      * 加载网络图片
      *
@@ -22,17 +26,22 @@ public class ImageUtils {
     }
 
     public static void loadImage(Context context, String url, ImageView imageView, int defaultResId) {
-        if (TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             return;
         }
         if (defaultResId == 0) {
-            HttpUtils.getInstance(context).getPicasso().load(url).into(imageView);
+            Glide.with(context).load(url).into(imageView);
         } else {
             try {
                 Drawable drawable = context.getResources().getDrawable(defaultResId);
-                HttpUtils.getInstance(context).getPicasso().load(url).error(drawable).into(imageView);
+                RequestOptions options = new RequestOptions()
+                        .centerCrop()
+                        .placeholder(drawable)
+                        .error(drawable)
+                        .priority(Priority.HIGH);
+                Glide.with(context).load(url).apply(options).into(imageView);
             } catch (Exception e) {
-                HttpUtils.getInstance(context).getPicasso().load(url).into(imageView);
+                Glide.with(context).load(url).into(imageView);
             }
 
         }
@@ -43,13 +52,6 @@ public class ImageUtils {
 //        Glide.with(context).load(url).asBitmap().centerCrop().placeholder(defaultResId).into(imageView);
 //    }
 
-    public static void loadImage(Context context, Uri uri, ImageView imageView) {
-        loadImage(context, uri, imageView, 0);
-    }
-
-    public static void loadImage(Context context, Uri uri, ImageView imageView, int defaultResId) {
-        HttpUtils.getInstance(context).getPicasso().load(uri).error(context.getResources().getDrawable(defaultResId)).into(imageView);
-    }
 
 //    /**
 //     * 加载带尺寸的图片
@@ -72,7 +74,7 @@ public class ImageUtils {
      * @param imageView
      */
     public static void loadImageWithLocation(Context context, Integer path, ImageView imageView) {
-        HttpUtils.getInstance(context).getPicasso().load(path).into(imageView);
+        Glide.with(context).load(path).into(imageView);
     }
 
 //    /**

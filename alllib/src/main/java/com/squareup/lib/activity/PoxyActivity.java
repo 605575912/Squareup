@@ -12,6 +12,7 @@ import android.view.Window;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
+import com.squareup.lib.R;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -31,6 +32,12 @@ public class PoxyActivity extends BaseActivity {
         intent.putExtra(PoxyActivity.fromclassname, factroyclassname);
         intent.setClass(context, PoxyActivity.class);
         return intent;
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+
     }
 
     public static Intent startIntent(Context context, String factroyclassname) {

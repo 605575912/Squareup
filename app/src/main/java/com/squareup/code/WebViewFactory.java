@@ -28,7 +28,7 @@ import com.squareup.lib.activity.SimpleFactroy;
  */
 public class WebViewFactory extends SimpleFactroy {
     protected final static String EXTRA_NAME_TITLE = "title";
-    protected final static String EXTRA_NAME_URL = "url";
+    public final static String EXTRA_NAME_URL = "url";
 
     protected String mTitle;
     protected String mUrl;

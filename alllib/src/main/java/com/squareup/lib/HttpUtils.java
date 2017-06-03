@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.squareup.lib.activity.PermissionsGrantActivity;
 import com.squareup.lib.utils.FileUtils;
-import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,27 +35,10 @@ public class HttpUtils {
     private static HttpUtils httpUtils;
     private Context application;
     private OkHttpClient mOkHttpClient = new OkHttpClient();
-    Picasso picasso;
 
-    protected synchronized Picasso getPicasso() {
-        if (picasso != null) {
-            return picasso;
-        }
-        synchronized (this){
-            OkHttpClient client = getProgressBarClient();
-            picasso = new Picasso.Builder(application)
-                    .downloader(new ImageDownLoader(client))
-                    .build();
-        }
-        return picasso;
-    }
 
-    private OkHttpClient getProgressBarClient() {
-        return HttpUtils.getInstance(application).mOkHttpClient.newBuilder()
-                .addInterceptor(new CaheInterceptor(application))
-                .addNetworkInterceptor(new CaheInterceptor(application))
-                .build();
-    }
+
+
 
     private HttpUtils(Context application) {
         this.application = application;

@@ -26,6 +26,7 @@ public class SimpleFactroy implements IProguard.ProtectClass {
 
     protected void setContentView(int layoutResID) {
         mactivity.setContentView(layoutResID);
+
     }
 
     public Resources getResources() {
