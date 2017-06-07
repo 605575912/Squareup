@@ -2,6 +2,7 @@ package com.squareup.code;
 
 import android.databinding.BaseObservable;
 import android.databinding.BindingAdapter;
+import android.databinding.ObservableField;
 import android.widget.ImageView;
 
 import com.squareup.lib.ImageUtils;
@@ -11,12 +12,14 @@ import com.squareup.lib.ImageUtils;
  */
 
 public class ItemData extends BaseObservable {
+//    public ObservableField<String> content = new ObservableField<>();
+//    public ObservableInt age = new ObservableInt();
+//    public ObservableBoolean isMan = new ObservableBoolean();
     /**
      * content : 最新
      * count : 110
      */
-
-    private String content;
+    String content;
     private String imgurl;
     private int count;
 
@@ -29,17 +32,18 @@ public class ItemData extends BaseObservable {
         return imgurl;
     }
 
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+//        notifyPropertyChanged(BR.itemdata);
+    }
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
-//        notifyPropertyChanged(BR.itemdata);
     }
 
     public int getCount() {

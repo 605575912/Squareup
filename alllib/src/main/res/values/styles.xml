@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Translucent" parent="android:style/Theme.Translucent">
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- <item name="android:windowIsTranslucent">false</item> -->
+        <!--<item name="android:scrollbarThumbVertical">@drawable/scroll_thumb</item>-->
+        <!-- <item name="android:alertDialogStyle">@style/MMAlertDialog</item> -->
+        <item name="android:windowBackground">@android:color/white</item>
+        <!--
+        <item name="android:colorForeground">@color/background_transparent</item>
+         -->
+    </style>
+</resources>

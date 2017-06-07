@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.squareup.lib.activity.PermissionsGrantActivity;
+import com.squareup.lib.utils.AppUtils;
 import com.squareup.lib.utils.FileUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -14,6 +15,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,6 +28,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * Created by Administrator on 2017/05/25 0025.
@@ -35,9 +38,6 @@ public class HttpUtils {
     private static HttpUtils httpUtils;
     private Context application;
     private OkHttpClient mOkHttpClient = new OkHttpClient();
-
-
-
 
 
     private HttpUtils(Context application) {
@@ -288,6 +288,95 @@ public class HttpUtils {
             readFile(type, url, jsonmodel);
         }
 
+    }
+
+    public interface OnDownloadListener {
+        /**
+         * 下载成功
+         */
+        void onDownloadSuccess();
+
+        /**
+         * @param progress 下载进度
+         */
+        void onDownloading(int progress);
+
+        /**
+         * 下载失败
+         */
+        void onDownloadFailed();
+    }
+
+    private String getNameFromUrl(String url) {
+        int i = url.lastIndexOf("/");
+        int n = url.lastIndexOf(".");
+        if (i > -1 && n > -1) {
+            return AppUtils.getMd5(url) + url.substring(i + 1);
+        }
+        return AppUtils.getMd5(url);
+    }
+
+    /**
+     * @param url      下载连接
+     * @param listener 下载监听
+     */
+    public void download(final String url, final OnDownloadListener listener) {
+        final Request request = new Request.Builder().url(url).build();
+        mOkHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                listener.onDownloadFailed();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                InputStream is = null;
+                byte[] buf = new byte[2048];
+                int len = 0;
+                FileOutputStream fos = null;
+                // 储存下载文件的目录
+//                String savePath = FileUtils.readFile(getNameFromUrl(url));
+                try {
+                    ResponseBody body = response.body();
+                    if (body == null) {
+                        listener.onDownloadFailed();
+                        return;
+                    }
+                    is = body.byteStream();
+                    long total = body.contentLength();
+                    File file = FileUtils.getFile(getNameFromUrl(url));
+                    if (file == null) {
+                        listener.onDownloadFailed();
+                        return;
+                    }
+                    fos = new FileOutputStream(file);
+                    long sum = 0;
+                    while ((len = is.read(buf)) != -1) {
+                        fos.write(buf, 0, len);
+                        sum += len;
+                        int progress = (int) (sum * 1.0f / total * 100);
+                        // 下载中
+                        listener.onDownloading(progress);
+                    }
+                    fos.flush();
+                    // 下载完成
+                    listener.onDownloadSuccess();
+                } catch (Exception e) {
+                    listener.onDownloadFailed();
+                } finally {
+                    try {
+                        if (is != null)
+                            is.close();
+                    } catch (IOException e) {
+                    }
+                    try {
+                        if (fos != null)
+                            fos.close();
+                    } catch (IOException e) {
+                    }
+                }
+            }
+        });
     }
 
     private void readFile(final int type, final String url, final Class jsonmodel) {

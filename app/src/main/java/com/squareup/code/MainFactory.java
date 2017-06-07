@@ -1,10 +1,12 @@
 package com.squareup.code;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.code.home.DoubleItemView;
@@ -53,8 +55,12 @@ public class MainFactory extends SimpleFactroy {
             }
         });
         url = "file:///android_asset/per.txt";
+        url = "http://192.168.30.25/server";
 //                url = "http://yangleilt.iteye.com/blog/710412";
         HttpUtils.getInstance(getActivity().getApplication()).getAsynMainHttp(url, DataUnit.class);//返回根据JSON解析的对象
+
+//        ImageUtils.loadImage(getActivity(),"",imageview);
+
     }
 
     @Override
@@ -89,7 +95,7 @@ public class MainFactory extends SimpleFactroy {
                         mainItemView.setItemData(itemData);
                         list.add(mainItemView);
                     }
-                    LogUtil.i("size==="+list.size());
+                    LogUtil.i("size===" + list.size());
                 } else {
                     Toast.makeText(getActivity(), event.getData().toString(), Toast.LENGTH_LONG).show();
                 }

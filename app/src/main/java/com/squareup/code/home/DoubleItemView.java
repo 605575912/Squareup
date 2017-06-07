@@ -41,14 +41,16 @@ public class DoubleItemView implements BaseViewItem {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//        ViewHolder viewHolder = (ViewHolder) holder;
+        ViewHolder viewHolder = (ViewHolder) holder;
+        if (viewHolder.getActivityMainBinding()!=null){
+            viewHolder.getActivityMainBinding().setItemdata(itemData);
+            viewHolder.getActivityMainBinding().setDoubleonclick(new DoubleOnClick(activity,itemData));
+        }
     }
 
     @Override
     public RecyclerViewHolder createViewHolder(ViewGroup parent) {
         DouitemLayoutBinding activityMainBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.douitem_layout, parent, false);
-        activityMainBinding.setDoubleonclick(new DoubleOnClick(activity,itemData));
-        activityMainBinding.setItemdata(itemData);
         return new ViewHolder(activityMainBinding);
     }
 
