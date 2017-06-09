@@ -6,37 +6,56 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import com.bumptech.glide.request.target.ViewTarget;
 import com.squareup.code.databinding.LauncherLayoutBinding;
+import com.squareup.code.home.tab.TabsCache;
+import com.squareup.code.launcher.LauncherCache;
+import com.squareup.code.launcher.LauncherMode;
 import com.squareup.lib.BaseActivity;
-import com.squareup.lib.activity.PoxyActivity;
+import com.squareup.lib.EventMainObject;
 
 /**
  * Created by Administrator on 2017/05/31 0031.
  */
 
 public class LauncherActivity extends BaseActivity {
+    LauncherLayoutBinding activityMainBinding;
+    LauncherCache launcherCache;
+    Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LauncherLayoutBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.launcher_layout);
-        Handler handler = new Handler() {
+        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.launcher_layout);
+        handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                Intent intent = PoxyActivity.startIntent(LauncherActivity.this, MainFactory.class.getName());
+                Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         };
-
-        ItemData itemData = new ItemData();
-        itemData.setContent("www.baidu.com 搜索拉翔");
-        itemData.setImgurl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496407745461&di=5751fef1d0055012fc130ee2dca2beaf&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a03b564da3d632f87512f695e7b4.png");
-        activityMainBinding.setItemdata(itemData);
-        handler.sendEmptyMessageDelayed(1, 3000);
-
+        TabsCache tabsCache = new TabsCache();
+        tabsCache.dowlNewWorkData();
+        launcherCache = new LauncherCache();
+        launcherCache.getCacheData();
+        launcherCache.dowlNewWorkData();
     }
 
-
+    @Override
+    public void onEventMain(EventMainObject event) {
+        if (event.getCommand().equals(launcherCache.getCommand())) {
+            if (event.getData() instanceof LauncherMode) {
+                LauncherMode launcherMode = (LauncherMode) event.getData();
+                if (launcherMode.getItems() != null && launcherMode.getItems().size() > 0) {
+                    activityMainBinding.setItemsbean(launcherMode.getItems().get(0));
+                    handler.sendEmptyMessageDelayed(1, 3000);
+                } else {
+                    handler.sendEmptyMessageDelayed(0, 1000);
+                }
+            } else {
+                handler.sendEmptyMessageDelayed(0, 1000);
+            }
+        }
+    }
 }

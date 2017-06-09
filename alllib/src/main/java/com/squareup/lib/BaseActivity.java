@@ -3,6 +3,7 @@ package com.squareup.lib;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,13 +17,17 @@ import org.greenrobot.eventbus.ThreadMode;
  * Created by Administrator on 2017/05/25 0025.
  */
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends FragmentActivity {
     public View titleView;
 
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         setStatus();
+    }
+
+    protected Activity getActivity() {
+        return this;
     }
 
     private void setStatus() {

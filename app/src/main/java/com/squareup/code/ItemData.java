@@ -23,7 +23,7 @@ public class ItemData extends BaseObservable {
     private String imgurl;
     private int count;
 
-    @BindingAdapter("bind:userface")
+    @BindingAdapter("userface")
     public static void setImage(ImageView iv, String userface) {
         ImageUtils.loadImage(iv.getContext(), userface, iv, R.mipmap.ic_launcher_round);
     }

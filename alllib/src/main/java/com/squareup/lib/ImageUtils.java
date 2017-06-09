@@ -7,9 +7,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.ViewTarget;
 
 
 public class ImageUtils {
@@ -34,20 +32,25 @@ public class ImageUtils {
         } else {
             try {
                 Drawable drawable = context.getResources().getDrawable(defaultResId);
-                RequestOptions options = new RequestOptions()
-                        .centerCrop()
-                        .placeholder(drawable)
-                        .error(drawable)
-                        .priority(Priority.HIGH);
-                Glide.with(context).load(url).apply(options).into(imageView);
+                loadImage(context, url, imageView, drawable);
             } catch (Exception e) {
                 Glide.with(context).load(url).into(imageView);
             }
 
         }
-
     }
 
+    public static void loadImage(Context context, String url, ImageView imageView, Drawable drawable) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(drawable)
+                .error(drawable)
+                .priority(Priority.HIGH);
+        Glide.with(context).load(url).apply(options).into(imageView);
+    }
 //    public static void loadImageAsBitmap(Context context, String url, ImageView imageView, int defaultResId) {
 //        Glide.with(context).load(url).asBitmap().centerCrop().placeholder(defaultResId).into(imageView);
 //    }

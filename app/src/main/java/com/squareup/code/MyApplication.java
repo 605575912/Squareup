@@ -1,5 +1,6 @@
 package com.squareup.code;
 
+import com.squareup.code.utils.URLUtils;
 import com.squareup.lib.BaseApplication;
 
 /**
@@ -10,5 +11,6 @@ public class MyApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        URLUtils.getInstance();
     }
 }

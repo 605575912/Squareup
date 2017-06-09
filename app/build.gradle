@@ -96,4 +96,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 // 依赖插件脚本
-apply from: 'tinker-support.gradle'
+//apply from: 'tinker-support.gradle'

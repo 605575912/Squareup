@@ -9,6 +9,7 @@ import com.google.gson.JsonSyntaxException;
 import com.squareup.lib.activity.PermissionsGrantActivity;
 import com.squareup.lib.utils.AppUtils;
 import com.squareup.lib.utils.FileUtils;
+import com.squareup.lib.utils.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -19,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 import okhttp3.Cache;
 import okhttp3.Call;
@@ -59,8 +61,26 @@ public class HttpUtils {
         return httpUtils;
     }
 
+    HashMap<String, HttpListener> httpListeners = new HashMap<String, HttpListener>();
+
+    public interface HttpListener {
+        void success(Object model, String data);
+
+        void failed(Object model);
+    }
+
     public void getAsynMainHttp(final String url, final Class jsonmodel) {
         getAsynHttp(0, url, jsonmodel);
+    }
+
+    public String getAsynMainHttp(final File file, final Class jsonmodel) {
+        if (file != null && file.exists()) {
+            getAsynHttp(0, file.getPath(), jsonmodel);
+            return file.getPath();
+        } else {
+            failed(0, "", "file not exists");
+        }
+        return "";
     }
 
     public void getAsynMainHttp(final String url) {
@@ -80,11 +100,25 @@ public class HttpUtils {
         postAsynHttp(1, url, jsonmodel, builder);
     }
 
+    public void postAsynThreadHttp(final String url, Class jsonmodel, FormBody.Builder builder, HttpListener httpListener) {
+        if (!TextUtils.isEmpty(url) && httpListener != null) {
+            httpListeners.put(url, httpListener);
+        }
+        postAsynHttp(1, url, jsonmodel, builder);
+    }
+
     public void postAsynThreadHttp(final String url, FormBody.Builder builder) {
         postAsynHttp(1, url, null, builder);
     }
 
     public void getAsynThreadHttp(final String url, final Class jsonmodel) {
+        getAsynHttp(1, url, jsonmodel);
+    }
+
+    public void getAsynThreadHttp(final String url, final Class jsonmodel, HttpListener httpListener) {
+        if (!TextUtils.isEmpty(url) && httpListener != null) {
+            httpListeners.put(url, httpListener);
+        }
         getAsynHttp(1, url, jsonmodel);
     }
 
@@ -95,18 +129,33 @@ public class HttpUtils {
     private void JSONfor(int type, final String url, final Class jsonmodel, String result) {
         Object model;
         boolean success = false;
+        HttpListener httpListener = httpListeners.get(url);
         if (jsonmodel == null || jsonmodel.getName().equals("java.lang.String")) {
             model = result;
             success = true;
+            if (httpListener != null) {
+                httpListener.success(model, result);
+                httpListeners.remove(url);
+            }
         } else {
             Gson gson = new Gson();
             try {
                 model = gson.fromJson(result, jsonmodel);
                 success = true;
+                if (httpListener != null) {
+                    httpListener.success(model, result);
+                    httpListeners.remove(url);
+                }
             } catch (JsonSyntaxException exception) {
                 model = result;
+                if (httpListener != null) {
+                    httpListener.failed(model);
+                    httpListeners.remove(url);
+                }
             }
         }
+
+
         if (type == 0) {
             EventMainObject mainObject = new EventMainObject(model);
             mainObject.setCommand(url);
@@ -121,6 +170,11 @@ public class HttpUtils {
     }
 
     private void failed(int type, String url, String fail) {
+        HttpListener httpListener = httpListeners.get(url);
+        if (httpListener != null) {
+            httpListener.failed(fail);
+            httpListeners.remove(url);
+        }
         if (type == 0) {
             EventMainObject mainObject = new EventMainObject(fail);
             mainObject.setCommand(url);
@@ -190,16 +244,19 @@ public class HttpUtils {
                                       @Override
                                       public void onResponse(Call call, Response response) throws IOException {
                                           String str = null;
-                                          if (null != response.cacheResponse()) {
-                                              str = response.cacheResponse().toString();
-                                          } else {
-                                              if (response.networkResponse() != null) {
-                                                  str = response.networkResponse().toString();
-                                              }
+//                                          if (null != response.cacheResponse()) {
+//                                              str = response.cacheResponse().toString();
+//                                          } else {
+                                          if (response.body() != null) {
+                                              str = response.body().string();
+//                                                  str = response.networkResponse().body().string();
                                           }
+//                                          }
                                           if (TextUtils.isEmpty(str)) {
+                                              LogUtil.i("read failed");
                                               failed(type, url, "read failed");
                                           } else {
+                                              LogUtil.i(str);
                                               JSONfor(type, url, jsonmodel, str);
                                           }
                                       }
@@ -270,12 +327,8 @@ public class HttpUtils {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String str = null;
-                    if (null != response.cacheResponse()) {
-                        str = response.cacheResponse().toString();
-                    } else {
-                        if (response.networkResponse() != null) {
-                            str = response.networkResponse().toString();
-                        }
+                    if (null != response.body()) {
+                        str = response.body().string();
                     }
                     if (TextUtils.isEmpty(str)) {
                         failed(type, url, "read failed");

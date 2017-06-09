@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swiprefresh"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:visibility="gone"
+    <data>
+
+        <import type="com.squareup.code.home.DoubleOnClick" />
+
+        <variable
+            name="bannerbean"
+            type="com.squareup.code.home.banner.BannerModel.BannersBean" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/swiprefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
-    <View
-        android:id="@+id/v"
-        android:layout_width="375px"
-        android:layout_height="230px"
-        android:background="#CA2C2A2A"
-        />
-</FrameLayout>
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"></android.support.v4.view.ViewPager>
+
+        <LinearLayout
+            android:id="@+id/tabs_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"></LinearLayout>
+
+    </LinearLayout>
+
+</layout>
