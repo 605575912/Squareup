@@ -18,11 +18,11 @@ import java.util.List;
  * Created by Administrator on 2017/05/27 0027.
  */
 
-public class MainItemView implements BaseViewItem {
+public class TwoItemView implements BaseViewItem {
     CardUnit cardUnit;
     Activity activity;
 
-    public MainItemView(Activity activity, CardUnit cardUnit) {
+    public TwoItemView(Activity activity, CardUnit cardUnit) {
         this.activity = activity;
         this.cardUnit = cardUnit;
     }
@@ -41,7 +41,7 @@ public class MainItemView implements BaseViewItem {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         for (ItemView itemView : viewHolder.getItemViews()) {
-            itemView.setItemData(cardUnit.getItems().get(0));
+//            itemView.setItemData(cardUnit.getItems().get(0));
             itemView.onBindViewHolder(viewHolder.recyclerViewHolder, position);
         }
 //        viewHolder.textView.setText(itemData.getContent());

@@ -18,11 +18,11 @@ import java.util.List;
  * Created by Administrator on 2017/05/27 0027.
  */
 
-public class MainItemView implements BaseViewItem {
+public class ThreeItemView implements BaseViewItem {
     CardUnit cardUnit;
     Activity activity;
 
-    public MainItemView(Activity activity, CardUnit cardUnit) {
+    public ThreeItemView(Activity activity, CardUnit cardUnit) {
         this.activity = activity;
         this.cardUnit = cardUnit;
     }
