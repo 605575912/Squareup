@@ -40,12 +40,10 @@ public class TwoItemView implements BaseViewItem {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
-        for (ItemView itemView : viewHolder.getItemViews()) {
-//            itemView.setItemData(cardUnit.getItems().get(0));
-            itemView.onBindViewHolder(viewHolder.recyclerViewHolder, position);
+        for (int i = 0; i < viewHolder.getItemViews().size(); i++) {
+            ItemView itemView = viewHolder.getItemViews().get(i);
+            itemView.onBindViewHolder(viewHolder.recyclerViewHolders.get(i), position);
         }
-//        viewHolder.textView.setText(itemData.getContent());
-//        ImageUtils.loadImage(MyApplication.application, itemData.getImgurl(), viewHolder.imageView, R.mipmap.ic_launcher_round);
     }
 
     @Override
@@ -56,43 +54,27 @@ public class TwoItemView implements BaseViewItem {
 
     private class ViewHolder extends RecyclerViewHolder {
         List<ItemView> itemViews;
-        RecyclerViewHolder recyclerViewHolder;
+        List<RecyclerViewHolder> recyclerViewHolders;
 
         public List<ItemView> getItemViews() {
             return itemViews;
         }
 
-        public RecyclerViewHolder getRecyclerViewHolder() {
-            return recyclerViewHolder;
-        }
 
         private ViewHolder(LinearLayout linearLayout) {
             super(linearLayout);
             itemViews = new ArrayList<ItemView>();
+            recyclerViewHolders = new ArrayList<RecyclerViewHolder>();
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
             for (ItemData itemData : cardUnit.getItems()) {
                 ItemView itemView = new ItemView(itemData);
                 itemViews.add(itemView);
-                recyclerViewHolder = itemView.createViewHolder(linearLayout);
+                RecyclerViewHolder recyclerViewHolder = itemView.createViewHolder(linearLayout);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.weight = 1;
                 linearLayout.addView(recyclerViewHolder.itemView.getRootView(), params);
+                recyclerViewHolders.add(recyclerViewHolder);
             }
-//            textView = new TextView(linearLayout.getContext());
-//            imageView = new ImageView(linearLayout.getContext());
-//            textView.setTextColor(Color.GREEN);
-//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(400, 400);
-//            params.gravity = Gravity.CENTER_HORIZONTAL;
-//            linearLayout.addView(imageView, params);
-//            linearLayout.addView(textView);
-//            linearLayout.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = PoxyActivity.startIntent(activity, WebViewFactory.class.getName());
-//                    intent.putExtra(WebViewFactory.EXTRA_NAME_URL, "https://www.baidu.com");
-//                    activity.startActivity(intent);
-//                }
-//            });
         }
     }
 }
