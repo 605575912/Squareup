@@ -69,6 +69,8 @@ public class WebViewFactory extends SimpleFactroy {
         mWebView.loadUrl(url);
     }
 
+    String currenturl;
+
     private void initWebView() {
         WebSettings webSettings = mWebView.getSettings();
 //        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);// 不需要缓存
@@ -102,8 +104,12 @@ public class WebViewFactory extends SimpleFactroy {
                         //在当前WebView跳转
                         //FIXME:某些链接在goBack时会一直跳转回到最后的连接,暂时用这个判断解决
                         WebHistoryItem item = mWebView.copyBackForwardList().getCurrentItem();
-                        if (item == null || !url.equals(item.getUrl())) {
+                        if (item == null || !url.equals(item.getOriginalUrl())) {
+                            if (url.equals(currenturl) && currenturl != null) {
+                                return false;
+                            }
                             view.loadUrl(url);
+                            currenturl = url;
                         }
                     }
                 }
@@ -122,6 +128,7 @@ public class WebViewFactory extends SimpleFactroy {
                 super.onPageStarted(view, url, favicon);
                 mProgressBar.setVisibility(View.VISIBLE);
                 mProgressBar.setProgress(10);
+                mProgressFinishOnce = false;
             }
 
             @Override

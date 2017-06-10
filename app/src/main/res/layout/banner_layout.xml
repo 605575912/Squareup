@@ -7,8 +7,8 @@
         <import type="com.squareup.code.home.DoubleOnClick" />
 
         <variable
-            name="bannerbean"
-            type="com.squareup.code.home.banner.BannerModel.BannersBean" />
+            name="banner"
+            type="com.squareup.code.home.banner.BannerModel" />
     </data>
 
     <LinearLayout
@@ -22,13 +22,13 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
-            app:bannerimg="@{bannerbean.imgurl}" />
+            app:bannerimg="@{banner.imgurl}" />
 
         <TextView
             android:id="@+id/tv_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@{bannerbean.jumpcontent}" />
+            android:text="@{banner.jumpcontent}" />
     </LinearLayout>
 </layout>

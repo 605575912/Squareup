@@ -1,11 +1,6 @@
 package com.squareup.code;
 
 import android.databinding.BaseObservable;
-import android.databinding.BindingAdapter;
-import android.databinding.ObservableField;
-import android.widget.ImageView;
-
-import com.squareup.lib.ImageUtils;
 
 /**
  * Created by Administrator on 2017/05/31 0031.
@@ -20,12 +15,28 @@ public class ItemData extends BaseObservable {
      * count : 110
      */
     String content;
+    String title;
+    String tagging;
+    String jumpurl;
+
+    public String getJumpurl() {
+        return jumpurl;
+    }
+
+    public String getTagging() {
+        return tagging;
+    }
+
     private String imgurl;
+    private String bckimgurl;
     private int count;
 
-    @BindingAdapter("userface")
-    public static void setImage(ImageView iv, String userface) {
-        ImageUtils.loadImage(iv.getContext(), userface, iv, R.mipmap.ic_launcher_round);
+    public String getTitle() {
+        return title;
+    }
+
+    public String getBckimgurl() {
+        return bckimgurl;
     }
 
     public String getImgurl() {

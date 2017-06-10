@@ -7,12 +7,15 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application>
-        <meta-data
-            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
-            android:value="GlideModule"/>
+        <!--<meta-data-->
+            <!--android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"-->
+            <!--android:value="GlideModule"/>-->
         <meta-data
             android:name="com.squareup.lib.ImageGlideModule"
             android:value="GlideModule"/>
+        <!--<meta-data-->
+            <!--android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"-->
+            <!--android:value="GlideModule"/>-->
     </application>
 
 </manifest>

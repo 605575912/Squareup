@@ -1,5 +1,7 @@
 package com.squareup.code;
 
+import com.squareup.code.home.banner.BannerModel;
+
 import java.util.List;
 
 /**
@@ -9,6 +11,10 @@ import java.util.List;
 public class Card {
     private List<CardUnit> cardUnits;
     private List<ItemData> items;
+    private List<BannerModel> banners;
+    public List<BannerModel> getBanners() {
+        return banners;
+    }
 
     public List<CardUnit> getCardUnits() {
         return cardUnits;

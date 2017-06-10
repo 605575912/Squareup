@@ -4,10 +4,6 @@
     <data>
 
         <import type="com.squareup.code.home.DoubleOnClick" />
-
-        <variable
-            name="bannerbean"
-            type="com.squareup.code.home.banner.BannerModel.BannersBean" />
     </data>
 
     <LinearLayout

@@ -12,6 +12,8 @@ import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
+import com.squareup.lib.HttpUtils;
+import com.squareup.lib.utils.ToastUtils;
 
 /**
  * Created by Administrator on 2017/05/31 0031.
@@ -40,6 +42,23 @@ public class LauncherActivity extends BaseActivity {
         launcherCache = new LauncherCache();
         launcherCache.getCacheData();
         launcherCache.dowlNewWorkData();
+//
+        HttpUtils.getInstance(getApplication()).download("https://imgjd3.fruitday.com/images/2017-06-08/9ccb2bcf569412e733570ef949fec618.jpg", new HttpUtils.OnDownloadListener() {
+            @Override
+            public void onDownloadSuccess() {
+                ToastUtils.showToast("onDownloadSuccess");
+            }
+
+            @Override
+            public void onDownloading(int progress) {
+                ToastUtils.showToast("onDownloading");
+            }
+
+            @Override
+            public void onDownloadFailed() {
+                ToastUtils.showToast("onDownloadFailed");
+            }
+        });
     }
 
     @Override

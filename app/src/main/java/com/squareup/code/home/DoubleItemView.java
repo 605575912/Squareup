@@ -1,15 +1,18 @@
 package com.squareup.code.home;
 
 import android.app.Activity;
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.squareup.code.ItemData;
 import com.squareup.code.R;
 import com.squareup.code.databinding.DouitemLayoutBinding;
+import com.squareup.lib.ImageUtils;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewHolder;
 
@@ -20,6 +23,11 @@ import com.squareup.lib.viewfactory.RecyclerViewHolder;
 public class DoubleItemView implements BaseViewItem {
     ItemData itemData;
     Activity activity;
+
+    @BindingAdapter("userface")
+    public static void setImage(ImageView iv, String userface) {
+        ImageUtils.loadImage(iv.getContext(), userface, iv, R.mipmap.ic_launcher_round);
+    }
 
     public DoubleItemView(Activity activity) {
         this.activity = activity;
@@ -42,9 +50,9 @@ public class DoubleItemView implements BaseViewItem {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
-        if (viewHolder.getActivityMainBinding()!=null){
+        if (viewHolder.getActivityMainBinding() != null) {
             viewHolder.getActivityMainBinding().setItemdata(itemData);
-            viewHolder.getActivityMainBinding().setDoubleonclick(new DoubleOnClick(activity,itemData));
+            viewHolder.getActivityMainBinding().setDoubleonclick(new DoubleOnClick(activity, itemData));
         }
     }
 

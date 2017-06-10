@@ -11,7 +11,11 @@ public class ThreadManager {
     static ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
 
 
-    public static void post(Runnable runnable) {
+    public static void execute(Runnable runnable) {
         fixedThreadPool.execute(runnable);
+    }
+
+    public static void submit(Runnable runnable) {
+        fixedThreadPool.submit(runnable);
     }
 }

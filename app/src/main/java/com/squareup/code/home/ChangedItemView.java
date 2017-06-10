@@ -1,12 +1,12 @@
 package com.squareup.code.home;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.squareup.code.CardUnit;
 import com.squareup.code.ItemData;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewHolder;
@@ -18,18 +18,22 @@ import java.util.List;
  * Created by Administrator on 2017/05/27 0027.
  */
 
-public class TwoItemView implements BaseViewItem {
-    CardUnit cardUnit;
+public class ChangedItemView implements BaseViewItem {
+    List<ItemData> items;
     Activity activity;
 
-    public TwoItemView(Activity activity, CardUnit cardUnit) {
+    public ChangedItemView(Activity activity, List<ItemData> items) {
         this.activity = activity;
-        this.cardUnit = cardUnit;
+        this.items = items;
+        if (items == null) {
+            this.items = new ArrayList<ItemData>();
+        }
+
     }
 
     @Override
     public int getViewType() {
-        return getClass().getName().hashCode();
+        return getClass().getName().hashCode() + items.size();
     }
 
     @Override
@@ -40,8 +44,9 @@ public class TwoItemView implements BaseViewItem {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
-        for (int i = 0; i < viewHolder.getItemViews().size(); i++) {
+        for (int i = 0; i < items.size(); i++) {
             ItemView itemView = viewHolder.getItemViews().get(i);
+            itemView.setItemData(items.get(i));
             itemView.onBindViewHolder(viewHolder.recyclerViewHolders.get(i), position);
         }
     }
@@ -49,6 +54,9 @@ public class TwoItemView implements BaseViewItem {
     @Override
     public RecyclerViewHolder createViewHolder(ViewGroup parent) {
         LinearLayout linearLayout = new LinearLayout(parent.getContext());
+        linearLayout.setBackgroundColor(Color.GREEN);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        linearLayout.setLayoutParams(params);
         return new ViewHolder(linearLayout);
     }
 
@@ -66,15 +74,17 @@ public class TwoItemView implements BaseViewItem {
             itemViews = new ArrayList<ItemView>();
             recyclerViewHolders = new ArrayList<RecyclerViewHolder>();
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-            for (ItemData itemData : cardUnit.getItems()) {
-                ItemView itemView = new ItemView(itemData);
+            for (ItemData itemData : items) {
+                ItemView itemView = new ItemView(activity,itemData);
                 itemViews.add(itemView);
                 RecyclerViewHolder recyclerViewHolder = itemView.createViewHolder(linearLayout);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) recyclerViewHolder.itemView.getLayoutParams();
                 params.weight = 1;
                 linearLayout.addView(recyclerViewHolder.itemView.getRootView(), params);
                 recyclerViewHolders.add(recyclerViewHolder);
             }
+
+
         }
     }
 }

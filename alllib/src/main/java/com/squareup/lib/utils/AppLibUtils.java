@@ -19,7 +19,7 @@ import java.security.NoSuchAlgorithmException;
  * Created by Administrator on 2017/05/26 0026.
  */
 
-public class AppUtils {
+public class AppLibUtils {
     public static int getversionCode(Context ctx) {
         int currentVersionCode = 0;
         PackageManager manager = ctx.getPackageManager();

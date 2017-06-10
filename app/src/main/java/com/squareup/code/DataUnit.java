@@ -1,5 +1,6 @@
 package com.squareup.code;
 
+import com.squareup.code.home.banner.BannerModel;
 import com.squareup.lib.utils.IProguard;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class DataUnit implements IProguard.ProtectMembers {
 
     private List<Card> cards;//大卡片
     private List<ItemData> items;//一组Item
+
 
     public List<Card> getCards() {
         return cards;

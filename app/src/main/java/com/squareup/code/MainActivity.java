@@ -17,7 +17,7 @@ import com.squareup.code.home.tab.TabsCache;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
-import com.squareup.lib.utils.AppUtils;
+import com.squareup.lib.utils.AppLibUtils;
 import com.squareup.lib.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onEventThread(EventThreadObject event) {
-        ToastUtils.showToast(AppUtils.getversionCode(getActivity()) + "");
+        ToastUtils.showToast(AppLibUtils.getversionCode(getActivity()) + "");
 //        if (event.getCommand().equals(url)) {
 //            if (event.isSuccess()) {
 //                String per = (String) event.getData();

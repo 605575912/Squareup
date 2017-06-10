@@ -1,5 +1,5 @@
 {
     "id": 1,
-     "launcherurl": "http://192.168.30.25:8080/launcher/"
+     "launcherurl": "http://192.168.30.25:8080/launcher/",
      "bannersurl": "http://192.168.30.25:8080/banner/"
 }

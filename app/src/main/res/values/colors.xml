@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="line_e6">#e6e6e6</color>
     <color name="line_of">#0fc167</color>
+    <color name="v6cardname">#ff333333</color>
+    <color name="v6cardslogan">#ff999999</color>
 </resources>
