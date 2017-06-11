@@ -14,6 +14,8 @@ import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.HttpUtils;
 import com.squareup.lib.utils.ToastUtils;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 /**
  * Created by Administrator on 2017/05/31 0031.
@@ -37,6 +39,8 @@ public class LauncherActivity extends BaseActivity {
                 finish();
             }
         };
+        IWXAPI iwxapi = WXAPIFactory.createWXAPI(this,"wx4c726304342b910d",true);
+        iwxapi.registerApp("wx4c726304342b910d");
         TabsCache tabsCache = new TabsCache();
         tabsCache.dowlNewWorkData();
         launcherCache = new LauncherCache();
