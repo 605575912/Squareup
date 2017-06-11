@@ -60,7 +60,7 @@ android {
     }
     repositories {
         flatDir {
-            dirs 'libs', "/src/main/libs"
+            dirs 'libs', "src/main/libs"
         }
     }
     buildTypes {
