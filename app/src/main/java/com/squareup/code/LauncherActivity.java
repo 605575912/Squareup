@@ -47,22 +47,22 @@ public class LauncherActivity extends BaseActivity {
         launcherCache.getCacheData();
         launcherCache.dowlNewWorkData();
 //
-        HttpUtils.getInstance(getApplication()).download("https://imgjd3.fruitday.com/images/2017-06-08/9ccb2bcf569412e733570ef949fec618.jpg", new HttpUtils.OnDownloadListener() {
-            @Override
-            public void onDownloadSuccess() {
-                ToastUtils.showToast("onDownloadSuccess");
-            }
-
-            @Override
-            public void onDownloading(int progress) {
-                ToastUtils.showToast("onDownloading");
-            }
-
-            @Override
-            public void onDownloadFailed() {
-                ToastUtils.showToast("onDownloadFailed");
-            }
-        });
+//        HttpUtils.getInstance(getApplication()).download("https://imgjd3.fruitday.com/images/2017-06-08/9ccb2bcf569412e733570ef949fec618.jpg", new HttpUtils.OnDownloadListener() {
+//            @Override
+//            public void onDownloadSuccess() {
+//                ToastUtils.showToast("onDownloadSuccess");
+//            }
+//
+//            @Override
+//            public void onDownloading(int progress) {
+//                ToastUtils.showToast("onDownloading");
+//            }
+//
+//            @Override
+//            public void onDownloadFailed() {
+//                ToastUtils.showToast("onDownloadFailed");
+//            }
+//        });
     }
 
     @Override

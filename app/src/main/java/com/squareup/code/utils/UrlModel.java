@@ -8,6 +8,7 @@ public class UrlModel {
     String launcherurl = URLUtils.HOST + "launcher";
     String bannersurl = URLUtils.HOST + "banner";
     String tabsurl = URLUtils.HOST + "tabs";
+    String loginurl = URLUtils.HOST + "login";
     /**
      * items : {"id":1,"launcherurl":"http://192.168.30.25:8080/launcher/"}
      */
@@ -20,10 +21,16 @@ public class UrlModel {
     public String getLauncherurl() {
         return launcherurl;
     }
+
     public String getBannersurl() {
         return bannersurl;
     }
+
     public int getId() {
         return id;
+    }
+
+    public String getLoginurl() {
+        return loginurl;
     }
 }

@@ -3,7 +3,6 @@ package com.squareup.lib;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -25,9 +24,7 @@ import java.io.InputStreamReader;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -36,17 +33,15 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.CipherSuite;
-import okhttp3.ConnectionSpec;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okhttp3.TlsVersion;
 
 /**
  * Created by Administrator on 2017/05/25 0025.
@@ -61,25 +56,25 @@ public class HttpUtils {
         return mOkHttpClient;
     }
 
-    public static OkHttpClient.Builder enableTls12OnPreLollipop(OkHttpClient.Builder client) {
-        if (Build.VERSION.SDK_INT >= 16 && Build.VERSION.SDK_INT < 22) {
-            try {
-                SSLContext sc = SSLContext.getInstance("TLSv1.2");
-                sc.init(null, null, null);
-                client.sslSocketFactory(new Tls12SocketFactory(sc.getSocketFactory()));
-                ConnectionSpec cs = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
-                        .tlsVersions(TlsVersion.TLS_1_2)
-                        .build();
-                List specs = new ArrayList<>();
-                specs.add(cs);
-                specs.add(ConnectionSpec.COMPATIBLE_TLS);
-                specs.add(ConnectionSpec.CLEARTEXT);
-                client.connectionSpecs(specs);
-            } catch (Exception exc) {
-            }
-        }
-        return client;
-    }
+//    public static OkHttpClient.Builder enableTls12OnPreLollipop(OkHttpClient.Builder client) {
+//        if (Build.VERSION.SDK_INT >= 16 && Build.VERSION.SDK_INT < 22) {
+//            try {
+//                SSLContext sc = SSLContext.getInstance("TLSv1.2");
+//                sc.init(null, null, null);
+//                client.sslSocketFactory(new Tls12SocketFactory(sc.getSocketFactory()));
+//                ConnectionSpec cs = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
+//                        .tlsVersions(TlsVersion.TLS_1_2)
+//                        .build();
+//                List specs = new ArrayList<>();
+//                specs.add(cs);
+//                specs.add(ConnectionSpec.COMPATIBLE_TLS);
+//                specs.add(ConnectionSpec.CLEARTEXT);
+//                client.connectionSpecs(specs);
+//            } catch (Exception exc) {
+//            }
+//        }
+//        return client;
+//    }
 
 
     private static class TrustAllManager implements X509TrustManager {
@@ -129,13 +124,13 @@ public class HttpUtils {
         return sSLSocketFactory;
     }
 
-    ConnectionSpec spec = new ConnectionSpec.Builder(ConnectionSpec.COMPATIBLE_TLS)
-            .tlsVersions(TlsVersion.TLS_1_2)
-            .cipherSuites(
-                    CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-                    CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-                    CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256)
-            .build();
+//    ConnectionSpec spec = new ConnectionSpec.Builder(ConnectionSpec.COMPATIBLE_TLS)
+//            .tlsVersions(TlsVersion.TLS_1_2)
+//            .cipherSuites(
+//                    CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+//                    CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+//                    CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256)
+//            .build();
 
     private HttpUtils(Context application) {
         this.application = application;
@@ -158,11 +153,11 @@ public class HttpUtils {
 //                        .add("publicobject.com", "sha256/afwiKY3RxoMmLkuRW1l7QsPZTJPwDS2pdDROQjXw8ig=")
 //                        .build())
                 .sslSocketFactory(createSSLSocketFactory())
-//                .cache(new Cache(FileUtils.getFile("cache"), 1000 * 1024))
-//                .addInterceptor(new CaheInterceptor(application))
-//                .addNetworkInterceptor(new CaheInterceptor(application)
-                .hostnameVerifier(new TrustAllHostnameVerifier()).build();
-        ;
+                .hostnameVerifier(new TrustAllHostnameVerifier())
+                .cache(new Cache(FileUtils.getFile("cache"), 1000 * 1024))
+                .addInterceptor(new CaheInterceptor(application))
+                .addNetworkInterceptor(new CaheInterceptor(application)).build();
+
     }
 
     public static synchronized HttpUtils getInstance(Context application) {

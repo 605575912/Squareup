@@ -1,29 +1,34 @@
 {
-    "color":"#303F9F",
+    "color": "#eeeeee",
     "tabs": [
         {
             "id": 1,
-            "imgurl": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496407745461&di=5751fef1d0055012fc130ee2dca2beaf&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a03b564da3d632f87512f695e7b4.png",
-            "jumpcontent": "",
-            "title":"1"
+             "index":1,
+            "normalimgurl": "file:///android_asset/tabimg/ic_vector_home_normal.png",
+            "pressedimgurl": "file:///android_asset/tabimg/ic_vector_home_pressed.png",
+            "jumpcontent": "http://192.168.30.25:8080/server/",
+            "title": "首页"
         },
         {
             "id": 2,
-            "imgurl": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496407745461&di=5751fef1d0055012fc130ee2dca2beaf&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a03b564da3d632f87512f695e7b4.png",
+            "normalimgurl": "file:///android_asset/tabimg/ic_vector_nearby_normal.png",
+            "pressedimgurl": "file:///android_asset/tabimg/ic_vector_nearby_pressed.png",
             "jumpcontent": "",
-            "title":"2"
+            "title": "附近"
         },
         {
             "id": 3,
-            "imgurl": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496407745461&di=5751fef1d0055012fc130ee2dca2beaf&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a03b564da3d632f87512f695e7b4.png",
+            "normalimgurl": "file:///android_asset/tabimg/ic_vector_order_normal.png",
+            "pressedimgurl": "file:///android_asset/tabimg/ic_vector_order_pressed.png",
             "jumpcontent": "",
-            "title":"2"
+            "title": "订单"
         },
         {
             "id": 4,
-            "imgurl": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1496407745461&di=5751fef1d0055012fc130ee2dca2beaf&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a03b564da3d632f87512f695e7b4.png",
+            "normalimgurl": "file:///android_asset/tabimg/ic_vector_mine_normal.png",
+            "pressedimgurl": "file:///android_asset/tabimg/ic_vector_mine_pressed.png",
             "jumpcontent": "",
-            "title":"2"
+            "title": "我的"
         }
     ]
 }

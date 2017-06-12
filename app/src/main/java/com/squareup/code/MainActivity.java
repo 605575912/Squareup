@@ -4,9 +4,12 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.squareup.code.databinding.ActivityMainBinding;
 import com.squareup.code.home.tab.TabAdapter;
@@ -17,6 +20,7 @@ import com.squareup.code.home.tab.TabsCache;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
+import com.squareup.lib.ImageUtils;
 import com.squareup.lib.utils.AppLibUtils;
 import com.squareup.lib.utils.ToastUtils;
 
@@ -24,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     //    SwipeRefreshLayout swipeRefreshLayout;
 
     LinearLayout tabs_layout;
@@ -65,7 +69,27 @@ public class MainActivity extends BaseActivity {
                     ImageView imageView = new ImageView(getActivity());
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     params.weight = 1;
-                    tabs_layout.addView(imageView, params);
+                    if (tabsBean.getIndex() == 1) {
+                        ImageUtils.loadImage(getActivity(), tabsBean.getPressedimgurl(), imageView);
+                    } else {
+                        ImageUtils.loadImage(getActivity(), tabsBean.getNormalimgurl(), imageView);
+                    }
+                    LinearLayout linearLayout = new LinearLayout(getActivity());
+                    linearLayout.setTag(R.id.maintabs_id, tabsBean);
+                    linearLayout.setOnClickListener(this);
+                    linearLayout.setOrientation(LinearLayout.VERTICAL);
+                    LinearLayout.LayoutParams imgparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    imgparams.weight = 1;
+                    imgparams.gravity = Gravity.CENTER_HORIZONTAL;
+                    linearLayout.addView(imageView, imgparams);
+                    TextView textView = new TextView(getActivity());
+                    textView.setText(tabsBean.getTitle());
+                    textView.setTextSize(11);
+                    textView.setTextColor(Color.BLACK);
+                    LinearLayout.LayoutParams textparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    textparams.gravity = Gravity.CENTER_HORIZONTAL;
+                    linearLayout.addView(textView, textparams);
+                    tabs_layout.addView(linearLayout, params);
                     TabFragment tabFragment = new TabFragment();
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("TabsBean", tabsBean);
@@ -99,5 +123,24 @@ public class MainActivity extends BaseActivity {
 //            }
 //        }
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        for (int i = 0; i < tabs_layout.getChildCount(); i++) {
+            TabsBean tabsBean = (TabsBean) tabs_layout.getChildAt(i).getTag(R.id.maintabs_id);
+            if (v == tabs_layout.getChildAt(i)) {
+                tabsBean.setIndex(1);
+            } else {
+                tabsBean.setIndex(0);
+            }
+            ImageView imageView = (ImageView) ((LinearLayout) tabs_layout.getChildAt(i)).getChildAt(0);
+            if (tabsBean.getIndex() == 1) {
+                viewPager.setCurrentItem(i);
+                ImageUtils.loadImage(getActivity(), tabsBean.getPressedimgurl(), imageView);
+            } else {
+                ImageUtils.loadImage(getActivity(), tabsBean.getNormalimgurl(), imageView);
+            }
+        }
     }
 }

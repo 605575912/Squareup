@@ -47,4 +47,7 @@ public class URLUtils {
     public String getBannersUrl() {
         return urlModel.getBannersurl();
     }
+    public String getLoginUrl() {
+        return urlModel.getLoginurl();
+    }
 }

@@ -23,8 +23,10 @@
             android:id="@+id/tabs_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/colorAccent"
-            android:orientation="horizontal"></LinearLayout>
+            android:background="#ffffff"
+            android:orientation="horizontal"
+            android:paddingBottom="2dp"
+            android:paddingTop="5dp"></LinearLayout>
 
     </LinearLayout>
 

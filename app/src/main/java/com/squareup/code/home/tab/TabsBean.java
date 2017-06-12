@@ -9,17 +9,49 @@ import android.os.Parcelable;
 
 public class TabsBean implements Parcelable {
     private int id;
-    private String imgurl;
+    private String normalimgurl;
+    private String pressedimgurl;
     private String jumpcontent;
     private String title;
+    int index = 0;
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     public TabsBean() {
 
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getNormalimgurl() {
+        return normalimgurl;
+    }
+
+    public String getPressedimgurl() {
+        return pressedimgurl;
+    }
+
+    public String getJumpcontent() {
+        return jumpcontent;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
     protected TabsBean(Parcel in) {
         id = in.readInt();
-        imgurl = in.readString();
+        index = in.readInt();
+        normalimgurl = in.readString();
+        pressedimgurl = in.readString();
         jumpcontent = in.readString();
         title = in.readString();
     }
@@ -36,38 +68,6 @@ public class TabsBean implements Parcelable {
         }
     };
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getImgurl() {
-        return imgurl;
-    }
-
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
-    }
-
-    public String getJumpcontent() {
-        return jumpcontent;
-    }
-
-    public void setJumpcontent(String jumpcontent) {
-        this.jumpcontent = jumpcontent;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -76,7 +76,9 @@ public class TabsBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeString(imgurl);
+        dest.writeInt(index);
+        dest.writeString(normalimgurl);
+        dest.writeString(pressedimgurl);
         dest.writeString(jumpcontent);
         dest.writeString(title);
     }
