@@ -1,6 +1,7 @@
 package com.squareup.lib;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -23,27 +24,28 @@ public class BaseActivity extends FragmentActivity {
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        setStatus();
+        setStatus(isAllTranslucentStatus());
     }
 
     protected Activity getActivity() {
         return this;
     }
 
-    private void setStatus() {
-        if (isTranslucentStatus()) {
-//            titleBar.setFitsSystemWindows(true);
-            if (titleView == null) {
-                FrameLayout frameLayout = ((FrameLayout) getWindow().getDecorView().findViewById(android.R.id.content));
-                if (frameLayout.getChildCount() > 0) {
-                    frameLayout.getChildAt(0).setPadding(0, getStatusBarHeight(), 0, 0);
-                } else {
-                    frameLayout.setPadding(0, getStatusBarHeight(), 0, 0);
-                }
-            } else {
-                titleView.setPadding(0, getStatusBarHeight(), 0, 0);
-            }
-
+    public void setStatus(boolean transtatus) {
+        int h = 0;
+        if (!isTranslucentStatus()) {
+            return;
+        }
+        if (transtatus) {
+            h = 0;
+        } else {
+            h = getStatusBarHeight();
+        }
+        FrameLayout frameLayout = ((FrameLayout) getWindow().getDecorView().findViewById(android.R.id.content));
+        if (frameLayout.getChildCount() > 0) {
+            frameLayout.getChildAt(0).setPadding(0, h, 0, 0);
+        } else {
+            frameLayout.setPadding(0, h, 0, 0);
         }
     }
 
@@ -63,7 +65,7 @@ public class BaseActivity extends FragmentActivity {
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        setStatus();
+        setStatus(isAllTranslucentStatus());
     }
 
     public boolean NeedEventBus() {
@@ -75,10 +77,23 @@ public class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (isTranslucentStatus()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-                localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                        | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color.TRANSPARENT);
+                window.setNavigationBarColor(Color.TRANSPARENT);
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+                    localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+                }
             }
+
         }
         if (NeedEventBus()) {
             EventBus.getDefault().register(this);
@@ -88,6 +103,11 @@ public class BaseActivity extends FragmentActivity {
     //是否透明状态栏
     protected boolean isTranslucentStatus() {
         return true;
+    }
+
+    //是否透明状态栏
+    protected boolean isAllTranslucentStatus() {
+        return false;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

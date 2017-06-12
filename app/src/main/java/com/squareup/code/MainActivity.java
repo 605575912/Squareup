@@ -55,6 +55,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 //        tabs_layout.addView();
     }
+    boolean transtatus;
+    @Override
+    protected boolean isAllTranslucentStatus() {
+        return true;
+    }
 
     @Override
     public void onEventMain(EventMainObject event) {
@@ -70,6 +75,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     params.weight = 1;
                     if (tabsBean.getIndex() == 1) {
+                        transtatus = tabsBean.isTranstatus();
+                        setStatus(transtatus);
                         ImageUtils.loadImage(getActivity(), tabsBean.getPressedimgurl(), imageView);
                     } else {
                         ImageUtils.loadImage(getActivity(), tabsBean.getNormalimgurl(), imageView);
@@ -136,6 +143,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
             ImageView imageView = (ImageView) ((LinearLayout) tabs_layout.getChildAt(i)).getChildAt(0);
             if (tabsBean.getIndex() == 1) {
+                transtatus = tabsBean.isTranstatus();
+                setStatus(transtatus);
                 viewPager.setCurrentItem(i);
                 ImageUtils.loadImage(getActivity(), tabsBean.getPressedimgurl(), imageView);
             } else {

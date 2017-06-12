@@ -12,8 +12,6 @@ import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
-import com.squareup.lib.HttpUtils;
-import com.squareup.lib.utils.ToastUtils;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -25,6 +23,11 @@ public class LauncherActivity extends BaseActivity {
     LauncherLayoutBinding activityMainBinding;
     LauncherCache launcherCache;
     Handler handler;
+
+    @Override
+    protected boolean isAllTranslucentStatus() {
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class LauncherActivity extends BaseActivity {
                 finish();
             }
         };
-        IWXAPI iwxapi = WXAPIFactory.createWXAPI(this,"wx4c726304342b910d",true);
+        IWXAPI iwxapi = WXAPIFactory.createWXAPI(this, "wx4c726304342b910d", true);
         iwxapi.registerApp("wx4c726304342b910d");
         TabsCache tabsCache = new TabsCache();
         tabsCache.dowlNewWorkData();

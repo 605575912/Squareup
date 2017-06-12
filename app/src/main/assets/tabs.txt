@@ -4,6 +4,7 @@
         {
             "id": 1,
              "index":1,
+             "transtatus":true;
             "normalimgurl": "file:///android_asset/tabimg/ic_vector_home_normal.png",
             "pressedimgurl": "file:///android_asset/tabimg/ic_vector_home_pressed.png",
             "jumpcontent": "http://192.168.30.25:8080/server/",
