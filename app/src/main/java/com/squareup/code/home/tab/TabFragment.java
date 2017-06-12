@@ -12,6 +12,7 @@ import com.squareup.code.Card;
 import com.squareup.code.CardUnit;
 import com.squareup.code.DataUnit;
 import com.squareup.code.ItemData;
+import com.squareup.code.MineItemData;
 import com.squareup.code.R;
 import com.squareup.code.WrapContentLinearLayoutManager;
 import com.squareup.code.home.ChangedItemView;
@@ -19,6 +20,9 @@ import com.squareup.code.home.DoubleItemView;
 import com.squareup.code.home.ItemView;
 import com.squareup.code.home.banner.BannerModel;
 import com.squareup.code.home.banner.BannerView;
+import com.squareup.code.mine.MineCard;
+import com.squareup.code.mine.MineCardUnit;
+import com.squareup.code.mine.MineItemView;
 import com.squareup.code.utils.LoadEmptyViewControl;
 import com.squareup.lib.BaseFrament;
 import com.squareup.lib.EventMainObject;
@@ -99,35 +103,56 @@ public class TabFragment extends BaseFrament {
                 if (dataUnit.getTitletype() > 0) {
                     addTitleView(dataUnit.getTitletype());
                 }
-                for (Card card : dataUnit.getCards()) {
-                    List<BannerModel> banners = card.getBanners();
-                    if (banners != null && banners.size() > 0) {
-                        BannerView bannerView = new BannerView(banners);
-                        list.add(bannerView);
-                    }
-                    List<CardUnit> cardUnits = card.getCardUnits();
-                    if (cardUnits != null) {
-                        for (CardUnit cardUnit : cardUnits) {
-                            List<ItemData> itemDatas = cardUnit.getItems();
-                            if (itemDatas == null || itemDatas.size() == 0) {
-                                continue;
+                if (dataUnit.getMinecards() != null) {
+                    for (MineCard mineCard : dataUnit.getMinecards()) {
+                        List<MineCardUnit> cardUnits = mineCard.getCardUnits();
+                        if (cardUnits != null) {
+                            for (MineCardUnit mineCardUnit : cardUnits) {
+                                List<MineItemData> items = mineCardUnit.getItems();
+                                if (items != null) {
+                                    for (MineItemData itemData : items) {
+                                        MineItemView mineItemView = new MineItemView(getActivity(), itemData);
+                                        list.add(mineItemView);
+                                    }
+
+                                }
                             }
-                            if (itemDatas.size() == 1) {
-                                ItemView baseViewItem = new ItemView(getActivity(), itemDatas.get(0));
-                                list.add(baseViewItem);
-                                continue;
-                            }
-                            ChangedItemView baseViewItem = new ChangedItemView(getActivity(), itemDatas);
-                            list.add(baseViewItem);
 
                         }
+
                     }
-                    List<ItemData> itemDatas = card.getItems();
-                    if (itemDatas != null) {
-                        for (ItemData itemData : itemDatas) {
-                            DoubleItemView mainItemView = new DoubleItemView(getActivity());
-                            mainItemView.setItemData(itemData);
-                            list.add(mainItemView);
+                }
+                if (dataUnit.getCards() != null) {
+                    for (Card card : dataUnit.getCards()) {
+                        List<BannerModel> banners = card.getBanners();
+                        if (banners != null && banners.size() > 0) {
+                            BannerView bannerView = new BannerView(banners);
+                            list.add(bannerView);
+                        }
+                        List<CardUnit> cardUnits = card.getCardUnits();
+                        if (cardUnits != null) {
+                            for (CardUnit cardUnit : cardUnits) {
+                                List<ItemData> itemDatas = cardUnit.getItems();
+                                if (itemDatas == null || itemDatas.size() == 0) {
+                                    continue;
+                                }
+                                if (itemDatas.size() == 1) {
+                                    ItemView baseViewItem = new ItemView(getActivity(), itemDatas.get(0));
+                                    list.add(baseViewItem);
+                                    continue;
+                                }
+                                ChangedItemView baseViewItem = new ChangedItemView(getActivity(), itemDatas);
+                                list.add(baseViewItem);
+
+                            }
+                        }
+                        List<ItemData> itemDatas = card.getItems();
+                        if (itemDatas != null) {
+                            for (ItemData itemData : itemDatas) {
+                                DoubleItemView mainItemView = new DoubleItemView(getActivity());
+                                mainItemView.setItemData(itemData);
+                                list.add(mainItemView);
+                            }
                         }
                     }
                 }

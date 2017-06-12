@@ -1,5 +1,6 @@
 package com.squareup.code;
 
+import com.squareup.code.mine.MineCard;
 import com.squareup.lib.utils.IProguard;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class DataUnit implements IProguard.ProtectMembers {
     private int titletype = -1;//-1 w无  1  搜索
     private List<Card> cards;//大卡片
     private List<ItemData> items;//一组Item
+    private List<MineCard> minecards;//一组Item
 
 
     public List<Card> getCards() {
@@ -32,5 +34,9 @@ public class DataUnit implements IProguard.ProtectMembers {
 
     public int getTitletype() {
         return titletype;
+    }
+
+    public List<MineCard> getMinecards() {
+        return minecards;
     }
 }
