@@ -10,6 +10,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.squareup.lib.utils.AppLibUtils;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -32,15 +34,10 @@ public class BaseActivity extends FragmentActivity {
     }
 
     public void setStatus(boolean transtatus) {
-        int h = 0;
         if (!isTranslucentStatus()) {
             return;
         }
-        if (transtatus) {
-            h = 0;
-        } else {
-            h = getStatusBarHeight();
-        }
+        int h = transtatus ? 0 : AppLibUtils.getStatusBarHeight();
         FrameLayout frameLayout = ((FrameLayout) getWindow().getDecorView().findViewById(android.R.id.content));
         if (frameLayout.getChildCount() > 0) {
             frameLayout.getChildAt(0).setPadding(0, h, 0, 0);
@@ -53,14 +50,6 @@ public class BaseActivity extends FragmentActivity {
         this.titleView = titleView;
     }
 
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
 
     @Override
     public void setContentView(View view) {

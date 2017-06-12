@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Handler;
 import android.os.RemoteException;
 import android.widget.Toast;
 
@@ -102,4 +101,12 @@ public class AppLibUtils {
 
     }
 
+    public static int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = BaseApplication.application.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = BaseApplication.application.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
 }

@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.squareup.code.home.tab.TabFragment;
 import com.squareup.code.home.tab.TabModel;
 import com.squareup.code.home.tab.TabsBean;
 import com.squareup.code.home.tab.TabsCache;
+import com.squareup.code.utils.LoadEmptyViewControl;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
@@ -36,6 +38,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     ViewPager viewPager;
     TabAdapter tabAdapter;
     List<TabFragment> fragments;
+    LoadEmptyViewControl loadEmptyViewControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         fragments = new ArrayList<TabFragment>();
         tabAdapter = new TabAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(tabAdapter);
-
+        FrameLayout frameLayout = (FrameLayout) activityMainBinding.getRoot().findViewById(R.id.container);
+        loadEmptyViewControl = new LoadEmptyViewControl(getActivity());
+        loadEmptyViewControl.addLoadView(frameLayout);
         tabsCache = new TabsCache();
         tabsCache.getCacheData();
     }
@@ -55,7 +60,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 //        tabs_layout.addView();
     }
+
     boolean transtatus;
+
     @Override
     protected boolean isAllTranslucentStatus() {
         return true;
@@ -70,18 +77,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (event.getData() instanceof TabModel) {
                 TabModel tabModel = (TabModel) event.getData();
                 tabs_layout.setBackgroundColor(Color.parseColor(tabModel.getColor()));
+                LinearLayout indexLayout = null;
                 for (TabsBean tabsBean : tabModel.getTabs()) {
+                    LinearLayout linearLayout = new LinearLayout(getActivity());
                     ImageView imageView = new ImageView(getActivity());
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     params.weight = 1;
-                    if (tabsBean.getIndex() == 1) {
-                        transtatus = tabsBean.isTranstatus();
-                        setStatus(transtatus);
-                        ImageUtils.loadImage(getActivity(), tabsBean.getPressedimgurl(), imageView);
-                    } else {
-                        ImageUtils.loadImage(getActivity(), tabsBean.getNormalimgurl(), imageView);
-                    }
-                    LinearLayout linearLayout = new LinearLayout(getActivity());
+                    indexLayout = tabsBean.getIndex() == 1 ? linearLayout : indexLayout;
                     linearLayout.setTag(R.id.maintabs_id, tabsBean);
                     linearLayout.setOnClickListener(this);
                     linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -105,8 +107,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     tabAdapter.notifyDataSetChanged();
                 }
                 viewPager.setOffscreenPageLimit(fragments.size());
+                loadEmptyViewControl.loadcomplete();
+                if (indexLayout != null) {
+                    onClick(indexLayout);
+                }
             } else {
-
+                loadEmptyViewControl.loadError();
             }
         }
 
@@ -145,7 +151,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (tabsBean.getIndex() == 1) {
                 transtatus = tabsBean.isTranstatus();
                 setStatus(transtatus);
-                viewPager.setCurrentItem(i);
+                viewPager.setCurrentItem(i, false);
                 ImageUtils.loadImage(getActivity(), tabsBean.getPressedimgurl(), imageView);
             } else {
                 ImageUtils.loadImage(getActivity(), tabsBean.getNormalimgurl(), imageView);

@@ -40,7 +40,7 @@ public class ItemView extends DataBindBaseViewItem implements View.OnClickListen
 
     @BindingAdapter("iconurl")
     public static void setImage(ImageView iv, String userface) {
-        ImageUtils.loadImage(iv.getContext(), userface, iv, R.mipmap.ic_launcher_round);
+        ImageUtils.loadImage(iv.getContext(), userface, iv, R.drawable.placeholder_error);
     }
 
     @BindingAdapter("background")

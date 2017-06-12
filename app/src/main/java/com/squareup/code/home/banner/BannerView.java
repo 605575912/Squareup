@@ -21,7 +21,7 @@ public class BannerView extends DataBindBaseViewItem {
 
     @BindingAdapter("bannerimg")
     public static void setImage(ImageView iv, String userface) {
-        ImageUtils.loadImage(iv.getContext(), userface, iv, R.mipmap.ic_launcher_round);
+        ImageUtils.loadImage(iv.getContext(), userface, iv, R.drawable.trip_flight_home_train_default_banner);
     }
 
     public BannerView(List<BannerModel> banners) {

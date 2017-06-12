@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.FrameLayout;
 
 import com.squareup.code.Card;
 import com.squareup.code.CardUnit;
@@ -19,10 +19,11 @@ import com.squareup.code.home.DoubleItemView;
 import com.squareup.code.home.ItemView;
 import com.squareup.code.home.banner.BannerModel;
 import com.squareup.code.home.banner.BannerView;
+import com.squareup.code.utils.LoadEmptyViewControl;
 import com.squareup.lib.BaseFrament;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.HttpUtils;
-import com.squareup.lib.utils.LogUtil;
+import com.squareup.lib.utils.AppLibUtils;
 import com.squareup.lib.view.EndlessRecyclerOnScrollListener;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewAdapter;
@@ -40,6 +41,8 @@ public class TabFragment extends BaseFrament {
     RecyclerViewAdapter adapter;
     View contentView;
     TabsBean tabsBean;
+    LoadEmptyViewControl loadEmptyViewControl;
+    FrameLayout frameLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,9 @@ public class TabFragment extends BaseFrament {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         contentView = inflater.inflate(R.layout.tab_layout, container, false);
+        frameLayout = (FrameLayout) contentView.findViewById(R.id.container);
+        loadEmptyViewControl = new LoadEmptyViewControl(getActivity());
+        loadEmptyViewControl.addLoadView(frameLayout);
         recyclerView = (RecyclerView) contentView.findViewById(R.id.recycler);
         WrapContentLinearLayoutManager wrapContentLinearLayoutManager = new WrapContentLinearLayoutManager(getActivity());
         recyclerView.setHasFixedSize(true);
@@ -76,62 +82,69 @@ public class TabFragment extends BaseFrament {
         }
     }
 
+    private void addTitleView(int titletype) {
+        if (titletype == 1) {
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_title_layout, frameLayout, false);
+            view.setPadding(0, AppLibUtils.getStatusBarHeight(), 0, 0);
+            frameLayout.addView(view);
+        }
+    }
+
     public void onEventMain(EventMainObject event) {
         if (event.getCommand().equals(tabsBean.getJumpcontent())) {
-            if (event.isSuccess()) {
-                if (event.getData() instanceof DataUnit) {
-                    DataUnit dataUnit = (DataUnit) event.getData();
+            if (event.getData() instanceof DataUnit) {
+                loadEmptyViewControl.loadcomplete();
 
-                    for (Card card : dataUnit.getCards()) {
-                        List<BannerModel> banners = card.getBanners();
-                        if (banners != null && banners.size() > 0) {
-                            BannerView bannerView = new BannerView(banners);
-                            list.add(bannerView);
-                        }
-                        List<CardUnit> cardUnits = card.getCardUnits();
-                        if (cardUnits != null) {
-                            for (CardUnit cardUnit : cardUnits) {
-                                List<ItemData> itemDatas = cardUnit.getItems();
-                                if (itemDatas == null || itemDatas.size() == 0) {
-                                    continue;
-                                }
-                                if (itemDatas.size() == 1) {
-                                    ItemView baseViewItem = new ItemView(getActivity(), itemDatas.get(0));
-                                    list.add(baseViewItem);
-                                    continue;
-                                }
-                                ChangedItemView baseViewItem = new ChangedItemView(getActivity(), itemDatas);
+                DataUnit dataUnit = (DataUnit) event.getData();
+                if (dataUnit.getTitletype() > 0) {
+                    addTitleView(dataUnit.getTitletype());
+                }
+                for (Card card : dataUnit.getCards()) {
+                    List<BannerModel> banners = card.getBanners();
+                    if (banners != null && banners.size() > 0) {
+                        BannerView bannerView = new BannerView(banners);
+                        list.add(bannerView);
+                    }
+                    List<CardUnit> cardUnits = card.getCardUnits();
+                    if (cardUnits != null) {
+                        for (CardUnit cardUnit : cardUnits) {
+                            List<ItemData> itemDatas = cardUnit.getItems();
+                            if (itemDatas == null || itemDatas.size() == 0) {
+                                continue;
+                            }
+                            if (itemDatas.size() == 1) {
+                                ItemView baseViewItem = new ItemView(getActivity(), itemDatas.get(0));
                                 list.add(baseViewItem);
+                                continue;
+                            }
+                            ChangedItemView baseViewItem = new ChangedItemView(getActivity(), itemDatas);
+                            list.add(baseViewItem);
 
-                            }
-                        }
-                        List<ItemData> itemDatas = card.getItems();
-                        if (itemDatas != null) {
-                            for (ItemData itemData : itemDatas) {
-                                DoubleItemView mainItemView = new DoubleItemView(getActivity());
-                                mainItemView.setItemData(itemData);
-                                list.add(mainItemView);
-                            }
                         }
                     }
-                    List<ItemData> itemDatas = dataUnit.getItems();
-                    if (itemDatas!=null){
-                        for (ItemData itemData : dataUnit.getItems()) {
+                    List<ItemData> itemDatas = card.getItems();
+                    if (itemDatas != null) {
+                        for (ItemData itemData : itemDatas) {
                             DoubleItemView mainItemView = new DoubleItemView(getActivity());
                             mainItemView.setItemData(itemData);
                             list.add(mainItemView);
                         }
                     }
-
-                    adapter.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(getActivity(), event.getData().toString(), Toast.LENGTH_LONG).show();
                 }
-
+                List<ItemData> itemDatas = dataUnit.getItems();
+                if (itemDatas != null) {
+                    for (ItemData itemData : dataUnit.getItems()) {
+                        DoubleItemView mainItemView = new DoubleItemView(getActivity());
+                        mainItemView.setItemData(itemData);
+                        list.add(mainItemView);
+                    }
+                }
+                adapter.notifyDataSetChanged();
             } else {
-                Toast.makeText(getActivity(), "请求失败 或者JSON 错误", Toast.LENGTH_LONG).show();
-                LogUtil.i("请求失败 或者JSON 错误");
+                loadEmptyViewControl.loadError(event.getData().toString());
             }
+
+
         }
     }
 

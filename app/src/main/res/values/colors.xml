@@ -7,4 +7,7 @@
     <color name="line_of">#0fc167</color>
     <color name="v6cardname">#ff333333</color>
     <color name="v6cardslogan">#ff999999</color>
+
+    <color name="text_d9">#d9d9d9</color>
+    <color name="text_b2">#b2b2b2</color>
 </resources>

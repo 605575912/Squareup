@@ -298,6 +298,7 @@ public class HttpUtils {
         if (TextUtils.isEmpty(url) || application == null || !PermissionsGrantActivity.checkAllPermissionsGranted(application, new String[]{
                 Manifest.permission.INTERNET})
                 ) {
+            failed(type, url, "未能获取数据");
             return;
         }
         int index = url.indexOf("file:///android_asset/");
