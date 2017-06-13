@@ -9,7 +9,7 @@ import com.squareup.lib.HttpUtils;
 
 public class URLUtils {
     private UrlModel urlModel = new UrlModel();
-    public static String HOST = "http://192.168.30.25:8080/";
+    public static String HOST = "http://192.168.30.20:8080/";
     private static URLUtils urlUtils;
 
     public static synchronized URLUtils getInstance() {

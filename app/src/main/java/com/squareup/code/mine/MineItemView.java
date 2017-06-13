@@ -35,31 +35,9 @@ public class MineItemView extends DataBindBaseViewItem implements View.OnClickLi
     }
 
 
-    @BindingAdapter("iconurl")
+    @BindingAdapter("lefticon")
     public static void setImage(ImageView iv, String userface) {
         ImageUtils.loadImage(iv.getContext(), userface, iv, R.drawable.placeholder_error);
-    }
-
-    @BindingAdapter("background")
-    public static void setImage(final View iv, String userface) {
-        iv.setBackgroundColor(Color.WHITE);
-        if (!TextUtils.isEmpty(userface)) {
-            if (userface.startsWith("#")) {
-                try {
-                    iv.setBackgroundColor(Color.parseColor(userface));
-                } catch (Exception ignored) {
-                }
-            } else {
-                Glide.with(iv.getContext()).load(userface).into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                        iv.setBackgroundDrawable(resource);
-                    }
-                });
-            }
-
-        }
-
     }
 
     @Override

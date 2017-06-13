@@ -20,9 +20,12 @@ import com.squareup.code.home.DoubleItemView;
 import com.squareup.code.home.ItemView;
 import com.squareup.code.home.banner.BannerModel;
 import com.squareup.code.home.banner.BannerView;
+import com.squareup.code.mine.LoginCardView;
 import com.squareup.code.mine.MineCard;
 import com.squareup.code.mine.MineCardUnit;
 import com.squareup.code.mine.MineItemView;
+import com.squareup.code.mine.MineLineView;
+import com.squareup.code.mine.MineSpaceView;
 import com.squareup.code.utils.LoadEmptyViewControl;
 import com.squareup.lib.BaseFrament;
 import com.squareup.lib.EventMainObject;
@@ -105,14 +108,28 @@ public class TabFragment extends BaseFrament {
                 }
                 if (dataUnit.getMinecards() != null) {
                     for (MineCard mineCard : dataUnit.getMinecards()) {
+                        if (mineCard.getLogincard() != null) {
+                            LoginCardView loginCardView = new LoginCardView();
+                            list.add(loginCardView);
+                            MineSpaceView mineSpaceView = new MineSpaceView();
+                            list.add(mineSpaceView);
+                        }
                         List<MineCardUnit> cardUnits = mineCard.getCardUnits();
                         if (cardUnits != null) {
                             for (MineCardUnit mineCardUnit : cardUnits) {
                                 List<MineItemData> items = mineCardUnit.getItems();
                                 if (items != null) {
-                                    for (MineItemData itemData : items) {
-                                        MineItemView mineItemView = new MineItemView(getActivity(), itemData);
+                                    for (int i = 0; i < items.size(); i++) {
+                                        MineItemView mineItemView = new MineItemView(getActivity(), items.get(i));
                                         list.add(mineItemView);
+                                        if (i < items.size() - 1) {
+                                            MineLineView mineLineView = new MineLineView();
+                                            list.add(mineLineView);
+                                        }
+                                        if (i == items.size() - 1) {
+                                            MineSpaceView mineSpaceView = new MineSpaceView();
+                                            list.add(mineSpaceView);
+                                        }
                                     }
 
                                 }

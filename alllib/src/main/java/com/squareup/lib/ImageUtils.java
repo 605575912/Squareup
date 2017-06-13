@@ -41,9 +41,6 @@ public class ImageUtils {
     }
 
     public static void loadImage(Context context, String url, ImageView imageView, Drawable drawable) {
-        if (TextUtils.isEmpty(url)) {
-            return;
-        }
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(drawable)

@@ -10,11 +10,11 @@ import java.util.List;
 
 public class MineCard {
     private List<MineCardUnit> cardUnits;//一个大卡片
-    private List<MineItemData> items;
+    private LoginCard logincard;
 
 
-    public List<MineItemData> getItems() {
-        return items;
+    public LoginCard getLogincard() {
+        return logincard;
     }
 
     public List<MineCardUnit> getCardUnits() {

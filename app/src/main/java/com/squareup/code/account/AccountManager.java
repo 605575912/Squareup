@@ -15,9 +15,27 @@ public class AccountManager {
     final int UNLOGINSTATE = 0;
     final int LOGININGSTATE = 2;
     final int LOGINFAILSTATE = -1;
+    private User user;
+
+    public User getUser() {
+        if (user == null) {
+            user = new User();
+        }
+        return user;
+    }
 
     public int getLoginState() {
         return state;
+    }
+
+    public String getLoginStateText() {
+        if (state == LUCCESSSTATE) {
+            return getUser().getName();
+        }
+        if (state == LOGININGSTATE) {
+            return "登录中";
+        }
+        return "请点击登录";
     }
 
     private AccountManager() {
@@ -40,6 +58,8 @@ public class AccountManager {
             public void success(Object model, String data) {
                 if (model instanceof LoginModel) {
                     state = LUCCESSSTATE;
+                    LoginModel loginModel = (LoginModel) model;
+                    user = loginModel.getUser();
 //                    FileUtils.saveFile(FileUtils.getFile(filename), data);
                 } else {
                     state = LOGINFAILSTATE;

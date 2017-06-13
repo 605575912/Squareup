@@ -26,6 +26,15 @@ public class User {
     private int age;
     private String token;
     private String account;
+    int state = 0;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
 
     public int getUid() {
         return uid;
