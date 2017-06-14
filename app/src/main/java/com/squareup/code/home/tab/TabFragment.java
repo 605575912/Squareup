@@ -148,16 +148,14 @@ public class TabFragment extends BaseFrament {
                         if (banners != null && banners.size() > 0) {
                             BannerView bannerView = new BannerView(banners);
                             list.add(bannerView);
-                            MineSpaceView mineSpaceView = new MineSpaceView();
-                            list.add(mineSpaceView);
+
 
                         }
                         List<ColumnData> columnitems = card.getColumnitems();
                         if (columnitems != null && columnitems.size() > 0) {
                             ColumnView columnView = new ColumnView(columnitems);
                             list.add(columnView);
-                            MineSpaceView mineSpaceView = new MineSpaceView();
-                            list.add(mineSpaceView);
+
                         }
                         List<CardUnit> cardUnits = card.getCardUnits();
                         if (cardUnits != null) {
@@ -184,14 +182,18 @@ public class TabFragment extends BaseFrament {
                                 list.add(mainItemView);
                             }
                         }
+                        MineSpaceView mineSpaceView = new MineSpaceView();
+                        list.add(mineSpaceView);
                     }
                 }
                 List<ItemData> itemDatas = dataUnit.getItems();
                 if (itemDatas != null) {
                     for (ItemData itemData : dataUnit.getItems()) {
                         if (itemData.getType() == 1) {//推荐
-                            PushItemView mainItemView = new PushItemView(getActivity(),itemData);
+                            PushItemView mainItemView = new PushItemView(getActivity(), itemData);
                             list.add(mainItemView);
+                            LineView lineView = new LineView();
+                            list.add(lineView);
                         } else {
 
                         }

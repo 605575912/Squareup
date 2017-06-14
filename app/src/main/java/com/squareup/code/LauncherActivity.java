@@ -74,7 +74,7 @@ public class LauncherActivity extends BaseActivity {
             if (event.getData() instanceof LauncherMode) {
                 LauncherMode launcherMode = (LauncherMode) event.getData();
                 if (launcherMode.getItems() != null && launcherMode.getItems().size() > 0) {
-                    activityMainBinding.setItemsbean(launcherMode.getItems().get(0));
+//                    activityMainBinding.setItemsbean(launcherMode.getItems().get(0));
                     handler.sendEmptyMessageDelayed(1, 3000);
                 } else {
                     handler.sendEmptyMessageDelayed(0, 1000);

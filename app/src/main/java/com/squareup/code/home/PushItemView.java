@@ -31,6 +31,7 @@ public class PushItemView extends DataBindBaseViewItem implements View.OnClickLi
         if (viewHolder.getViewDataBinding() != null) {
             viewHolder.getViewDataBinding().setVariable(BR.pushitemdata, itemData);
             viewHolder.getViewDataBinding().setVariable(BR.onclick, this);
+            viewHolder.getViewDataBinding().setVariable(BR.res, activity.getResources());
         }
     }
 

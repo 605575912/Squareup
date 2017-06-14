@@ -6,13 +6,23 @@
 
         <import type="android.view.View" />
 
+        <import type="java.lang.String" />
+
         <import type="android.text.TextUtils" />
+
+        <import type="android.content.res.Resources" />
+
+        <import type="com.squareup.code.R" />
 
         <import type="com.squareup.code.home.PushItemView" />
 
         <variable
             name="pushitemdata"
             type="com.squareup.code.ItemData" />
+
+        <variable
+            name="res"
+            type="android.content.res.Resources" />
 
         <variable
             name="onclick"
@@ -23,45 +33,113 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
 
         <ImageView
             android:id="@+id/iv_"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             app:iconurl="@{pushitemdata.imgurl}" />
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/iv_"
-            android:text="@{pushitemdata.title}"
-            android:textColor="@color/text_b2"
-            android:textSize="16sp" />
+            android:layout_centerVertical="true"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_toRightOf="@+id/iv_">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toLeftOf="@+id/dis"
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                android:text="@{pushitemdata.title}"
+                android:textColor="#050505"
+                android:textSize="18sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/dis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@{pushitemdata.dis>500 ? res.getString(R.string.str_push_cdis,pushitemdata.dis):res.getString(R.string.str_push_dis,500)}"
+                android:textColor="#b2b2b2" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/tv_title"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@{res.getString(R.string.str_push_content,pushitemdata.location,pushitemdata.content)}"
+                android:textColor="#b2b2b2" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorAccent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pri_n"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="bottom"
+                    android:includeFontPadding="false"
+                    android:text="¥"
+                    android:textColor="#04f5f5" />
+
+                <TextView
+                    android:id="@+id/pri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/pri_n"
+                    android:includeFontPadding="false"
+                    android:text="@{String.valueOf(pushitemdata.price)}"
+                    android:textColor="#04f5f5"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/pri"
+                    android:gravity="bottom"
+                    android:includeFontPadding="false"
+                    android:text="@{res.getString(R.string.str_push_origina,pushitemdata.originaprice)}"
+                    android:textColor="#b2b2b2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:gravity="bottom"
+                    android:includeFontPadding="false"
+                    android:text="@{String.valueOf(pushitemdata.sellcount)}"
+                    android:textColor="#b2b2b2" />
+            </RelativeLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

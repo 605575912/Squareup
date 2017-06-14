@@ -7,4 +7,9 @@
     <string name="str_nodata">没有相关数据</string>
     <string name="str_neterror">无网络可用</string>
     <string name="str_check_net">检查网络访问权限及链接状态</string>
+
+    <string name="str_push_content">[%1$s]%2$s</string>
+    <string name="str_push_dis">&lt;%1$dm</string>
+    <string name="str_push_cdis">%1$dm</string>
+    <string name="str_push_origina">门市价:¥%1$d</string>
 </resources>
