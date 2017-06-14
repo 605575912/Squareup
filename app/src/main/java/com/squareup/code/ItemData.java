@@ -6,47 +6,38 @@ import android.databinding.BaseObservable;
  * Created by Administrator on 2017/05/31 0031.
  */
 
-public class ItemData extends BaseObservable {
-//    public ObservableField<String> content = new ObservableField<>();
-//    public ObservableInt age = new ObservableInt();
-//    public ObservableBoolean isMan = new ObservableBoolean();
+public class ItemData  {
+
     /**
-     * content : 最新
-     * count : 110
+     * imgurl : https: //ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3527597864,2116312579&fm=117&gp=0.jpg
+     * content :
+     * title :
+     * location :
+     * dis : 100
+     * price : 11
+     * originaprice : 12
+     * sellcount : 110
+     * jumpcontent :
+     * type : 1
      */
-    String content;
-    String title;
-    String tagging;
-    String jumpurl;
-
-    public String getJumpurl() {
-        return jumpurl;
-    }
-
-    public String getTagging() {
-        return tagging;
-    }
 
     private String imgurl;
-    private String bckimgurl;
-    private int count;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getBckimgurl() {
-        return bckimgurl;
-    }
+    private String content;
+    private String title;
+    private String location;
+    private int dis;
+    private int price;
+    private int originaprice;
+    private int sellcount;
+    private String jumpcontent;
+    private int type;
 
     public String getImgurl() {
         return imgurl;
     }
 
-
     public void setImgurl(String imgurl) {
         this.imgurl = imgurl;
-//        notifyPropertyChanged(BR.itemdata);
     }
 
     public String getContent() {
@@ -57,11 +48,68 @@ public class ItemData extends BaseObservable {
         this.content = content;
     }
 
-    public int getCount() {
-        return count;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setTitle(String title) {
+        this.title = title;
     }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public int getDis() {
+        return dis;
+    }
+
+    public void setDis(int dis) {
+        this.dis = dis;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getOriginaprice() {
+        return originaprice;
+    }
+
+    public void setOriginaprice(int originaprice) {
+        this.originaprice = originaprice;
+    }
+
+    public int getSellcount() {
+        return sellcount;
+    }
+
+    public void setSellcount(int sellcount) {
+        this.sellcount = sellcount;
+    }
+
+    public String getJumpcontent() {
+        return jumpcontent;
+    }
+
+    public void setJumpcontent(String jumpcontent) {
+        this.jumpcontent = jumpcontent;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
 }

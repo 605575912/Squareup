@@ -24,10 +24,7 @@ public class DoubleItemView implements BaseViewItem {
     ItemData itemData;
     Activity activity;
 
-    @BindingAdapter("userface")
-    public static void setImage(ImageView iv, String userface) {
-        ImageUtils.loadImage(iv.getContext(), userface, iv, R.drawable.placeholder_error);
-    }
+
 
     public DoubleItemView(Activity activity) {
         this.activity = activity;

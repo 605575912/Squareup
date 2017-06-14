@@ -15,9 +15,12 @@ import com.squareup.code.ItemData;
 import com.squareup.code.MineItemData;
 import com.squareup.code.R;
 import com.squareup.code.WrapContentLinearLayoutManager;
+import com.squareup.code.column.ColumnData;
+import com.squareup.code.column.ColumnView;
 import com.squareup.code.home.ChangedItemView;
 import com.squareup.code.home.DoubleItemView;
 import com.squareup.code.home.ItemView;
+import com.squareup.code.home.PushItemView;
 import com.squareup.code.home.banner.BannerModel;
 import com.squareup.code.home.banner.BannerView;
 import com.squareup.code.mine.LoginCardView;
@@ -145,6 +148,16 @@ public class TabFragment extends BaseFrament {
                         if (banners != null && banners.size() > 0) {
                             BannerView bannerView = new BannerView(banners);
                             list.add(bannerView);
+                            MineSpaceView mineSpaceView = new MineSpaceView();
+                            list.add(mineSpaceView);
+
+                        }
+                        List<ColumnData> columnitems = card.getColumnitems();
+                        if (columnitems != null && columnitems.size() > 0) {
+                            ColumnView columnView = new ColumnView(columnitems);
+                            list.add(columnView);
+                            MineSpaceView mineSpaceView = new MineSpaceView();
+                            list.add(mineSpaceView);
                         }
                         List<CardUnit> cardUnits = card.getCardUnits();
                         if (cardUnits != null) {
@@ -176,9 +189,13 @@ public class TabFragment extends BaseFrament {
                 List<ItemData> itemDatas = dataUnit.getItems();
                 if (itemDatas != null) {
                     for (ItemData itemData : dataUnit.getItems()) {
-                        DoubleItemView mainItemView = new DoubleItemView(getActivity());
-                        mainItemView.setItemData(itemData);
-                        list.add(mainItemView);
+                        if (itemData.getType() == 1) {//推荐
+                            PushItemView mainItemView = new PushItemView(getActivity(),itemData);
+                            list.add(mainItemView);
+                        } else {
+
+                        }
+
                     }
                 }
                 adapter.notifyDataSetChanged();

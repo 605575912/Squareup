@@ -10,7 +10,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
+        android:background="@color/bg_gray">
 
         <LinearLayout
             android:id="@+id/swiprefresh"
@@ -22,13 +22,18 @@
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="-5dp"
                 android:layout_weight="1"></com.squareup.code.views.SViewPager>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/tab_bar_bg"></View>
 
             <LinearLayout
                 android:id="@+id/tabs_layout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="#ffffff"
                 android:orientation="horizontal"
                 android:paddingBottom="2dp"
                 android:paddingTop="5dp"></LinearLayout>

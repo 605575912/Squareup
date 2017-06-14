@@ -24,16 +24,21 @@ public class ImageUtils {
     }
 
     public static void loadImage(Context context, String url, ImageView imageView, int defaultResId) {
-        if (TextUtils.isEmpty(url)) {
-            return;
-        }
+
         if (defaultResId == 0) {
+            if (TextUtils.isEmpty(url)) {
+                imageView.setImageResource(defaultResId);
+                return;
+            }
             Glide.with(context).load(url).into(imageView);
         } else {
             try {
                 Drawable drawable = context.getResources().getDrawable(defaultResId);
                 loadImage(context, url, imageView, drawable);
             } catch (Exception e) {
+                if (TextUtils.isEmpty(url)) {
+                    return;
+                }
                 Glide.with(context).load(url).into(imageView);
             }
 
@@ -41,6 +46,10 @@ public class ImageUtils {
     }
 
     public static void loadImage(Context context, String url, ImageView imageView, Drawable drawable) {
+        if (TextUtils.isEmpty(url)) {
+            imageView.setImageDrawable(drawable);
+            return;
+        }
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(drawable)

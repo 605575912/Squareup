@@ -23,10 +23,7 @@ public class LoginCardView extends DataBindBaseViewItem implements View.OnClickL
         return R.layout.mine_login;
     }
 
-    @BindingAdapter("loginface")
-    public static void setImage(ImageView iv, String userface) {
-        ImageUtils.loadImage(iv.getContext(), userface, iv, R.drawable.takeout_feedback_avatar_custom_default);
-    }
+
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {

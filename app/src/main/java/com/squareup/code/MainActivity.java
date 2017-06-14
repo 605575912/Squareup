@@ -56,12 +56,40 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabsCache.getCacheData();
     }
 
-    private void addTabs() {
-
-//        tabs_layout.addView();
-    }
-
     boolean transtatus;
+
+    private LinearLayout addTabs(TabModel tabModel) {
+        LinearLayout indexLayout = null;
+        for (TabsBean tabsBean : tabModel.getTabs()) {
+            LinearLayout linearLayout = new LinearLayout(getActivity());
+            ImageView imageView = new ImageView(getActivity());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            params.weight = 1;
+            indexLayout = tabsBean.getIndex() == 1 ? linearLayout : indexLayout;
+            linearLayout.setTag(R.id.maintabs_id, tabsBean);
+            linearLayout.setOnClickListener(this);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams imgparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            imgparams.weight = 1;
+            imgparams.gravity = Gravity.CENTER_HORIZONTAL;
+            linearLayout.addView(imageView, imgparams);
+            TextView textView = new TextView(getActivity());
+            textView.setText(tabsBean.getTitle());
+            textView.setTextSize(11);
+            textView.setTextColor(Color.BLACK);
+            LinearLayout.LayoutParams textparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            textparams.gravity = Gravity.CENTER_HORIZONTAL;
+            linearLayout.addView(textView, textparams);
+            tabs_layout.addView(linearLayout, params);
+            TabFragment tabFragment = new TabFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("TabsBean", tabsBean);
+            tabFragment.setArguments(bundle);
+            fragments.add(tabFragment);
+            tabAdapter.notifyDataSetChanged();
+        }
+        return indexLayout;
+    }
 
     @Override
     protected boolean isAllTranslucentStatus() {
@@ -77,35 +105,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (event.getData() instanceof TabModel) {
                 TabModel tabModel = (TabModel) event.getData();
                 tabs_layout.setBackgroundColor(Color.parseColor(tabModel.getColor()));
-                LinearLayout indexLayout = null;
-                for (TabsBean tabsBean : tabModel.getTabs()) {
-                    LinearLayout linearLayout = new LinearLayout(getActivity());
-                    ImageView imageView = new ImageView(getActivity());
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                    params.weight = 1;
-                    indexLayout = tabsBean.getIndex() == 1 ? linearLayout : indexLayout;
-                    linearLayout.setTag(R.id.maintabs_id, tabsBean);
-                    linearLayout.setOnClickListener(this);
-                    linearLayout.setOrientation(LinearLayout.VERTICAL);
-                    LinearLayout.LayoutParams imgparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                    imgparams.weight = 1;
-                    imgparams.gravity = Gravity.CENTER_HORIZONTAL;
-                    linearLayout.addView(imageView, imgparams);
-                    TextView textView = new TextView(getActivity());
-                    textView.setText(tabsBean.getTitle());
-                    textView.setTextSize(11);
-                    textView.setTextColor(Color.BLACK);
-                    LinearLayout.LayoutParams textparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    textparams.gravity = Gravity.CENTER_HORIZONTAL;
-                    linearLayout.addView(textView, textparams);
-                    tabs_layout.addView(linearLayout, params);
-                    TabFragment tabFragment = new TabFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("TabsBean", tabsBean);
-                    tabFragment.setArguments(bundle);
-                    fragments.add(tabFragment);
-                    tabAdapter.notifyDataSetChanged();
-                }
+                LinearLayout indexLayout = addTabs(tabModel);
                 viewPager.setOffscreenPageLimit(fragments.size());
                 loadEmptyViewControl.loadcomplete();
                 if (indexLayout != null) {

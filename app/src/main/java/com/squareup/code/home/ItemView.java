@@ -38,32 +38,9 @@ public class ItemView extends DataBindBaseViewItem implements View.OnClickListen
         this.itemData = itemData;
     }
 
-    @BindingAdapter("iconurl")
-    public static void setImage(ImageView iv, String userface) {
-        ImageUtils.loadImage(iv.getContext(), userface, iv, R.drawable.placeholder_error);
-    }
 
-    @BindingAdapter("background")
-    public static void setImage(final View iv, String userface) {
-        iv.setBackgroundColor(Color.WHITE);
-        if (!TextUtils.isEmpty(userface)) {
-            if (userface.startsWith("#")) {
-                try {
-                    iv.setBackgroundColor(Color.parseColor(userface));
-                } catch (Exception ignored) {
-                }
-            } else {
-                Glide.with(iv.getContext()).load(userface).into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                        iv.setBackgroundDrawable(resource);
-                    }
-                });
-            }
 
-        }
 
-    }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -82,7 +59,7 @@ public class ItemView extends DataBindBaseViewItem implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        Intent intent = LauncherUrl.launcherActivity(itemData.getJumpurl());
+        Intent intent = LauncherUrl.launcherActivity(itemData.getJumpcontent());
         if (intent != null && activity != null) {
             activity.startActivity(intent);
         }

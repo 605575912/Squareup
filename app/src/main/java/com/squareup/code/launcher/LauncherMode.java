@@ -30,31 +30,6 @@ public class LauncherMode {
         this.items = items;
     }
 
-    @BindingAdapter("launcher")
-    public static void setImage(ImageView iv, String userface) {
-        Drawable drawable = new Drawable() {
-            @Override
-            public void draw(@NonNull Canvas canvas) {
-                canvas.drawColor(Color.GREEN);
-            }
-
-            @Override
-            public void setAlpha(int alpha) {
-
-            }
-
-            @Override
-            public void setColorFilter(@Nullable ColorFilter colorFilter) {
-
-            }
-
-            @Override
-            public int getOpacity() {
-                return PixelFormat.TRANSPARENT;
-            }
-        };
-        ImageUtils.loadImage(iv.getContext(), userface, iv, drawable);
-    }
 
     public static class ItemsBean {
         /**

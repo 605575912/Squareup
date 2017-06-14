@@ -76,17 +76,17 @@
         </RelativeLayout>
 
 
-        <TextView
-            android:id="@+id/card_typetext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/tag_bg"
-            android:gravity="center_horizontal"
-            android:text="@{itemdata.tagging}"
-            android:textColor="@android:color/white"
-            android:textSize="13sp"
-            android:visibility="@{TextUtils.isEmpty(itemdata.tagging) ? View.GONE : View.VISIBLE}" />
+        <!--<TextView-->
+            <!--android:id="@+id/card_typetext"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:background="@drawable/tag_bg"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:text="@{itemdata.tagging}"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="13sp"-->
+            <!--android:visibility="@{TextUtils.isEmpty(itemdata.tagging) ? View.GONE : View.VISIBLE}" />-->
 
         <!--<com.aspire.mm.view.DownView-->
         <!--android:id="@+id/download_btn"-->

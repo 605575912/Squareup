@@ -19,10 +19,7 @@ import java.util.List;
 public class BannerView extends DataBindBaseViewItem {
     List<BannerModel> banners;
 
-    @BindingAdapter("bannerimg")
-    public static void setImage(ImageView iv, String userface) {
-        ImageUtils.loadImage(iv.getContext(), userface, iv, R.drawable.trip_flight_home_train_default_banner);
-    }
+
 
     public BannerView(List<BannerModel> banners) {
         this.banners = banners;
