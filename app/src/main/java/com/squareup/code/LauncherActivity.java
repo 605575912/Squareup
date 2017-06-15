@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.squareup.code.databinding.LauncherLayoutBinding;
+import com.squareup.code.detail.ActivityDetailActivity;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
@@ -37,13 +38,12 @@ public class LauncherActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
+                Intent intent = new Intent(LauncherActivity.this, ActivityDetailActivity.class);
                 startActivity(intent);
                 finish();
             }
         };
-        IWXAPI iwxapi = WXAPIFactory.createWXAPI(this, "wx4c726304342b910d", true);
-        iwxapi.registerApp("wx4c726304342b910d");
+
         TabsCache tabsCache = new TabsCache();
         tabsCache.dowlNewWorkData();
         launcherCache = new LauncherCache();

@@ -94,38 +94,34 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorAccent"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.squareup.code.views.PriceTextView
                     android:id="@+id/pri_n"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
-                    android:gravity="bottom"
-                    android:includeFontPadding="false"
                     android:text="¥"
                     android:textColor="#04f5f5" />
 
-                <TextView
+                <com.squareup.code.views.PriceTextView
                     android:id="@+id/pri"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
                     android:layout_toRightOf="@+id/pri_n"
-                    android:includeFontPadding="false"
-                    android:text="@{String.valueOf(pushitemdata.price)}"
+                    android:text="@{String.valueOf(28)}"
                     android:textColor="#04f5f5"
                     android:textSize="20sp" />
 
-                <TextView
+                <com.squareup.code.views.PriceTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="2dp"
                     android:layout_toRightOf="@+id/pri"
-                    android:gravity="bottom"
-                    android:includeFontPadding="false"
                     android:text="@{res.getString(R.string.str_push_origina,pushitemdata.originaprice)}"
                     android:textColor="#b2b2b2" />
 
@@ -137,7 +133,7 @@
                     android:layout_marginRight="10dp"
                     android:gravity="bottom"
                     android:includeFontPadding="false"
-                    android:text="@{String.valueOf(pushitemdata.sellcount)}"
+                    android:text="@{res.getString(R.string.str_push_sell,pushitemdata.sellcount)}"
                     android:textColor="#b2b2b2" />
             </RelativeLayout>
         </RelativeLayout>

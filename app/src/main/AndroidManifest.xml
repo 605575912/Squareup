@@ -31,7 +31,7 @@
 
         <activity android:name=".MainActivity"></activity>
         <activity android:name="com.squareup.lib.activity.PoxyActivity"></activity>
-
+        <activity android:name=".detail.ActivityDetailActivity"></activity>
 
         <!-- -->
         <activity android:name=".wxapi.WXEntryActivity" />

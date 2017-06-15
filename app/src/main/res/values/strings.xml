@@ -11,5 +11,6 @@
     <string name="str_push_content">[%1$s]%2$s</string>
     <string name="str_push_dis">&lt;%1$dm</string>
     <string name="str_push_cdis">%1$dm</string>
-    <string name="str_push_origina">门市价:¥%1$d</string>
+    <string name="str_push_origina">门市价：¥%1$d</string>
+    <string name="str_push_sell">已售%1$d</string>
 </resources>

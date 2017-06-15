@@ -16,7 +16,11 @@ public class LogUtil {
             Log.i(TAG, log);
         }
     }
-
+    public static void i(CharSequence log) {
+        if (islog) {
+            Log.i(TAG, log.toString());
+        }
+    }
     public static void i(int log) {
         if (islog) {
             Log.i(TAG, String.valueOf(log));

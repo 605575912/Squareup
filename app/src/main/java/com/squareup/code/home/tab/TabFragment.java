@@ -101,6 +101,9 @@ public class TabFragment extends BaseFrament {
     }
 
     public void onEventMain(EventMainObject event) {
+        if (tabsBean == null) {
+            return;
+        }
         if (event.getCommand().equals(tabsBean.getJumpcontent())) {
             if (event.getData() instanceof DataUnit) {
                 loadEmptyViewControl.loadcomplete();
