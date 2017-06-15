@@ -1,5 +1,6 @@
 package com.squareup.code;
 
+import com.squareup.code.detail.DetailCard;
 import com.squareup.code.mine.MineCard;
 import com.squareup.lib.utils.IProguard;
 
@@ -14,6 +15,7 @@ public class DataUnit implements IProguard.ProtectMembers {
     private List<Card> cards;//大卡片
     private List<ItemData> items;//一组Item
     private List<MineCard> minecards;//一组Item
+    private List<DetailCard> detailcards;//详情
 
 
     public List<Card> getCards() {
@@ -38,5 +40,9 @@ public class DataUnit implements IProguard.ProtectMembers {
 
     public List<MineCard> getMinecards() {
         return minecards;
+    }
+
+    public List<DetailCard> getDetailcards() {
+        return detailcards;
     }
 }

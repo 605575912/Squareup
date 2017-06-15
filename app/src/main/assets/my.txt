@@ -1,2 +1,21 @@
 {
+    "detailcards": [
+        {
+            "imagedata": {
+                "img": "",
+                "imgtitle": "",
+                "imgdes": "",
+                "orgprice": 0,
+                "price": 0,
+                "timeprice": 0,
+                "eventdes": "",
+                "sellcount": 11,
+                "limts": [
+                    "",
+                    ""
+                ]
+            },
+            "commentdata": {}
+        }
+    ]
 }
