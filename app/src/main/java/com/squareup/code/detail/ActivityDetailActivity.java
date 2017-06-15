@@ -6,13 +6,10 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -114,7 +111,7 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
                 list.add(create("QQ", R.drawable.share_ic_base_share_qq));
                 list.add(create("Qzone", R.drawable.share_ic_base_share_qzone));
                 ListGridAdapter adapter = new ListGridAdapter(list);
-                grid.setNumColumns(4);
+                grid.setNumColumns(list.size() > 4 ? 4 : list.size());
                 grid.setAdapter(adapter);
                 dialog.show();
                 break;
@@ -125,10 +122,7 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    String descontent;
-    String content;
-    String detitle;
-    String deurl;
+
     private static final int THUMB_SIZE = 150;
 
     class ListGridAdapter extends BaseAdapter {
@@ -177,105 +171,36 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
                     if (shareItem.getImgid() == R.drawable.share_ic_base_share_weixin || shareItem.getImgid() == R.drawable.share_ic_base_share_weixin_friends) {
                         final IWXAPI iwxapi = create();
                         if (istext) {
-                            final Dialog dialog = new Dialog(ActivityDetailActivity.this, R.style.ThemeDialog);
-                            Display display = ActivityDetailActivity.this.getWindowManager().getDefaultDisplay();
-                            int width = display.getWidth();
-                            int height = display.getHeight();
-                            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, height);
-                            View view = LayoutInflater.from(ActivityDetailActivity.this).inflate(R.layout.dialog_txt, parent, false);
-                            dialog.setContentView(view, layoutParams);
-                            final EditText edit = (EditText) view.findViewById(R.id.edit);
-                            if (TextUtils.isEmpty(descontent)) {
-                                edit.setText(content);
-                            } else {
-                                if (!TextUtils.isEmpty(content)) {
-                                    edit.setText(content);
-                                } else {
-                                    edit.setText(descontent);
-                                }
+                            WXTextObject textObj = new WXTextObject();
+                            textObj.text = "";
+                            if (TextUtils.isEmpty(textObj.text)) {
+                                ToastUtils.showToast("没填写");
+                                return;
                             }
-                            Button button = (Button) view.findViewById(R.id.button);
-                            button.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    WXTextObject textObj = new WXTextObject();
-                                    textObj.text = edit.getText().toString();
-                                    if (TextUtils.isEmpty(textObj.text)) {
-                                        ToastUtils.showToast("没填写几把");
-                                        return;
-                                    }
-                                    WXMediaMessage msg = new WXMediaMessage();
-                                    msg.mediaObject = textObj;
-                                    descontent = msg.description = textObj.text;
-                                    SendMessageToWX.Req req = new SendMessageToWX.Req();
-                                    req.transaction = buildTransaction("text"); //
-                                    req.message = msg;
-                                    req.scene = shareItem.getImgid() == R.drawable.share_ic_base_share_weixin ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
-                                    iwxapi.sendReq(req);
-                                    dialog.cancel();
-                                }
-                            });
-                            dialog.show();
+                            WXMediaMessage msg = new WXMediaMessage();
+                            msg.mediaObject = textObj;
+                            msg.description = textObj.text;
+                            SendMessageToWX.Req req = new SendMessageToWX.Req();
+                            req.transaction = buildTransaction("text"); //
+                            req.message = msg;
+                            req.scene = shareItem.getImgid() == R.drawable.share_ic_base_share_weixin ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+                            iwxapi.sendReq(req);
 
                         } else {
-                            final Dialog dialog = new Dialog(ActivityDetailActivity.this, R.style.ThemeDialog);
-                            Display display = ActivityDetailActivity.this.getWindowManager().getDefaultDisplay();
-                            int width = display.getWidth();
-                            int height = display.getHeight();
-                            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, height);
-                            View view = LayoutInflater.from(ActivityDetailActivity.this).inflate(R.layout.dialog_web, parent, false);
-                            dialog.setContentView(view, layoutParams);
-                            dialog.show();
-
-                            final EditText edit = (EditText) view.findViewById(R.id.edit);
-                            if (TextUtils.isEmpty(descontent)) {
-                                edit.setText(content);
-                            } else {
-                                if (!TextUtils.isEmpty(content)) {
-                                    edit.setText(content);
-                                } else {
-                                    edit.setText(descontent);
-                                }
-                            }
-
-
-                            Button button = (Button) view.findViewById(R.id.button);
-                            final EditText title = (EditText) view.findViewById(R.id.title);
-                            final EditText url = (EditText) view.findViewById(R.id.url);
-                            url.setText(deurl);
-                            title.setText(detitle);
-                            button.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if (TextUtils.isEmpty(url.getText().toString())) {
-                                        ToastUtils.showToast("没填写跳转网址");
-                                        return;
-                                    }
-                                    if (TextUtils.isEmpty(title.getText().toString())) {
-                                        ToastUtils.showToast("没填写标题");
-                                        return;
-                                    }
-                                    if (TextUtils.isEmpty(edit.getText().toString())) {
-                                        ToastUtils.showToast("没填写几把");
-                                        return;
-                                    }
-                                    WXWebpageObject webpage = new WXWebpageObject();
-                                    webpage.webpageUrl = deurl = url.getText().toString();
-                                    WXMediaMessage msg = new WXMediaMessage(webpage);
-                                    detitle = msg.title = title.getText().toString();
-                                    content = msg.description = edit.getText().toString();
-                                    Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-                                    Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, THUMB_SIZE, THUMB_SIZE, true);
-                                    bmp.recycle();
-                                    msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
-                                    SendMessageToWX.Req req = new SendMessageToWX.Req();
-                                    req.transaction = buildTransaction("webpage");
-                                    req.message = msg;
-                                    req.scene = shareItem.getImgid() == R.drawable.share_ic_base_share_weixin ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
-                                    iwxapi.sendReq(req);
-                                    dialog.cancel();
-                                }
-                            });
+                            WXWebpageObject webpage = new WXWebpageObject();
+                            webpage.webpageUrl = "";
+                            WXMediaMessage msg = new WXMediaMessage(webpage);
+                            msg.title = "";
+                            msg.description = "";
+                            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+                            Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, THUMB_SIZE, THUMB_SIZE, true);
+                            bmp.recycle();
+                            msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
+                            SendMessageToWX.Req req = new SendMessageToWX.Req();
+                            req.transaction = buildTransaction("webpage");
+                            req.message = msg;
+                            req.scene = shareItem.getImgid() == R.drawable.share_ic_base_share_weixin ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+                            iwxapi.sendReq(req);
 
                         }
 
