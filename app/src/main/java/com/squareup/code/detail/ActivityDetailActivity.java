@@ -74,6 +74,7 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
     IWXAPI iwxapi;
     List<BaseViewItem> list;
     private LocationService locationService;
+
     @Override
     protected boolean isTranslucentStatus() {
         return false;
@@ -125,6 +126,7 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
 
 
     }
+
     /*****
      *
      * 定位结果回调，重写onReceiveLocation方法，可以直接拷贝如下代码到自己工程中修改
@@ -218,7 +220,7 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
             }
         }
 
-        public void onConnectHotSpotMessage(String s, int i){
+        public void onConnectHotSpotMessage(String s, int i) {
         }
     };
 
@@ -239,6 +241,18 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
 //            if (dataUnit.getTitletype() > 0) {
 ////                addTitleView(dataUnit.getTitletype());
 //            }
+            if (dataUnit.getDetailcards() != null) {
+                for (DetailCard detailCard : dataUnit.getDetailcards()) {
+
+                    if (detailCard.getImagedata() != null) {
+                        BaseViewItem baseViewItem = new DetailImageView(ActivityDetailActivity.this, detailCard.getImagedata());
+                        list.add(baseViewItem);
+                    }
+                    MineSpaceView mineSpaceView = new MineSpaceView();
+                    list.add(mineSpaceView);
+                }
+            }
+
             if (dataUnit.getMinecards() != null) {
                 for (MineCard mineCard : dataUnit.getMinecards()) {
                     if (mineCard.getLogincard() != null) {
