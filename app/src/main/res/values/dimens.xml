@@ -2,4 +2,5 @@
 <resources>
     <dimen name="hpv6_appicon">64dp</dimen>
     <dimen name="detailimage">15dp</dimen>
+    <dimen name="detailimageleft">5dp</dimen>
 </resources>

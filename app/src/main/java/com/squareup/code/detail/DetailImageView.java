@@ -47,6 +47,7 @@ public class DetailImageView extends DataBindBaseViewItem {
                     linearLayout.addView(imageView, imgparams);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     params.gravity = Gravity.CENTER_VERTICAL;
+                    params.leftMargin = (int) activity.getResources().getDimension(R.dimen.detailimageleft);
                     textView.setText(lim);
                     textView.setTextColor(activity.getResources().getColor(R.color.detail_green));
                     linearLayout.addView(textView, params);

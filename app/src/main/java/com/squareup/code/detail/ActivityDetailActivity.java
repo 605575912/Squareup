@@ -248,6 +248,18 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
                         BaseViewItem baseViewItem = new DetailImageView(ActivityDetailActivity.this, detailCard.getImagedata());
                         list.add(baseViewItem);
                     }
+                    if (detailCard.getCommentdata() != null) {
+                        BaseViewItem baseViewItem = new DetailCommentView(ActivityDetailActivity.this, detailCard.getCommentdata());
+                        list.add(baseViewItem);
+                        if (detailCard.getCommentdata().getComents() != null && detailCard.getCommentdata().getComents().length > 0) {
+                            LineView b = new LineView();
+                            list.add(b);
+                            BaseViewItem baseViewItem = new DetailCommentView(ActivityDetailActivity.this, detailCard.getCommentdata());
+                            list.add(baseViewItem);
+                        }
+
+                    }
+
                     MineSpaceView mineSpaceView = new MineSpaceView();
                     list.add(mineSpaceView);
                 }

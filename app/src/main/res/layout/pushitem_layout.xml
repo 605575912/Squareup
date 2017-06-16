@@ -14,15 +14,15 @@
 
         <import type="com.squareup.code.R" />
 
+        <variable
+            name="res"
+            type="android.content.res.Resources" />
+
         <import type="com.squareup.code.home.PushItemView" />
 
         <variable
             name="pushitemdata"
             type="com.squareup.code.ItemData" />
-
-        <variable
-            name="res"
-            type="android.content.res.Resources" />
 
         <variable
             name="onclick"
@@ -112,7 +112,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="2dp"
                     android:layout_toRightOf="@+id/pri_n"
-                    android:text="@{String.valueOf(28)}"
+                    android:text="@{String.valueOf(pushitemdata.price)}"
                     android:textColor="#04f5f5"
                     android:textSize="20sp" />
 

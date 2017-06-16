@@ -13,4 +13,6 @@
     <string name="str_push_cdis">%1$dm</string>
     <string name="str_push_origina">门市价：¥%1$d</string>
     <string name="str_push_sell">已售%1$d</string>
+    <string name="str_scroe">%1$1.1f分</string>
+    <string name="str_comment">%1$d 人评价</string>
 </resources>

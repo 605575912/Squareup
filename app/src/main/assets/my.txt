@@ -15,7 +15,10 @@
                     "过去自动退"
                 ]
             },
-            "commentdata": {}
+            "commentdata": {
+                "score": 4,
+                "count": 13
+            }
         }
     ]
 }

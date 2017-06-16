@@ -5,4 +5,24 @@ package com.squareup.code.detail;
  */
 
 public class DetailCommentData {
+    double score;
+    int count;
+    String jumpurl;
+    String[] coments;
+
+    public String[] getComents() {
+        return coments;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public String getJumpurl() {
+        return jumpurl;
+    }
 }
