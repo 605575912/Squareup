@@ -10,6 +10,6 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginLeft="20dp"
-            android:background="#a4a3a3"></View>
+            android:background="@color/bg_line"></View>
     </LinearLayout>
 </layout>
