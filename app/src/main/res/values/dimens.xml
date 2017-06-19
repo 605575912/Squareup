@@ -3,4 +3,8 @@
     <dimen name="hpv6_appicon">64dp</dimen>
     <dimen name="detailimage">15dp</dimen>
     <dimen name="detailimageleft">5dp</dimen>
+
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 </resources>
