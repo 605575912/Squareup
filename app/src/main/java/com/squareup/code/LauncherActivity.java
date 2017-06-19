@@ -11,10 +11,9 @@ import com.squareup.code.detail.ActivityDetailActivity;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
+import com.squareup.code.map.MapActivity;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 /**
  * Created by Administrator on 2017/05/31 0031.
@@ -38,7 +37,7 @@ public class LauncherActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                Intent intent = new Intent(LauncherActivity.this, ActivityDetailActivity.class);
+                Intent intent = new Intent(LauncherActivity.this, MapActivity.class);
                 startActivity(intent);
                 finish();
             }

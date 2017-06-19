@@ -247,6 +247,8 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
                     if (detailCard.getImagedata() != null) {
                         BaseViewItem baseViewItem = new DetailImageView(ActivityDetailActivity.this, detailCard.getImagedata());
                         list.add(baseViewItem);
+                        MineSpaceView mineSpaceView = new MineSpaceView();
+                        list.add(mineSpaceView);
                     }
                     if (detailCard.getCommentdata() != null) {
                         BaseViewItem baseViewItem = new DetailCommentView(ActivityDetailActivity.this, detailCard.getCommentdata());
@@ -254,14 +256,14 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
                         if (detailCard.getCommentdata().getComents() != null && detailCard.getCommentdata().getComents().length > 0) {
                             LineView b = new LineView();
                             list.add(b);
-                            BaseViewItem baseViewItem = new DetailCommentView(ActivityDetailActivity.this, detailCard.getCommentdata());
-                            list.add(baseViewItem);
+                            BaseViewItem detailCommentView = new DetailCommentFlowView(ActivityDetailActivity.this, detailCard.getCommentdata().getComents());
+                            list.add(detailCommentView);
                         }
-
+                        MineSpaceView mineSpaceView = new MineSpaceView();
+                        list.add(mineSpaceView);
                     }
 
-                    MineSpaceView mineSpaceView = new MineSpaceView();
-                    list.add(mineSpaceView);
+
                 }
             }
 
