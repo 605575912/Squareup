@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Base64;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -21,11 +22,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
@@ -338,8 +343,6 @@ public class HttpUtils {
 
         } else if (url.startsWith("https://") || url.startsWith("http://")) {
             Request.Builder requestBuilder = new Request.Builder().url(url);
-            //可以省略，默认是GET请求
-            requestBuilder.method("GET", null);
             Request request = requestBuilder.build();
             Call mcall = mOkHttpClient.newCall(request);
             mcall.enqueue(new

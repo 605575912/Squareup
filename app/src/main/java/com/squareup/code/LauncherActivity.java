@@ -50,15 +50,16 @@ public class LauncherActivity extends BaseActivity {
                 finish();
             }
         };
+        handler.sendEmptyMessageDelayed(0, 1000);
         if (payUtils == null) {
 //            payUtils = new PayUtils(LauncherActivity.this);
 //            payUtils.payV2("data", handler);
         }
-        TabsCache tabsCache = new TabsCache();
-        tabsCache.dowlNewWorkData();
-        launcherCache = new LauncherCache();
-        launcherCache.getCacheData();
-        launcherCache.dowlNewWorkData();
+//        TabsCache tabsCache = new TabsCache();
+//        tabsCache.dowlNewWorkData();
+//        launcherCache = new LauncherCache();
+//        launcherCache.getCacheData();
+//        launcherCache.dowlNewWorkData();
 //
 //        HttpUtils.getInstance(getApplication()).download("https://imgjd3.fruitday.com/images/2017-06-08/9ccb2bcf569412e733570ef949fec618.jpg", new HttpUtils.OnDownloadListener() {
 //            @Override
