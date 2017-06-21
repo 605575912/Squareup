@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.example.zxingdemo.ZxingMainActivity;
 import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.detail.ActivityDetailActivity;
 import com.squareup.code.home.tab.TabsCache;
@@ -45,7 +46,7 @@ public class LauncherActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                Intent intent = new Intent(LauncherActivity.this, ALMainActivity.class);
+                Intent intent = new Intent(LauncherActivity.this, ZxingMainActivity.class);
                 startActivity(intent);
                 finish();
             }

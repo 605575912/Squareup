@@ -7,6 +7,7 @@
 
     <com.squareup.lib.view.MindleViewPager
         android:id="@+id/viewpager"
+        android:background="#fafaeb"
         android:layout_width="match_parent"
         android:layout_height="200dp"></com.squareup.lib.view.MindleViewPager>
 </RelativeLayout>

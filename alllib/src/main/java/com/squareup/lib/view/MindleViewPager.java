@@ -266,7 +266,7 @@ public class MindleViewPager extends RelativeLayout {
         }
     }
 
-    private static final float MAX_SCALE = 1.2f;
+    private static final float MAX_SCALE = 1.1999f;
     private static final float MIN_SCALE = 1.0f;//0.85f
     private static final float VIEW_SCALE = 0.5f;
 
