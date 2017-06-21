@@ -7,4 +7,6 @@
     <item name="searcgtitle_id" type="id" />
     <item name="searchfeed_id" type="id" />
     <item name="maintabs_id" type="id" />
+
+    <item name="jazzy_key" type="id"/>
 </resources>

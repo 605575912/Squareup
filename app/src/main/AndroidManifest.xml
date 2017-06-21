@@ -39,6 +39,7 @@
         <activity android:name=".upload.DirActivity" />
         <activity android:name=".upload.OtherActivity" />
         <activity android:name=".upload.MainActivity" />
+        <activity android:name=".p.ALMainActivity"></activity>
 
 
         <!-- alipay sdk begin -->

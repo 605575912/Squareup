@@ -11,8 +11,8 @@ import com.squareup.code.detail.ActivityDetailActivity;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
+import com.squareup.code.p.ALMainActivity;
 import com.squareup.code.pay.PayUtils;
-import com.squareup.code.upload.*;
 import com.squareup.code.wx.WxpayModel;
 import com.squareup.code.wxapi.WXEntryActivity;
 import com.squareup.lib.BaseActivity;
@@ -45,7 +45,7 @@ public class LauncherActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
+                Intent intent = new Intent(LauncherActivity.this, ALMainActivity.class);
                 startActivity(intent);
                 finish();
             }

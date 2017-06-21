@@ -502,6 +502,11 @@ public class HttpUtils {
                 // 储存下载文件的目录
 //                String savePath = FileUtils.readFile(getNameFromUrl(url));
                 try {
+                    File file = FileUtils.getFile(getNameFromUrl(url));
+                    if (file == null) {
+                        listener.onDownloadFailed();
+                        return;
+                    }
                     ResponseBody body = response.body();
                     if (body == null) {
                         listener.onDownloadFailed();
@@ -509,11 +514,6 @@ public class HttpUtils {
                     }
                     is = body.byteStream();
                     long total = body.contentLength();
-                    File file = FileUtils.getFile(getNameFromUrl(url));
-                    if (file == null) {
-                        listener.onDownloadFailed();
-                        return;
-                    }
                     fos = new FileOutputStream(file);
                     long sum = 0;
                     while ((len = is.read(buf)) != -1) {
