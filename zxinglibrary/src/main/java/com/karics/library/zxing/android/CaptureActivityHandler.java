@@ -82,13 +82,10 @@ public final class CaptureActivityHandler extends Handler {
 
 	@Override
 	public void handleMessage(Message message) {
-		switch (message.what) {
-		case R.id.restart_preview:
-			// 重新预览
+		if (message.what == R.id.restart_preview) {// 重新预览
 			restartPreviewAndDecode();
-			break;
-		case R.id.decode_succeeded:
-			// 解码成功
+
+		} else if (message.what == R.id.decode_succeeded) {// 解码成功
 			state = State.SUCCESS;
 			Bundle bundle = message.getData();
 			Bitmap barcode = null;
@@ -106,21 +103,19 @@ public final class CaptureActivityHandler extends Handler {
 						.getFloat(DecodeThread.BARCODE_SCALED_FACTOR);
 			}
 			activity.handleDecode((Result) message.obj, barcode, scaleFactor);
-			break;
-		case R.id.decode_failed:
-			// We're decoding as fast as possible, so when one decode fails,
+
+		} else if (message.what == R.id.decode_failed) {// We're decoding as fast as possible, so when one decode fails,
 			// start another.
 			// 尽可能快的解码，以便可以在解码失败时，开始另一次解码
 			state = State.PREVIEW;
 			cameraManager.requestPreviewFrame(decodeThread.getHandler(),
 					R.id.decode);
-			break;
-		case R.id.return_scan_result:
-			//扫描结果，返回CaptureActivity处理
+
+		} else if (message.what == R.id.return_scan_result) {//扫描结果，返回CaptureActivity处理
 			activity.setResult(Activity.RESULT_OK, (Intent) message.obj);
 			activity.finish();
-			break;
-		case R.id.launch_product_query:
+
+		} else if (message.what == R.id.launch_product_query) {
 			String url = (String) message.obj;
 
 			Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -150,7 +145,7 @@ public final class CaptureActivityHandler extends Handler {
 			} catch (ActivityNotFoundException ignored) {
 				Log.w(TAG, "Can't find anything to handle VIEW of URI " + url);
 			}
-			break;
+
 		}
 	}
 

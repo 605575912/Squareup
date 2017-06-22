@@ -6,13 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import com.example.zxingdemo.ZxingMainActivity;
+import com.karics.library.zxing.android.CaptureActivity;
 import com.squareup.code.databinding.LauncherLayoutBinding;
-import com.squareup.code.detail.ActivityDetailActivity;
-import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
-import com.squareup.code.p.ALMainActivity;
 import com.squareup.code.pay.PayUtils;
 import com.squareup.code.wx.WxpayModel;
 import com.squareup.code.wxapi.WXEntryActivity;
@@ -46,7 +43,7 @@ public class LauncherActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                Intent intent = new Intent(LauncherActivity.this, ZxingMainActivity.class);
+                Intent intent = new Intent(LauncherActivity.this, CaptureActivity.class);
                 startActivity(intent);
                 finish();
             }
