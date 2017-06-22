@@ -5,10 +5,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.zxing.WriterException;
+import com.karics.library.zxing.R;
+import com.karics.library.zxing.encode.CodeCreator;
 
 public class ZxingMainActivity extends Activity {
 
@@ -25,40 +30,40 @@ public class ZxingMainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.zxing_layout);
+		setContentView(R.layout.zxing_main);
 
-//		qrCoded = (TextView) findViewById(R.id.ECoder_title);
-//		qrCodeImage = (ImageView) findViewById(R.id.ECoder_image);
-//		creator = (Button) findViewById(R.id.ECoder_creator);
-//		scanner = (Button) findViewById(R.id.ECoder_scaning);
-//		qrCodeUrl = (EditText) findViewById(R.id.ECoder_input);
+		qrCoded = (TextView) findViewById(R.id.ECoder_title);
+		qrCodeImage = (ImageView) findViewById(R.id.ECoder_image);
+		creator = (Button) findViewById(R.id.ECoder_creator);
+		scanner = (Button) findViewById(R.id.ECoder_scaning);
+		qrCodeUrl = (EditText) findViewById(R.id.ECoder_input);
 
-//		creator.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View arg0) {
-//
-//				String url = qrCodeUrl.getText().toString();
-//				try {
-//					Bitmap bitmap = CodeCreator.createQRCode(url);
-//					qrCodeImage.setImageBitmap(bitmap);
-//				} catch (WriterException e) {
-//					e.printStackTrace();
-//				}
-//
-//			}
-//		});
+		creator.setOnClickListener(new View.OnClickListener() {
 
-//		scanner.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-//				Intent intent = new Intent(ZxingMainActivity.this,
-//						CaptureActivity.class);
-//				startActivityForResult(intent, REQUEST_CODE_SCAN);
-//			}
-//		});
+			@Override
+			public void onClick(View arg0) {
+
+				String url = qrCodeUrl.getText().toString();
+				try {
+					Bitmap bitmap = CodeCreator.createQRCode(url);
+					qrCodeImage.setImageBitmap(bitmap);
+				} catch (WriterException e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
+
+		scanner.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+//				 TODO Auto-generated method stub
+				Intent intent = new Intent(ZxingMainActivity.this,
+						CaptureActivity.class);
+				startActivityForResult(intent, REQUEST_CODE_SCAN);
+			}
+		});
 
 	}
 
