@@ -73,11 +73,11 @@ public class TabFragment extends BaseFrament {
         list = new ArrayList<BaseViewItem>();
         adapter = new RecyclerViewAdapter(getActivity(), list);
         recyclerView.setAdapter(adapter);
-        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener() {
-            @Override
-            public void onLoadMore(int currentPage) {
-            }
-        });
+//        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener() {
+//            @Override
+//            public void onLoadMore(int currentPage) {
+//            }
+//        });
         return contentView;
     }
 
