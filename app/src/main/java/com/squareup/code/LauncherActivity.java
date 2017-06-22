@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.karics.library.zxing.android.CaptureActivity;
+import com.karics.library.zxing.android.ZxingMainActivity;
 import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
@@ -43,7 +44,7 @@ public class LauncherActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                Intent intent = new Intent(LauncherActivity.this, CaptureActivity.class);
+                Intent intent = new Intent(LauncherActivity.this, ZxingMainActivity.class);
                 startActivity(intent);
                 finish();
             }
