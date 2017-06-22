@@ -1,1 +1,1 @@
-include ':app', ':alllib', ':DroidPlugin', ':zxinglibrary'
+include ':app', ':alllib', ':DroidPlugin', ':zxinglibrary', ':twinklingRefreshLaoutlibrary'

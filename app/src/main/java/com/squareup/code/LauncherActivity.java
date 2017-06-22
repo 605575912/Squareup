@@ -8,6 +8,7 @@ import android.os.Message;
 
 import com.karics.library.zxing.android.CaptureActivity;
 import com.karics.library.zxing.android.ZxingMainActivity;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
@@ -49,6 +50,7 @@ public class LauncherActivity extends BaseActivity {
                 finish();
             }
         };
+//        TwinklingRefreshLayout twinklingRefreshLayout;
         handler.sendEmptyMessageDelayed(0, 1000);
         if (payUtils == null) {
 //            payUtils = new PayUtils(LauncherActivity.this);
