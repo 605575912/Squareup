@@ -1,5 +1,7 @@
 package com.squareup.code.home.tab;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.squareup.code.BR;
 import com.squareup.code.Card;
 import com.squareup.code.CardUnit;
 import com.squareup.code.DataUnit;
@@ -101,6 +104,8 @@ public class TabFragment extends BaseFrament {
         if (titletype == 1) {
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_title_layout, frameLayout, false);
             view.setPadding(0, AppLibUtils.getStatusBarHeight(), 0, 0);
+            ViewDataBinding viewDataBinding = DataBindingUtil.bind(view);
+//            viewHolder.getViewDataBinding().setVariable(BR.lists, banners);
             frameLayout.addView(view);
         }
     }
