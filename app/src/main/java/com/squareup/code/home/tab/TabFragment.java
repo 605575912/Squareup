@@ -3,6 +3,7 @@ package com.squareup.code.home.tab;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import com.squareup.lib.BaseFrament;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.HttpUtils;
 import com.squareup.lib.utils.AppLibUtils;
+import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.view.EndlessRecyclerOnScrollListener;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewAdapter;
@@ -57,6 +59,18 @@ public class TabFragment extends BaseFrament {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        tabsBean = getArguments().getParcelable("TabsBean");
+        if (tabsBean != null) {
+            HttpUtils.getInstance(getActivity().getApplication()).getAsynMainHttp(tabsBean.getJumpcontent(), DataUnit.class);//返回根据JSON解析的对象
+        } else {
+            tabsBean = new TabsBean();
+        }
     }
 
     @Override
@@ -81,16 +95,7 @@ public class TabFragment extends BaseFrament {
         return contentView;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        tabsBean = getArguments().getParcelable("TabsBean");
-        if (tabsBean != null) {
-            HttpUtils.getInstance(getActivity().getApplication()).getAsynMainHttp(tabsBean.getJumpcontent(), DataUnit.class);//返回根据JSON解析的对象
-        } else {
-            tabsBean = new TabsBean();
-        }
-    }
+
 
     private void addTitleView(int titletype) {
         if (titletype == 1) {
@@ -104,10 +109,10 @@ public class TabFragment extends BaseFrament {
         if (tabsBean == null) {
             return;
         }
+
         if (event.getCommand().equals(tabsBean.getJumpcontent())) {
             if (event.getData() instanceof DataUnit) {
                 loadEmptyViewControl.loadcomplete();
-
                 DataUnit dataUnit = (DataUnit) event.getData();
                 if (dataUnit.getTitletype() > 0) {
                     addTitleView(dataUnit.getTitletype());

@@ -46,13 +46,13 @@ public class LauncherActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
+                handler.removeCallbacksAndMessages(null);
                 Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
             }
         };
 //        TwinklingRefreshLayout twinklingRefreshLayout;
-        handler.sendEmptyMessageDelayed(0, 1000);
         if (payUtils == null) {
 //            payUtils = new PayUtils(LauncherActivity.this);
 //            payUtils.payV2("data", handler);

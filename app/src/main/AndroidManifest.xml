@@ -29,7 +29,9 @@
             android:theme="@android:style/Theme.Dialog"
             android:windowSoftInputMode="adjustNothing" />
 
-        <activity android:name=".HomeActivity"></activity>
+        <activity
+            android:name=".HomeActivity"
+            android:launchMode="singleInstance"></activity>
         <activity android:name="com.squareup.lib.activity.PoxyActivity"></activity>
         <activity android:name=".detail.ActivityDetailActivity"></activity>
         <activity android:name=".map.MapActivity"></activity>
@@ -41,7 +43,6 @@
         <activity android:name=".upload.MainActivity" />
         <activity android:name=".p.ALMainActivity"></activity>
         <activity android:name=".MusicActivity"></activity>
-
 
 
         <!-- alipay sdk begin -->
@@ -83,8 +84,10 @@
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:theme="@android:style/Theme.Translucent" />
 
-        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
-        </service>
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"></service>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="4GSRrstylRw4OFGyEwPS2COuBjeQPqMq" />

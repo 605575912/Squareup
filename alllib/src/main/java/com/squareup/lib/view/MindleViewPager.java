@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
 import com.squareup.lib.R;
+import com.squareup.lib.utils.LogUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -32,44 +34,48 @@ import java.util.List;
 public class MindleViewPager extends RelativeLayout {
     private ViewPager viewPager;
     private boolean animator = false;
+    private int pagemargin = 0;
 
     public MindleViewPager(Context context) {
         super(context);
-        init(context,null);
+        init(context, null);
     }
 
     public MindleViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context,attrs);
+        init(context, attrs);
     }
 
     public MindleViewPager(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context,attrs);
+        init(context, attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public MindleViewPager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context,attrs);
+        init(context, attrs);
     }
 
     private List list = new ArrayList();
 
-    private void init(Context context,AttributeSet attrs) {
+    private void init(Context context, AttributeSet attrs) {
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MindleViewPager);
             animator = a.getBoolean(R.styleable.MindleViewPager_animator, false);
+            pagemargin = (int) a.getDimension(R.styleable.MindleViewPager_pagemargin, 0f);
             a.recycle();
         }
+
+        setGravity(Gravity.CENTER);
         setClipChildren(!animator);
         viewPager = new SuperViewPager(context);
         viewPager.setClipChildren(!animator);
         viewPager.setOffscreenPageLimit(3);
-        viewPager.setAdapter(new MyPagerAdapter());
-        if (animator){
+
+        if (animator) {
             viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-            viewPager.setPageMargin(200);
+            viewPager.setPageMargin(pagemargin);
         }
         setOnTouchListener(new OnTouchListener() {
 
@@ -81,6 +87,12 @@ public class MindleViewPager extends RelativeLayout {
         });
         addView(viewPager);
 
+    }
+
+    public void setPageMargin(int marginPixels) {
+        if (animator) {
+            viewPager.setPageMargin(marginPixels);
+        }
     }
 
     public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
@@ -225,8 +237,12 @@ public class MindleViewPager extends RelativeLayout {
     public void setAdapter(LunAdapter lunAdapter, List list) {
         this.lunAdapter = lunAdapter;
         this.list = list;
+        viewPager.setAdapter(new MyPagerAdapter());
         handler.removeCallbacksAndMessages(null);
-        handler.sendEmptyMessageDelayed(0, 2000);
+        if (list != null && list.size() > 0) {
+            viewPager.setCurrentItem(0);
+            handler.sendEmptyMessageDelayed(0, 2000);
+        }
     }
 
     public interface LunAdapter {
@@ -296,7 +312,6 @@ public class MindleViewPager extends RelativeLayout {
                     view.setTranslationX(scaleFactor * 2);
                 }
                 view.setScaleY(scaleFactor);
-
             } else { // (1,+Infinity]
                 view.setScaleX(MIN_SCALE);
                 view.setScaleY(MIN_SCALE);
@@ -311,32 +326,30 @@ public class MindleViewPager extends RelativeLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (animator) {
-            if (viewPager != null) {
-                ViewGroup.LayoutParams parentparams = getLayoutParams();
-                if (parentparams != null && !hasparams) {
-                    hasparams = true;
-                    defaulth = MeasureSpec.getSize(heightMeasureSpec);
-                    defaultw = MeasureSpec.getSize(widthMeasureSpec);
-                    int w = 0;
-                    int h = 0;
-                    if (parentparams.width != ViewGroup.LayoutParams.MATCH_PARENT && parentparams.width != ViewGroup.LayoutParams.WRAP_CONTENT) {
-                        if (parentparams.width < defaultw) {
-                            defaultw = parentparams.width;
-                        }
+        if (animator && viewPager != null) {
+            ViewGroup.LayoutParams parentparams = getLayoutParams();
+            if (parentparams != null && !hasparams) {
+                hasparams = true;
+                defaulth = MeasureSpec.getSize(heightMeasureSpec);
+                defaultw = MeasureSpec.getSize(widthMeasureSpec);
+                int w = 0;
+                int h = 0;
+                if (parentparams.width != ViewGroup.LayoutParams.MATCH_PARENT && parentparams.width != ViewGroup.LayoutParams.WRAP_CONTENT) {
+                    if (parentparams.width < defaultw) {
+                        defaultw = parentparams.width;
                     }
-                    if (parentparams.height != ViewGroup.LayoutParams.MATCH_PARENT && parentparams.height != ViewGroup.LayoutParams.WRAP_CONTENT) {
-                        if (parentparams.height < defaulth) {
-                            defaulth = parentparams.height;
-                        }
-                    }
-                    h = (int) (defaulth * (2 - MAX_SCALE));
-                    w = (int) (defaultw * VIEW_SCALE);
-                    LayoutParams params = new LayoutParams(
-                            w,
-                            h);
-                    viewPager.setLayoutParams(params);
                 }
+                if (parentparams.height != ViewGroup.LayoutParams.MATCH_PARENT && parentparams.height != ViewGroup.LayoutParams.WRAP_CONTENT) {
+                    if (parentparams.height < defaulth) {
+                        defaulth = parentparams.height;
+                    }
+                }
+                h = (int) (defaulth / (MAX_SCALE));
+                w = (int) (defaultw * VIEW_SCALE);
+                LayoutParams params = new LayoutParams(
+                        w,
+                        h);
+                viewPager.setLayoutParams(params);
             }
             super.onMeasure(MeasureSpec.makeMeasureSpec(defaultw, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(defaulth, MeasureSpec.EXACTLY));
         } else {

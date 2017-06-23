@@ -17,7 +17,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.squareup.code.R;
+import com.squareup.code.home.banner.BannerModel;
 import com.squareup.lib.ImageUtils;
+import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.view.MindleViewPager;
 
 import java.util.ArrayList;
@@ -59,16 +61,14 @@ public class DataBindImage {
         ImageUtils.loadImage(iv.getContext(), userface, iv, drawable);
     }
 
-    @BindingAdapter("bannerimg")
-    public static void setBannerImage(MindleViewPager mindleViewPager, String userface) {
-        final List<String> list = new ArrayList<>();
-        list.add("1");
+    @BindingAdapter("banners")
+    public static void setBannerImage(MindleViewPager mindleViewPager, final List<BannerModel> bannerModels) {
         mindleViewPager.setAdapter(new MindleViewPager.LunAdapter() {
             @Override
             public View getview(ViewGroup container, int position) {
                 ImageView imageView = new ImageView(container.getContext());
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                imageView.setImageResource(R.drawable.trip_flight_home_train_default_banner);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                ImageUtils.loadImage(container.getContext(),bannerModels.get(position).getImgurl(),imageView);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -76,7 +76,7 @@ public class DataBindImage {
                 });
                 return imageView;
             }
-        }, list);
+        }, bannerModels);
 
 
     }

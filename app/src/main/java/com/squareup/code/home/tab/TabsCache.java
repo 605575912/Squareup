@@ -4,6 +4,7 @@ import com.squareup.code.MyApplication;
 import com.squareup.code.utils.URLUtils;
 import com.squareup.lib.HttpUtils;
 import com.squareup.lib.utils.FileUtils;
+import com.squareup.lib.utils.LogUtil;
 
 import java.io.File;
 

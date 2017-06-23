@@ -1,13 +1,10 @@
 package com.squareup.code.home.banner;
 
-import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.squareup.code.BR;
 import com.squareup.code.R;
-import com.squareup.lib.ImageUtils;
 import com.squareup.lib.viewfactory.DataBindBaseViewItem;
 
 import java.util.List;
@@ -17,8 +14,7 @@ import java.util.List;
  */
 
 public class BannerView extends DataBindBaseViewItem {
-    List<BannerModel> banners;
-
+    private List<BannerModel> banners;
 
 
     public BannerView(List<BannerModel> banners) {
@@ -29,7 +25,7 @@ public class BannerView extends DataBindBaseViewItem {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         DataBindBaseViewItem.ViewHolder viewHolder = (DataBindBaseViewItem.ViewHolder) holder;
         if (viewHolder.getViewDataBinding() != null) {
-            viewHolder.getViewDataBinding().setVariable(BR.banner, banners.get(0));
+            viewHolder.getViewDataBinding().setVariable(BR.lists, banners);
         }
     }
 

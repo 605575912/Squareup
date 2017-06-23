@@ -24,6 +24,7 @@ import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
 import com.squareup.lib.ImageUtils;
 import com.squareup.lib.utils.AppLibUtils;
+import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -84,8 +85,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             Bundle bundle = new Bundle();
             bundle.putParcelable("TabsBean", tabsBean);
             tabFragment.setArguments(bundle);
+
             fragments.add(tabFragment);
             tabAdapter.notifyDataSetChanged();
+
         }
         return indexLayout;
     }
@@ -100,20 +103,23 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         for (TabFragment tabFragment : fragments) {
             tabFragment.onEventMain(event);
         }
-        if (event.getCommand().equals(tabsCache.getCommand())) {
-            if (event.getData() instanceof TabModel) {
-                TabModel tabModel = (TabModel) event.getData();
-                tabs_layout.setBackgroundColor(Color.parseColor(tabModel.getColor()));
-                LinearLayout indexLayout = addTabs(tabModel);
-                viewPager.setOffscreenPageLimit(fragments.size());
-                loadEmptyViewControl.loadcomplete();
-                if (indexLayout != null) {
-                    onClick(indexLayout);
+        if (tabsCache != null) {
+            if (event.getCommand().equals(tabsCache.getCommand())) {
+                if (event.getData() instanceof TabModel) {
+                    TabModel tabModel = (TabModel) event.getData();
+                    tabs_layout.setBackgroundColor(Color.parseColor(tabModel.getColor()));
+                    LinearLayout indexLayout = addTabs(tabModel);
+                    viewPager.setOffscreenPageLimit(fragments.size());
+                    loadEmptyViewControl.loadcomplete();
+                    if (indexLayout != null) {
+                        onClick(indexLayout);
+                    }
+                } else {
+                    loadEmptyViewControl.loadError();
                 }
-            } else {
-                loadEmptyViewControl.loadError();
             }
         }
+
 
     }
 

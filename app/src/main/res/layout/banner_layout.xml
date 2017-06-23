@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
-        <import type="com.squareup.code.home.DoubleOnClick" />
-
+        <import type="java.util.List" />
+        <import type="com.squareup.code.home.banner.BannerModel" />
         <variable
-            name="banner"
-            type="com.squareup.code.home.banner.BannerModel" />
+            name="lists"
+            type="java.util.List&lt;com.squareup.code.home.banner.BannerModel>"/>
     </data>
 
 
     <com.squareup.lib.view.MindleViewPager
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        app:animator="true"
-        app:bannerimg="@{banner.imgurl}" />
+        app:animator="false"
+        app:banners="@{lists}"
+         />
 </layout>
