@@ -31,7 +31,6 @@ import java.util.List;
 
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
-    //    SwipeRefreshLayout swipeRefreshLayout;
 
     LinearLayout tabs_layout;
     TabsCache tabsCache;

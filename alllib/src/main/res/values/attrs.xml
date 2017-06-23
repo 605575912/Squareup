@@ -14,4 +14,7 @@
         <attr name="layout_weight" format="float"/>
         <attr name="android:layout_gravity"/>
     </declare-styleable>
+    <declare-styleable name="MindleViewPager">
+        <attr name="animator" format="boolean" />
+    </declare-styleable>
 </resources>

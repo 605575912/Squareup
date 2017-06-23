@@ -40,6 +40,7 @@
         <activity android:name=".upload.OtherActivity" />
         <activity android:name=".upload.MainActivity" />
         <activity android:name=".p.ALMainActivity"></activity>
+        <activity android:name=".MusicActivity"></activity>
 
 
 

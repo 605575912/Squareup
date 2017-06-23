@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +18,10 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.squareup.code.R;
 import com.squareup.lib.ImageUtils;
+import com.squareup.lib.view.MindleViewPager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/06/14 0014.
@@ -27,6 +32,7 @@ public class DataBindImage {
     public static void setLogin(ImageView iv, String userface) {
         ImageUtils.loadImage(iv.getContext(), userface, iv, R.drawable.takeout_feedback_avatar_custom_default);
     }
+
     @BindingAdapter("launcher")
     public static void setlauncherImage(ImageView iv, String userface) {
         Drawable drawable = new Drawable() {
@@ -54,8 +60,25 @@ public class DataBindImage {
     }
 
     @BindingAdapter("bannerimg")
-    public static void setBannerImage(ImageView iv, String userface) {
-        ImageUtils.loadImage(iv.getContext(), userface, iv, R.drawable.trip_flight_home_train_default_banner);
+    public static void setBannerImage(MindleViewPager mindleViewPager, String userface) {
+        final List<String> list = new ArrayList<>();
+        list.add("1");
+        mindleViewPager.setAdapter(new MindleViewPager.LunAdapter() {
+            @Override
+            public View getview(ViewGroup container, int position) {
+                ImageView imageView = new ImageView(container.getContext());
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setImageResource(R.drawable.trip_flight_home_train_default_banner);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                });
+                return imageView;
+            }
+        }, list);
+
+
     }
 
     @BindingAdapter("iconurl")

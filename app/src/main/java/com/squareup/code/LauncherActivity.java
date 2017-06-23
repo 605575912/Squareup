@@ -10,6 +10,7 @@ import com.karics.library.zxing.android.CaptureActivity;
 import com.karics.library.zxing.android.ZxingMainActivity;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.squareup.code.databinding.LauncherLayoutBinding;
+import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
 import com.squareup.code.pay.PayUtils;
@@ -45,7 +46,7 @@ public class LauncherActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                Intent intent = new Intent(LauncherActivity.this, ZxingMainActivity.class);
+                Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -56,11 +57,11 @@ public class LauncherActivity extends BaseActivity {
 //            payUtils = new PayUtils(LauncherActivity.this);
 //            payUtils.payV2("data", handler);
         }
-//        TabsCache tabsCache = new TabsCache();
-//        tabsCache.dowlNewWorkData();
-//        launcherCache = new LauncherCache();
-//        launcherCache.getCacheData();
-//        launcherCache.dowlNewWorkData();
+        TabsCache tabsCache = new TabsCache();
+        tabsCache.dowlNewWorkData();
+        launcherCache = new LauncherCache();
+        launcherCache.getCacheData();
+        launcherCache.dowlNewWorkData();
 //
 //        HttpUtils.getInstance(getApplication()).download("https://imgjd3.fruitday.com/images/2017-06-08/9ccb2bcf569412e733570ef949fec618.jpg", new HttpUtils.OnDownloadListener() {
 //            @Override

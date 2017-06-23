@@ -21,6 +21,7 @@
     <string name="pay_success">支付成功</string>
     <string name="pay_fail">支付失败</string>
     <string name="pay_cancle">取消支付</string>
+    <string name="live_pust_des">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;在规定时间内阅读挑战规则，并直播一段30s的内容完成挑战！您挑战的将是一个未知项目，项目的难易程度随机而定！亲爱的，您准备好了吗？</string>
 
 
 </resources>

@@ -151,14 +151,13 @@ public class TabFragment extends BaseFrament {
                         if (banners != null && banners.size() > 0) {
                             BannerView bannerView = new BannerView(banners);
                             list.add(bannerView);
-
-
                         }
                         List<ColumnData> columnitems = card.getColumnitems();
                         if (columnitems != null && columnitems.size() > 0) {
                             ColumnView columnView = new ColumnView(columnitems);
                             list.add(columnView);
-
+                            MineSpaceView mineSpaceView = new MineSpaceView();
+                            list.add(mineSpaceView);
                         }
                         List<CardUnit> cardUnits = card.getCardUnits();
                         if (cardUnits != null) {
@@ -176,6 +175,8 @@ public class TabFragment extends BaseFrament {
                                 list.add(baseViewItem);
 
                             }
+                            MineSpaceView mineSpaceView = new MineSpaceView();
+                            list.add(mineSpaceView);
                         }
                         List<ItemData> itemDatas = card.getItems();
                         if (itemDatas != null) {
@@ -184,9 +185,10 @@ public class TabFragment extends BaseFrament {
                                 mainItemView.setItemData(itemData);
                                 list.add(mainItemView);
                             }
+                            MineSpaceView mineSpaceView = new MineSpaceView();
+                            list.add(mineSpaceView);
                         }
-                        MineSpaceView mineSpaceView = new MineSpaceView();
-                        list.add(mineSpaceView);
+
                     }
                 }
                 List<ItemData> itemDatas = dataUnit.getItems();
