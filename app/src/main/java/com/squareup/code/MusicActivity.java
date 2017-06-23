@@ -1,21 +1,17 @@
 package com.squareup.code;
 
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
-import com.squareup.lib.utils.ToastUtils;
 import com.squareup.lib.view.MindleViewPager;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewAdapter;
@@ -26,7 +22,6 @@ import java.util.List;
 //TODO 有FixedHeader的界面fling有问题
 public class MusicActivity extends Activity {
 
-    RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
     MindleViewPager viewpager;
 
@@ -35,7 +30,6 @@ public class MusicActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
-
 
 
         setupListView((RecyclerView) findViewById(R.id.listView));
@@ -69,7 +63,7 @@ public class MusicActivity extends Activity {
 
 
         viewpager = (MindleViewPager) findViewById(R.id.viewpager);
-        if (viewpager!=null){
+        if (viewpager != null) {
             final List<String> list = new ArrayList<>();
             list.add("1");
             viewpager.setAdapter(new MindleViewPager.LunAdapter() {
@@ -89,13 +83,12 @@ public class MusicActivity extends Activity {
         }
 
 
-
 //        View exHeader = View.inflate(this, R.layout.header_music, null);
 //        refreshLayout.addFixedExHeader(exHeader);
         refreshLayout.setOverScrollRefreshShow(false);
 //        refreshLayout.setFloatRefresh(true);
         List<BaseViewItem> data = new ArrayList<>();
-        adapter = new RecyclerViewAdapter(this,data);
+        adapter = new RecyclerViewAdapter(this, data);
         recyclerView.setAdapter(adapter);
 //        adapter.refreshCard();
 

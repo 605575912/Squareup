@@ -16,5 +16,7 @@
     <color name="detail_green">#1ef90a</color>
 
 
-
+    <color name="bg_9b26">#9b26222f</color>
+    <color name="bg_window">#ffffff</color>
+    <color name="text_ccff">#ccffffff</color>
 </resources>
