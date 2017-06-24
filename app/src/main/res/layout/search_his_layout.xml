@@ -20,12 +20,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="52dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -40,15 +40,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="9dp"
+                android:layout_marginTop="9dp"
+                android:layout_weight="1"
+                android:background="@drawable/search_his_bg">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/trip_hplus_ic_city_search_box" />
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="1dp"
+                    android:background="@android:color/transparent" />
 
             </LinearLayout>
 
@@ -57,10 +68,20 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:onClick="@{onclick.onSearchClick}"
-                android:text="搜索" />
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:text="搜索"
+                android:textColor="@color/bg_9b26"
+                android:textSize="15sp" />
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/bg_line"></View>
+
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"></android.support.v7.widget.RecyclerView>
