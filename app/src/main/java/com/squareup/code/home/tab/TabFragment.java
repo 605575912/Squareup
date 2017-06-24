@@ -1,9 +1,12 @@
 package com.squareup.code.home.tab;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.squareup.code.BR;
 import com.squareup.code.Card;
 import com.squareup.code.CardUnit;
 import com.squareup.code.DataUnit;
@@ -34,12 +38,13 @@ import com.squareup.code.mine.MineCardUnit;
 import com.squareup.code.mine.MineItemView;
 import com.squareup.code.mine.MineLineView;
 import com.squareup.code.mine.MineSpaceView;
+import com.squareup.code.search.SearchActivity;
+import com.squareup.code.search.SearchHisActivity;
 import com.squareup.code.utils.LoadEmptyViewControl;
 import com.squareup.lib.BaseFrament;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.HttpUtils;
 import com.squareup.lib.utils.AppLibUtils;
-import com.squareup.lib.view.EndlessRecyclerOnScrollListener;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewAdapter;
 
@@ -58,6 +63,7 @@ public class TabFragment extends BaseFrament {
     TabsBean tabsBean;
     LoadEmptyViewControl loadEmptyViewControl;
     FrameLayout frameLayout;
+    View titleview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,11 +107,23 @@ public class TabFragment extends BaseFrament {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
-
-
-
-
+                if (titleview != null) {
+                    RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                    if (layoutManager instanceof LinearLayoutManager) {
+                        LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+                        int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+                        if (list.get(firstItemPosition) instanceof BannerView) {
+                            View view = recyclerView.getChildAt(0);
+                            float maxh = view.getHeight() - titleview.getHeight();
+                            float alpha = Math.abs(view.getY() / maxh);
+                            if (alpha > 1) {
+                                titleview.setBackgroundColor(Color.argb(255, 51, 249, 222));
+                            } else {
+                                titleview.setBackgroundColor(Color.argb((int) (alpha * 255), 51, 249, 222));
+                            }
+                        }
+                    }
+                }
             }
         });
         return contentView;
@@ -114,11 +132,12 @@ public class TabFragment extends BaseFrament {
 
     private void addTitleView(int titletype) {
         if (titletype == 1) {
-            View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_title_layout, frameLayout, false);
-            view.setPadding(0, AppLibUtils.getStatusBarHeight(), 0, 0);
-            ViewDataBinding viewDataBinding = DataBindingUtil.bind(view);
-//            viewHolder.getViewDataBinding().setVariable(BR.lists, banners);
-            frameLayout.addView(view);
+            titleview = LayoutInflater.from(getActivity()).inflate(R.layout.home_title_layout, frameLayout, false);
+            titleview.setPadding(0, AppLibUtils.getStatusBarHeight(), 0, 0);
+            ViewDataBinding viewDataBinding = DataBindingUtil.bind(titleview);
+            viewDataBinding.setVariable(BR.onclick, this);
+            viewDataBinding.setVariable(BR.title, "稻香");
+            frameLayout.addView(titleview);
         }
     }
 
@@ -243,5 +262,9 @@ public class TabFragment extends BaseFrament {
         }
     }
 
-
+    public void onClick(View view) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), SearchHisActivity.class);
+        getActivity().startActivity(intent);
+    }
 }

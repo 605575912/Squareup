@@ -323,7 +323,6 @@ public class MindleViewPager extends RelativeLayout {
                     indicator.addView(imageView);
                 }
             }
-            viewPager.setCurrentItem(0);
             handler.sendEmptyMessageDelayed(0, 2000);
         }
     }

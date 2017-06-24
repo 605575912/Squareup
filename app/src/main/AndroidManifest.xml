@@ -42,6 +42,8 @@
         <activity android:name=".upload.OtherActivity" />
         <activity android:name=".upload.MainActivity" />
         <activity android:name=".MusicActivity"></activity>
+        <activity android:name=".search.SearchActivity"></activity>
+        <activity android:name=".search.SearchHisActivity"></activity>
 
 
         <!-- alipay sdk begin -->
