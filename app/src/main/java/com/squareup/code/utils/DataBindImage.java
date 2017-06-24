@@ -18,11 +18,11 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.squareup.code.R;
 import com.squareup.code.home.banner.BannerModel;
+import com.squareup.code.views.RadioTextView;
 import com.squareup.lib.ImageUtils;
 import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.view.MindleViewPager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,7 +40,7 @@ public class DataBindImage {
         Drawable drawable = new Drawable() {
             @Override
             public void draw(@NonNull Canvas canvas) {
-                canvas.drawColor(Color.GREEN);
+                canvas.drawColor(Color.TRANSPARENT);
             }
 
             @Override
@@ -68,7 +68,7 @@ public class DataBindImage {
             public View getview(ViewGroup container, int position) {
                 ImageView imageView = new ImageView(container.getContext());
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                ImageUtils.loadImage(container.getContext(),bannerModels.get(position).getImgurl(),imageView);
+                ImageUtils.loadImage(container.getContext(), bannerModels.get(position).getImgurl(), imageView);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -76,7 +76,7 @@ public class DataBindImage {
                 });
                 return imageView;
             }
-        }, bannerModels);
+        }, bannerModels, R.drawable.mtadvert_indicator_selected, R.drawable.mtadvert_indicator_normal);
 
 
     }
@@ -106,5 +106,10 @@ public class DataBindImage {
 
         }
 
+    }
+
+    @BindingAdapter("launchertime")
+    public static void setBannerTime(RadioTextView radioTextView, int time) {
+        radioTextView.setTime(time);
     }
 }

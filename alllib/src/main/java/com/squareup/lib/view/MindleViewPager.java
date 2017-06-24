@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
@@ -35,6 +36,8 @@ public class MindleViewPager extends RelativeLayout {
     private ViewPager viewPager;
     private boolean animator = false;
     private int pagemargin = 0;
+    LinearLayout indicator;
+    ViewPager.OnPageChangeListener listener;
 
     public MindleViewPager(Context context) {
         super(context);
@@ -86,7 +89,60 @@ public class MindleViewPager extends RelativeLayout {
 
         });
         addView(viewPager);
+        indicator = new LinearLayout(context);
+        indicator.setOrientation(LinearLayout.HORIZONTAL);
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.bottomMargin = 30;
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        addView(indicator, params);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (listener != null) {
+                    listener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                }
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+                if (listener != null) {
+                    listener.onPageSelected(position);
+                }
+                if (list == null || list.size() == 0) {
+                    return;
+                }
+                int a = position / list.size();
+                if (a <= 0) {
+                    a = position;
+                } else {
+                    a = position % list.size();
+                }
+                if (selected != 0 && normal != 0 && indicator.getChildCount() > 0) {
+                    int pre = a - 1;
+                    int apre = a + 1;
+                    if (pre >= 0) {
+                        setIndicator(pre, normal);
+                    } else {
+                        setIndicator(indicator.getChildCount() - 1, normal);
+                    }
+                    if (apre < indicator.getChildCount()) {
+                        setIndicator(apre, normal);
+                    } else {
+                        setIndicator(0, normal);
+                    }
+                    setIndicator(a, selected);
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (listener != null) {
+                    listener.onPageScrollStateChanged(state);
+                }
+            }
+        });
     }
 
     public void setPageMargin(int marginPixels) {
@@ -95,11 +151,11 @@ public class MindleViewPager extends RelativeLayout {
         }
     }
 
-    public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
+    public void setOnPageChangeListener(final ViewPager.OnPageChangeListener listener) {
         if (viewPager == null) {
             return;
         }
-        viewPager.setOnPageChangeListener(listener);
+        this.listener = listener;
     }
 
     Interpolator sInterpolator = new Interpolator() {
@@ -235,11 +291,30 @@ public class MindleViewPager extends RelativeLayout {
     private LunAdapter lunAdapter;
 
     public void setAdapter(LunAdapter lunAdapter, List list) {
+        setAdapter(lunAdapter, list, 0, 0);
+    }
+
+    int selected, normal;
+
+    public void setAdapter(LunAdapter lunAdapter, List list, int selected, int normal) {
         this.lunAdapter = lunAdapter;
         this.list = list;
-        viewPager.setAdapter(new MyPagerAdapter());
+        this.selected = selected;
+        this.normal = normal;
+        if (viewPager.getAdapter() == null) {
+            viewPager.setAdapter(new MyPagerAdapter());
+        }
         handler.removeCallbacksAndMessages(null);
+        indicator.removeAllViews();
         if (list != null && list.size() > 0) {
+            if (selected != 0 && normal != 0) {
+                for (int i = 0; i < list.size(); i++) {
+                    ImageView imageView = new ImageView(getContext());
+                    imageView.setPadding(10, 0, 10, 0);
+                    imageView.setImageResource(normal);
+                    indicator.addView(imageView);
+                }
+            }
             viewPager.setCurrentItem(0);
             handler.sendEmptyMessageDelayed(0, 2000);
         }
@@ -289,6 +364,11 @@ public class MindleViewPager extends RelativeLayout {
         public void destroyItem(ViewGroup container, int position, Object object) {
             (container).removeView((ImageView) object);
         }
+    }
+
+    private void setIndicator(int index, int id) {
+        ImageView imageView = (ImageView) indicator.getChildAt(index);
+        imageView.setImageResource(id);
     }
 
     private static final float MAX_SCALE = 1.1999f;

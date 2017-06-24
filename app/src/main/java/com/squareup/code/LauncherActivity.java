@@ -5,15 +5,14 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 
-import com.karics.library.zxing.android.CaptureActivity;
-import com.karics.library.zxing.android.ZxingMainActivity;
-import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
 import com.squareup.code.pay.PayUtils;
+import com.squareup.code.views.RadioTextView;
 import com.squareup.code.wx.WxpayModel;
 import com.squareup.code.wxapi.WXEntryActivity;
 import com.squareup.lib.BaseActivity;
@@ -26,7 +25,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  * Created by Administrator on 2017/05/31 0031.
  */
 
-public class LauncherActivity extends BaseActivity {
+public class LauncherActivity extends BaseActivity implements View.OnClickListener {
     LauncherLayoutBinding activityMainBinding;
     LauncherCache launcherCache;
     Handler handler;
@@ -46,10 +45,15 @@ public class LauncherActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                handler.removeCallbacksAndMessages(null);
-                Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
+                if (msg.what == 0) {
+                    handler.removeCallbacksAndMessages(null);
+                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+
+                }
+
             }
         };
 //        TwinklingRefreshLayout twinklingRefreshLayout;
@@ -114,14 +118,22 @@ public class LauncherActivity extends BaseActivity {
             if (event.getData() instanceof LauncherMode) {
                 LauncherMode launcherMode = (LauncherMode) event.getData();
                 if (launcherMode.getItems() != null && launcherMode.getItems().size() > 0) {
-//                    activityMainBinding.setItemsbean(launcherMode.getItems().get(0));
-                    handler.sendEmptyMessageDelayed(1, 3000);
+                    launcherMode.getItems().get(0).setCounttime(5);
+                    activityMainBinding.setItemsbean(launcherMode.getItems().get(0));
+                    handler.sendEmptyMessageDelayed(0, 5000);
                 } else {
                     handler.sendEmptyMessageDelayed(0, 1000);
                 }
             } else {
                 handler.sendEmptyMessageDelayed(0, 1000);
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v instanceof RadioTextView) {
+            handler.sendEmptyMessage(0);
         }
     }
 }

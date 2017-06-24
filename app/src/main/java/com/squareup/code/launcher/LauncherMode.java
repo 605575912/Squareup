@@ -43,6 +43,15 @@ public class LauncherMode {
         private String imgurl;
         private String content;
         private int starttime;
+        private int counttime;
+
+        public int getCounttime() {
+            return counttime;
+        }
+
+        public void setCounttime(int counttime) {
+            this.counttime = counttime;
+        }
 
         public int getId() {
             return id;
