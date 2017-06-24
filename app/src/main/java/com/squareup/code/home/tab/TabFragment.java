@@ -20,6 +20,8 @@ import com.squareup.code.R;
 import com.squareup.code.WrapContentLinearLayoutManager;
 import com.squareup.code.column.ColumnData;
 import com.squareup.code.column.ColumnView;
+import com.squareup.code.discount.DiscountData;
+import com.squareup.code.discount.DiscountView;
 import com.squareup.code.home.ChangedItemView;
 import com.squareup.code.home.DoubleItemView;
 import com.squareup.code.home.ItemView;
@@ -176,6 +178,13 @@ public class TabFragment extends BaseFrament {
                         if (columnitems != null && columnitems.size() > 0) {
                             ColumnView columnView = new ColumnView(columnitems);
                             list.add(columnView);
+                            MineSpaceView mineSpaceView = new MineSpaceView();
+                            list.add(mineSpaceView);
+                        }
+                        List<DiscountData> discountdatas = card.getDiscountdatas();
+                        if (discountdatas != null && discountdatas.size() > 0) {
+                            DiscountView discountView = new DiscountView(discountdatas);
+                            list.add(discountView);
                             MineSpaceView mineSpaceView = new MineSpaceView();
                             list.add(mineSpaceView);
                         }

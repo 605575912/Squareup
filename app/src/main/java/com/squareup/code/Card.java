@@ -1,6 +1,7 @@
 package com.squareup.code;
 
 import com.squareup.code.column.ColumnData;
+import com.squareup.code.discount.DiscountData;
 import com.squareup.code.home.banner.BannerModel;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class Card {
     private List<ItemData> items;
     private List<BannerModel> banners;
     private List<ColumnData> columnitems;
+    private List<DiscountData> discountdatas;
     public List<BannerModel> getBanners() {
         return banners;
     }
@@ -32,5 +34,9 @@ public class Card {
 
     public List<ItemData> getItems() {
         return items;
+    }
+
+    public List<DiscountData> getDiscountdatas() {
+        return discountdatas;
     }
 }

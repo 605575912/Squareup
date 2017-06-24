@@ -35,8 +35,8 @@ public class RadioTextView extends TextView {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    Paint paint, dpaint;
-    float time;
+    private Paint paint, dpaint;
+    private float time;
 
     public void setTime(final int duration) {
         if (duration <= 0) {
@@ -67,11 +67,11 @@ public class RadioTextView extends TextView {
             paint = new Paint();
             paint.setStrokeWidth(10);
             paint.setStyle(Paint.Style.STROKE);
-            paint.setColor(Color.parseColor("#FFAC2D2D"));
+            paint.setColor(Color.parseColor("#FF1DFCE2"));
             dpaint = new Paint();
             dpaint.setStrokeWidth(10);
             dpaint.setStyle(Paint.Style.STROKE);
-            dpaint.setColor(Color.parseColor("#FFD4D3D3"));
+            dpaint.setColor(Color.parseColor("#C8E2E1E1"));
         }
         RectF oval = new RectF(10, 10, getWidth() - 10, getHeight() - 10);
         canvas.drawArc(oval, 0, 360, false, dpaint);

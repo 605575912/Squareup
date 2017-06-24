@@ -3,5 +3,5 @@
     android:id="@+id/grid"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
-    android:background="@android:color/white"></com.squareup.code.views.CunGridView>
+    android:background="@android:color/white"
+    android:listSelector="@android:color/transparent"></com.squareup.code.views.CunGridView>
