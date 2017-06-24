@@ -62,6 +62,12 @@ public class MindleViewPager extends RelativeLayout {
 
     private List list = new ArrayList();
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        handler.removeCallbacksAndMessages(null);
+    }
+
     private void init(Context context, AttributeSet attrs) {
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MindleViewPager);
