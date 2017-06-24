@@ -21,7 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
 import com.squareup.lib.R;
-import com.squareup.lib.utils.LogUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -61,11 +60,13 @@ public class MindleViewPager extends RelativeLayout {
     }
 
     private List list = new ArrayList();
+    private boolean isdeotry;
 
     @Override
     protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
         handler.removeCallbacksAndMessages(null);
+        isdeotry = true;
+        super.onDetachedFromWindow();
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -283,7 +284,7 @@ public class MindleViewPager extends RelativeLayout {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (list == null) {
+            if (list == null || isdeotry) {
                 return;
             }
             int max = list.size() - 1;
@@ -305,6 +306,7 @@ public class MindleViewPager extends RelativeLayout {
     public void setAdapter(LunAdapter lunAdapter, List list, int selected, int normal) {
         this.lunAdapter = lunAdapter;
         this.list = list;
+        isdeotry = false;
         this.selected = selected;
         this.normal = normal;
         if (viewPager.getAdapter() == null) {
