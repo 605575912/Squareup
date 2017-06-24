@@ -45,7 +45,7 @@ public class DiscountView implements BaseViewItem {
 
     @Override
     public RecyclerViewHolder createViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.column_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.discount_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -56,9 +56,6 @@ public class DiscountView implements BaseViewItem {
             GridView grid = (GridView) view.findViewById(R.id.grid);
             ListGridAdapter adapter = new ListGridAdapter(discountdatas);
             grid.setNumColumns(4);
-            grid.setBackgroundColor(Color.GRAY);
-            grid.setHorizontalSpacing(2);
-            grid.setVerticalSpacing(2);
             grid.setAdapter(adapter);
             adapter.notifyDataSetChanged();
 
@@ -104,6 +101,12 @@ public class DiscountView implements BaseViewItem {
             DiscountData discountData = list.get(position);
             holder.tx_.setText(discountData.getTitle());
             holder.tx_content.setText(discountData.getContent());
+            try {
+                holder.tx_content.setTextColor(Color.parseColor(discountData.getColor()));
+            } catch (Exception e) {
+
+            }
+
             ImageUtils.loadImage(parent.getContext(), discountData.getImg(), holder.image, R.drawable.placeholder_error);
             return convertView;
         }

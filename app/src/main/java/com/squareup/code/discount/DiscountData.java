@@ -9,6 +9,11 @@ public class DiscountData {
     String title;
     String jumpcontent;
     String content;
+    String color;
+
+    public String getColor() {
+        return color;
+    }
 
     public String getImg() {
         return img;
