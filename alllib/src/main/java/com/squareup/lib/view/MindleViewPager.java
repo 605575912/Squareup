@@ -69,6 +69,13 @@ public class MindleViewPager extends RelativeLayout {
         super.onDetachedFromWindow();
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        isdeotry = false;
+        handler.sendEmptyMessageDelayed(0, 5000);
+    }
+
     private void init(Context context, AttributeSet attrs) {
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MindleViewPager);
@@ -291,6 +298,7 @@ public class MindleViewPager extends RelativeLayout {
             if (max >= 0) {
                 int i = viewPager.getCurrentItem();
                 viewPager.setCurrentItem(i + 1, true);
+                handler.removeCallbacksAndMessages(null);
                 handler.sendEmptyMessageDelayed(0, 5000);
             }
         }
@@ -301,7 +309,7 @@ public class MindleViewPager extends RelativeLayout {
         setAdapter(lunAdapter, list, 0, 0);
     }
 
-    int selected, normal;
+    private int selected, normal;
 
     public void setAdapter(LunAdapter lunAdapter, List list, int selected, int normal) {
         this.lunAdapter = lunAdapter;

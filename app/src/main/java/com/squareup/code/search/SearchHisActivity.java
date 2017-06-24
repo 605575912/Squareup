@@ -33,4 +33,7 @@ public class SearchHisActivity extends BaseActivity {
     public void onBackClick(View view) {
         finish();
     }
+
+    public void onSearchClick(View view) {
+    }
 }

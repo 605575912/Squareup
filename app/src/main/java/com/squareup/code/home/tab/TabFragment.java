@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.squareup.code.BR;
 import com.squareup.code.Card;
@@ -38,7 +39,6 @@ import com.squareup.code.mine.MineCardUnit;
 import com.squareup.code.mine.MineItemView;
 import com.squareup.code.mine.MineLineView;
 import com.squareup.code.mine.MineSpaceView;
-import com.squareup.code.search.SearchActivity;
 import com.squareup.code.search.SearchHisActivity;
 import com.squareup.code.utils.LoadEmptyViewControl;
 import com.squareup.lib.BaseFrament;
@@ -64,6 +64,7 @@ public class TabFragment extends BaseFrament {
     LoadEmptyViewControl loadEmptyViewControl;
     FrameLayout frameLayout;
     View titleview;
+    TwinklingRefreshLayout refresh;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,10 +77,14 @@ public class TabFragment extends BaseFrament {
         super.onActivityCreated(savedInstanceState);
         tabsBean = getArguments().getParcelable("TabsBean");
         if (tabsBean != null) {
-            HttpUtils.getInstance(getActivity().getApplication()).getAsynMainHttp(tabsBean.getJumpcontent(), DataUnit.class);//返回根据JSON解析的对象
+            onRefresh();
         } else {
             tabsBean = new TabsBean();
         }
+    }
+
+    private void onRefresh() {
+        HttpUtils.getInstance(getActivity().getApplication()).getAsynMainHttp(tabsBean.getJumpcontent(), DataUnit.class);//返回根据JSON解析的对象
     }
 
     @Override
@@ -87,8 +92,19 @@ public class TabFragment extends BaseFrament {
         super.onCreateView(inflater, container, savedInstanceState);
         contentView = inflater.inflate(R.layout.tab_layout, container, false);
         frameLayout = (FrameLayout) contentView.findViewById(R.id.container);
-        TwinklingRefreshLayout refresh = (TwinklingRefreshLayout) contentView.findViewById(R.id.refresh);
+        refresh = (TwinklingRefreshLayout) contentView.findViewById(R.id.refresh);
         refresh.setEnableRefresh(true);
+        refresh.setEnableLoadmore(false);
+        refresh.setOnRefreshListener(new RefreshListenerAdapter() {
+            @Override
+            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
+                TabFragment.this.onRefresh();
+            }
+
+            @Override
+            public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
+            }
+        });
         loadEmptyViewControl = new LoadEmptyViewControl(getActivity());
         loadEmptyViewControl.addLoadView(frameLayout);
         recyclerView = (RecyclerView) contentView.findViewById(R.id.recycler);
@@ -148,118 +164,121 @@ public class TabFragment extends BaseFrament {
 
         if (event.getCommand().equals(tabsBean.getJumpcontent())) {
             if (event.getData() instanceof DataUnit) {
+                refresh.finishRefreshing();
                 loadEmptyViewControl.loadcomplete();
-                DataUnit dataUnit = (DataUnit) event.getData();
-                if (dataUnit.getTitletype() > 0) {
-                    addTitleView(dataUnit.getTitletype());
-                }
-                if (dataUnit.getMinecards() != null) {
-                    for (MineCard mineCard : dataUnit.getMinecards()) {
-                        if (mineCard.getLogincard() != null) {
-                            LoginCardView loginCardView = new LoginCardView();
-                            list.add(loginCardView);
-                            MineSpaceView mineSpaceView = new MineSpaceView();
-                            list.add(mineSpaceView);
-                        }
-                        List<MineCardUnit> cardUnits = mineCard.getCardUnits();
-                        if (cardUnits != null) {
-                            for (MineCardUnit mineCardUnit : cardUnits) {
-                                List<MineItemData> items = mineCardUnit.getItems();
-                                if (items != null) {
-                                    for (int i = 0; i < items.size(); i++) {
-                                        MineItemView mineItemView = new MineItemView(getActivity(), items.get(i));
-                                        list.add(mineItemView);
-                                        if (i < items.size() - 1) {
-                                            MineLineView mineLineView = new MineLineView();
-                                            list.add(mineLineView);
-                                        }
-                                        if (i == items.size() - 1) {
-                                            MineSpaceView mineSpaceView = new MineSpaceView();
-                                            list.add(mineSpaceView);
-                                        }
-                                    }
-
-                                }
-                            }
-
-                        }
-
-                    }
-                }
-                if (dataUnit.getCards() != null) {
-                    for (Card card : dataUnit.getCards()) {
-                        List<BannerModel> banners = card.getBanners();
-                        if (banners != null && banners.size() > 0) {
-                            BannerView bannerView = new BannerView(banners);
-                            list.add(bannerView);
-                        }
-                        List<ColumnData> columnitems = card.getColumnitems();
-                        if (columnitems != null && columnitems.size() > 0) {
-                            ColumnView columnView = new ColumnView(columnitems);
-                            list.add(columnView);
-                            MineSpaceView mineSpaceView = new MineSpaceView();
-                            list.add(mineSpaceView);
-                        }
-                        List<DiscountData> discountdatas = card.getDiscountdatas();
-                        if (discountdatas != null && discountdatas.size() > 0) {
-                            DiscountView discountView = new DiscountView(discountdatas);
-                            list.add(discountView);
-                            MineSpaceView mineSpaceView = new MineSpaceView();
-                            list.add(mineSpaceView);
-                        }
-                        List<CardUnit> cardUnits = card.getCardUnits();
-                        if (cardUnits != null) {
-                            for (CardUnit cardUnit : cardUnits) {
-                                List<ItemData> itemDatas = cardUnit.getItems();
-                                if (itemDatas == null || itemDatas.size() == 0) {
-                                    continue;
-                                }
-                                if (itemDatas.size() == 1) {
-                                    ItemView baseViewItem = new ItemView(getActivity(), itemDatas.get(0));
-                                    list.add(baseViewItem);
-                                    continue;
-                                }
-                                ChangedItemView baseViewItem = new ChangedItemView(getActivity(), itemDatas);
-                                list.add(baseViewItem);
-
-                            }
-                            MineSpaceView mineSpaceView = new MineSpaceView();
-                            list.add(mineSpaceView);
-                        }
-                        List<ItemData> itemDatas = card.getItems();
-                        if (itemDatas != null) {
-                            for (ItemData itemData : itemDatas) {
-                                DoubleItemView mainItemView = new DoubleItemView(getActivity());
-                                mainItemView.setItemData(itemData);
-                                list.add(mainItemView);
-                            }
-                            MineSpaceView mineSpaceView = new MineSpaceView();
-                            list.add(mineSpaceView);
-                        }
-
-                    }
-                }
-                List<ItemData> itemDatas = dataUnit.getItems();
-                if (itemDatas != null) {
-                    for (ItemData itemData : dataUnit.getItems()) {
-                        if (itemData.getType() == 1) {//推荐
-                            PushItemView mainItemView = new PushItemView(getActivity(), itemData);
-                            list.add(mainItemView);
-                            LineView lineView = new LineView();
-                            list.add(lineView);
-                        } else {
-
-                        }
-
-                    }
-                }
-                adapter.notifyDataSetChanged();
+                list.clear();
+                addData((DataUnit) event.getData());
             } else {
                 loadEmptyViewControl.loadError(event.getData().toString());
             }
-
-
         }
+    }
+
+    private void addData(DataUnit dataUnit) {
+        if (dataUnit.getTitletype() > 0) {
+            addTitleView(dataUnit.getTitletype());
+        }
+        if (dataUnit.getMinecards() != null) {
+            for (MineCard mineCard : dataUnit.getMinecards()) {
+                if (mineCard.getLogincard() != null) {
+                    LoginCardView loginCardView = new LoginCardView();
+                    list.add(loginCardView);
+                    MineSpaceView mineSpaceView = new MineSpaceView();
+                    list.add(mineSpaceView);
+                }
+                List<MineCardUnit> cardUnits = mineCard.getCardUnits();
+                if (cardUnits != null) {
+                    for (MineCardUnit mineCardUnit : cardUnits) {
+                        List<MineItemData> items = mineCardUnit.getItems();
+                        if (items != null) {
+                            for (int i = 0; i < items.size(); i++) {
+                                MineItemView mineItemView = new MineItemView(getActivity(), items.get(i));
+                                list.add(mineItemView);
+                                if (i < items.size() - 1) {
+                                    MineLineView mineLineView = new MineLineView();
+                                    list.add(mineLineView);
+                                }
+                                if (i == items.size() - 1) {
+                                    MineSpaceView mineSpaceView = new MineSpaceView();
+                                    list.add(mineSpaceView);
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+
+            }
+        }
+        if (dataUnit.getCards() != null) {
+            for (Card card : dataUnit.getCards()) {
+                List<BannerModel> banners = card.getBanners();
+                if (banners != null && banners.size() > 0) {
+                    BannerView bannerView = new BannerView(banners);
+                    list.add(bannerView);
+                }
+                List<ColumnData> columnitems = card.getColumnitems();
+                if (columnitems != null && columnitems.size() > 0) {
+                    ColumnView columnView = new ColumnView(columnitems);
+                    list.add(columnView);
+                    MineSpaceView mineSpaceView = new MineSpaceView();
+                    list.add(mineSpaceView);
+                }
+                List<DiscountData> discountdatas = card.getDiscountdatas();
+                if (discountdatas != null && discountdatas.size() > 0) {
+                    DiscountView discountView = new DiscountView(discountdatas);
+                    list.add(discountView);
+                    MineSpaceView mineSpaceView = new MineSpaceView();
+                    list.add(mineSpaceView);
+                }
+                List<CardUnit> cardUnits = card.getCardUnits();
+                if (cardUnits != null) {
+                    for (CardUnit cardUnit : cardUnits) {
+                        List<ItemData> itemDatas = cardUnit.getItems();
+                        if (itemDatas == null || itemDatas.size() == 0) {
+                            continue;
+                        }
+                        if (itemDatas.size() == 1) {
+                            ItemView baseViewItem = new ItemView(getActivity(), itemDatas.get(0));
+                            list.add(baseViewItem);
+                            continue;
+                        }
+                        ChangedItemView baseViewItem = new ChangedItemView(getActivity(), itemDatas);
+                        list.add(baseViewItem);
+
+                    }
+                    MineSpaceView mineSpaceView = new MineSpaceView();
+                    list.add(mineSpaceView);
+                }
+                List<ItemData> itemDatas = card.getItems();
+                if (itemDatas != null) {
+                    for (ItemData itemData : itemDatas) {
+                        DoubleItemView mainItemView = new DoubleItemView(getActivity());
+                        mainItemView.setItemData(itemData);
+                        list.add(mainItemView);
+                    }
+                    MineSpaceView mineSpaceView = new MineSpaceView();
+                    list.add(mineSpaceView);
+                }
+
+            }
+        }
+        List<ItemData> itemDatas = dataUnit.getItems();
+        if (itemDatas != null) {
+            for (ItemData itemData : dataUnit.getItems()) {
+                if (itemData.getType() == 1) {//推荐
+                    PushItemView mainItemView = new PushItemView(getActivity(), itemData);
+                    list.add(mainItemView);
+                    LineView lineView = new LineView();
+                    list.add(lineView);
+                } else {
+
+                }
+
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 
     public void onClick(View view) {

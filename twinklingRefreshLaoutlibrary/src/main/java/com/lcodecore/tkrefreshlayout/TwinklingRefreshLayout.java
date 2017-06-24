@@ -681,7 +681,6 @@ public class TwinklingRefreshLayout extends RelativeLayout implements PullListen
         if (bottomView != null) {
             mBottomLayout.removeAllViewsInLayout();
             mBottomLayout.addView(bottomView.getView());
-            mBottomLayout.setBackgroundColor(Color.GREEN);
             mBottomView = bottomView;
         }
     }
