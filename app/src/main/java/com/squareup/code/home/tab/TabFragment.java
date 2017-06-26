@@ -84,7 +84,7 @@ public class TabFragment extends BaseFrament {
     }
 
     private void onRefresh() {
-        HttpUtils.getInstance(getActivity().getApplication()).getAsynMainHttp(tabsBean.getJumpcontent(), DataUnit.class);//返回根据JSON解析的对象
+        HttpUtils.INSTANCE.getAsynMainHttp(tabsBean.getJumpcontent(), DataUnit.class);//返回根据JSON解析的对象
     }
 
     @Override

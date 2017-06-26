@@ -16,6 +16,7 @@ import com.squareup.lib.viewfactory.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 
+
 /**
  * Created by Administrator on 2017/06/24 0024.
  */
@@ -39,7 +40,6 @@ public class SearchHisActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         SearchHisLayoutBinding searchHisLayoutBinding = DataBindingUtil.setContentView(this, R.layout.search_his_layout);
         searchHisLayoutBinding.setVariable(BR.onclick, this);
-
         recyclerView = (RecyclerView) searchHisLayoutBinding.getRoot().findViewById(R.id.recycler);
         WrapContentLinearLayoutManager wrapContentLinearLayoutManager = new WrapContentLinearLayoutManager(getActivity());
         recyclerView.setHasFixedSize(true);
@@ -56,6 +56,7 @@ public class SearchHisActivity extends BaseActivity {
 
             }
         });
+
     }
 
     public void onBackClick(View view) {

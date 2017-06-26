@@ -21,6 +21,7 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+
 /**
  * Created by Administrator on 2017/05/31 0031.
  */
@@ -66,6 +67,23 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         launcherCache = new LauncherCache();
         launcherCache.getCacheData();
         launcherCache.dowlNewWorkData();
+
+
+
+//        observable.subscribeOn(Schedulers.computation())
+//                .observeOn(Schedulers.trampoline())
+//                .subscribe(new Consumer<Integer>() {
+//                    @Override
+//                    public void accept(Integer integer) throws Exception {
+//                        Thread thread = Thread.currentThread();
+//                        thread.getName();
+//                        LogUtil.i(thread.getName()+"========3==========");
+//
+//                        LogUtil.i(integer + "===1============");
+//                    }
+//                });
+//        observable.unsubscribeOn(Schedulers.computation());
+
 //
 //        HttpUtils.getInstance(getApplication()).download("https://imgjd3.fruitday.com/images/2017-06-08/9ccb2bcf569412e733570ef949fec618.jpg", new HttpUtils.OnDownloadListener() {
 //            @Override

@@ -18,11 +18,11 @@ public class LauncherCache {
     }
 
     public void getCacheData() {
-        command = HttpUtils.getInstance(MyApplication.application).getAsynMainHttp(FileUtils.getFile(filename), LauncherMode.class);//返回根据JSON解析的对象
+        command = HttpUtils.INSTANCE.getAsynMainHttp(FileUtils.getFile(filename), LauncherMode.class);//返回根据JSON解析的对象
     }
 
     public void dowlNewWorkData() {
-        HttpUtils.getInstance(MyApplication.application).getAsynThreadHttp(URLUtils.getInstance().getLauncherUrl(), LauncherMode.class, new HttpUtils.HttpListener() {
+        HttpUtils.INSTANCE.getAsynThreadHttp(URLUtils.getInstance().getLauncherUrl(), LauncherMode.class, new HttpUtils.HttpListener() {
             @Override
             public void success(Object model, String data) {
                 if (model instanceof LauncherMode) {

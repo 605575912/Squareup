@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
-        HttpUtils.getInstance(getApplication()).getAsynThreadHttp("http://gz.file.myqcloud.com/files/v2/" + BizServer.appid + "/" + BizServer.bucket + "?op=list&num=10"
+        HttpUtils.INSTANCE.getAsynThreadHttp("http://gz.file.myqcloud.com/files/v2/" + BizServer.appid + "/" + BizServer.bucket + "?op=list&num=10"
         );
     }
 }

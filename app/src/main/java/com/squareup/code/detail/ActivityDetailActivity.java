@@ -95,7 +95,7 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
         adapter = new RecyclerViewAdapter(getActivity(), list);
         recyclerView.setAdapter(adapter);
         TextView backtext = (TextView) findViewById(R.id.backtext);
-        HttpUtils.getInstance(getActivity().getApplication()).getAsynMainHttp("file:///android_asset/my.txt", DataUnit.class);//返回根据JSON解析的对象
+        HttpUtils.INSTANCE.getAsynMainHttp("file:///android_asset/my.txt", DataUnit.class);//返回根据JSON解析的对象
 
         // -----------location config ------------
         locationService = ((MyApplication) getApplication()).locationService;

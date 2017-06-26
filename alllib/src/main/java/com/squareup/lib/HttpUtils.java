@@ -2,9 +2,7 @@ package com.squareup.lib;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.text.TextUtils;
-import android.util.Base64;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -22,15 +20,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
@@ -38,6 +32,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
 import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -48,13 +44,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import static com.squareup.lib.BaseApplication.application;
+
 /**
  * Created by Administrator on 2017/05/25 0025.
  */
 
-public class HttpUtils {
-    private static HttpUtils httpUtils;
-    private Context application;
+public enum HttpUtils {
+    INSTANCE;
     private OkHttpClient mOkHttpClient = new OkHttpClient();
 
     public OkHttpClient getmOkHttpClient() {
@@ -137,8 +134,7 @@ public class HttpUtils {
 //                    CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256)
 //            .build();
 
-    private HttpUtils(Context application) {
-        this.application = application;
+    private HttpUtils() {
 //        OkHttpClient.Builder client = new OkHttpClient.Builder()
 //                .followRedirects(true)
 //                .followSslRedirects(true)
@@ -165,14 +161,6 @@ public class HttpUtils {
 
     }
 
-    public static synchronized HttpUtils getInstance(Context application) {
-        if (httpUtils == null) {
-            synchronized (HttpUtils.class) {
-                httpUtils = new HttpUtils(application);
-            }
-        }
-        return httpUtils;
-    }
 
     HashMap<String, HttpListener> httpListeners = new HashMap<String, HttpListener>();
 
@@ -188,7 +176,7 @@ public class HttpUtils {
 
     public String getAsynMainHttp(final File file, final Class jsonmodel) {
         if (file != null && file.exists()) {
-            getAsynHttp(0, file.getPath(), jsonmodel);
+            getAsynMainHttp(file.getPath(),jsonmodel);
             return file.getPath();
         } else {
             failed(0, "", "file not exists");
@@ -282,6 +270,7 @@ public class HttpUtils {
         }
     }
 
+
     private void failed(int type, String url, String fail) {
         HttpListener httpListener = httpListeners.get(url);
         if (httpListener != null) {
@@ -300,7 +289,7 @@ public class HttpUtils {
     }
 
     private void getAsynHttp(final int type, final String url, final Class jsonmodel) {
-        if (TextUtils.isEmpty(url) || application == null || !PermissionsGrantActivity.checkAllPermissionsGranted(application, new String[]{
+        if (TextUtils.isEmpty(url) || !PermissionsGrantActivity.checkAllPermissionsGranted(application, new String[]{
                 Manifest.permission.INTERNET})
                 ) {
             failed(type, url, "未能获取数据");

@@ -22,7 +22,7 @@ public class URLUtils {
     }
 
     private URLUtils() {
-        HttpUtils.getInstance(MyApplication.application).getAsynThreadHttp("file:///android_asset/urls.txt", UrlModel.class, new HttpUtils.HttpListener() {
+        HttpUtils.INSTANCE.getAsynThreadHttp("file:///android_asset/urls.txt", UrlModel.class, new HttpUtils.HttpListener() {
             @Override
             public void success(Object model, String data) {
                 if (model instanceof UrlModel) {

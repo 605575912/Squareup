@@ -37,7 +37,7 @@ public class ImageGlideModule implements GlideModule {
     @Override
     public void registerComponents(Context context, Registry registry) {
 //        Glide.with(context).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(HttpManager.getInstance().getClient()));
-        registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(HttpUtils.getInstance(context).getmOkHttpClient()));
+        registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(HttpUtils.INSTANCE.getmOkHttpClient()));
 
     }
 }
