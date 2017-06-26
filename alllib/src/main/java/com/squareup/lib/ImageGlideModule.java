@@ -31,7 +31,7 @@ public class ImageGlideModule implements GlideModule {
         //设置图片解码格式
         builder.setDecodeFormat(DecodeFormat.PREFER_ARGB_8888);
 //        builder.setDiskCache()
-        LogUtil.i("ImageGlideModule 自定义缓存");
+//        LogUtil.i("ImageGlideModule 自定义缓存");
     }
 
     @Override

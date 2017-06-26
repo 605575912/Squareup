@@ -1,5 +1,6 @@
 package com.squareup.lib;
 
+import android.accounts.AccountManager;
 import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
@@ -13,6 +14,8 @@ import com.morgoo.droidplugin.PluginHelper;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
+
+import static android.os.Build.VERSION.SDK_INT;
 
 /**
  * Demo Application示例.
@@ -117,7 +120,6 @@ public class BaseApplication extends Application {
         // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId,调试时将第三个参数设置为true
         Bugly.init(this, "b5f9e8654b", true);
         long end = System.currentTimeMillis();
-
         Log.e("init time--->", end - start + "ms");
     }
 
@@ -126,6 +128,16 @@ public class BaseApplication extends Application {
      */
     static {
         Beta.loadLibrary("mylib");
+    }
+
+    protected void enabledStrictMode() {
+        if (SDK_INT >= 9) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder() //
+                    .detectAll() //
+                    .penaltyLog() //
+                    .penaltyDeath() //
+                    .build());
+        }
     }
 
     @Override

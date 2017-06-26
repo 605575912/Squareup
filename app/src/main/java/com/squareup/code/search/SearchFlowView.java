@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.squareup.lib.utils.AppLibUtils;
 import com.squareup.lib.view.flowlayout.FlowLayout;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewHolder;
@@ -17,9 +18,11 @@ import com.squareup.lib.viewfactory.RecyclerViewHolder;
 
 public class SearchFlowView implements BaseViewItem {
     String[] strings;
+    Activity activity;
 
     public SearchFlowView(Activity activity, String[] strings) {
         this.strings = strings;
+        this.activity = activity;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class SearchFlowView implements BaseViewItem {
         FlowLayout flowLayout = new FlowLayout(parent.getContext());
         for (String s : strings) {
             TextView textView = new TextView(parent.getContext());
-            textView.setPadding(40, 0, 40, 0);
+            textView.setPadding(((int) AppLibUtils.getdensity(activity) * 10), 0, ((int) AppLibUtils.getdensity(activity) * 10), 0);
             textView.setText(s);
             textView.setBackgroundColor(Color.WHITE);
             flowLayout.addView(textView);

@@ -6,12 +6,14 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -20,7 +22,7 @@ import com.squareup.code.R;
 import com.squareup.code.home.banner.BannerModel;
 import com.squareup.code.views.RadioTextView;
 import com.squareup.lib.ImageUtils;
-import com.squareup.lib.utils.LogUtil;
+import com.squareup.lib.utils.AppLibUtils;
 import com.squareup.lib.view.MindleViewPager;
 
 import java.util.List;
@@ -110,6 +112,10 @@ public class DataBindImage {
 
     @BindingAdapter("launchertime")
     public static void setBannerTime(RadioTextView radioTextView, int time) {
+        if (Build.VERSION.SDK_INT >= 19) {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) radioTextView.getLayoutParams();
+            params.topMargin = AppLibUtils.getStatusBarHeight();
+        }
         radioTextView.setTime(time);
     }
 }

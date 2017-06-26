@@ -10,7 +10,7 @@
 
         <import type="com.squareup.code.account.User" />
 
-        <import type="com.squareup.code.account.AccountManager" />
+        <import type="com.squareup.code.account.APPAccountManager" />
 
         <variable
             name="user"
@@ -18,7 +18,7 @@
 
         <variable
             name="accounmanager"
-            type="com.squareup.code.account.AccountManager" />
+            type="com.squareup.code.account.APPAccountManager" />
 
         <variable
             name="loginview"
