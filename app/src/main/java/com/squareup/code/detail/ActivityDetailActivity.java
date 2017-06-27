@@ -45,6 +45,7 @@ import com.squareup.code.mine.MineLineView;
 import com.squareup.code.mine.MineSpaceView;
 import com.squareup.code.utils.LoadEmptyViewControl;
 import com.squareup.code.wx.Util;
+import com.squareup.code.wxapi.WXEntryActivity;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.HttpUtils;
@@ -515,8 +516,8 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
 
     private IWXAPI create() {
         if (iwxapi == null) {
-            iwxapi = WXAPIFactory.createWXAPI(MyApplication.application, "wx4c726304342b910d", true);
-            iwxapi.registerApp("wx4c726304342b910d");
+            iwxapi = WXAPIFactory.createWXAPI(MyApplication.application, WXEntryActivity.APP_ID, true);
+            iwxapi.registerApp(WXEntryActivity.APP_ID);
         }
         return iwxapi;
     }

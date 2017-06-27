@@ -65,7 +65,9 @@
 
 
         <!-- wx 分享 登录-->
-        <activity android:name=".wxapi.WXEntryActivity" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true" />
 
         <!-- wx 支付 -->
         <activity

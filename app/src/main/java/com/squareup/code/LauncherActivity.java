@@ -1,6 +1,5 @@
 package com.squareup.code;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,9 +47,11 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                 super.handleMessage(msg);
                 if (msg.what == 0) {
                     handler.removeCallbacksAndMessages(null);
-                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+//                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
+//                    startActivity(intent);
+//                    finish();
+                    ShareNotice.getInstance().show(LauncherActivity.this);
+
                 } else {
 
                 }
@@ -67,7 +68,6 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         launcherCache = new LauncherCache();
         launcherCache.getCacheData();
         launcherCache.dowlNewWorkData();
-
 
 
 //        observable.subscribeOn(Schedulers.computation())
