@@ -108,7 +108,7 @@ public enum APPAccountManager {
     }
 
     public void AutoLoginUser(Activity activity, DataBindBaseViewItem.ViewHolder viewHolder) {
-        if (state == LOGININGSTATE) {
+        if (state == LOGININGSTATE || state == LOGINSUCCESSSTATE) {
             return;
         }
         state = LOGININGSTATE;
@@ -160,6 +160,7 @@ public enum APPAccountManager {
             public void onComplete(Object o) {
                 try {
                     JSONObject jsonObject = (JSONObject) o;
+                    state = LOGINSUCCESSSTATE;
                     String nickname = jsonObject.getString("nickname");
                     String gender = jsonObject.getString("gender");
                     String province = jsonObject.getString("province");
@@ -169,10 +170,10 @@ public enum APPAccountManager {
                     user.setImg(figureurl_qq_2);
                     user.setName(nickname);
                     APPAccountManager.INSTANCE.setUser(user);
-                    state = LOGINSUCCESSSTATE;
                     viewHolder.getViewDataBinding().setVariable(BR.accounmanager, APPAccountManager.INSTANCE);
                     viewHolder.getViewDataBinding().setVariable(BR.user, APPAccountManager.INSTANCE.getUser());
                 } catch (Exception e) {
+                    onCancel();
                     ToastUtils.showToast(activity.getResources().getString(R.string.login_failed));
                 }
 
@@ -181,11 +182,13 @@ public enum APPAccountManager {
             @Override
             public void onError(UiError uiError) {
                 state = LOGINFAILSTATE;
+                viewHolder.getViewDataBinding().setVariable(BR.accounmanager, APPAccountManager.INSTANCE);
             }
 
             @Override
             public void onCancel() {
                 state = LOGINFAILSTATE;
+                viewHolder.getViewDataBinding().setVariable(BR.accounmanager, APPAccountManager.INSTANCE);
             }
         });
     }
