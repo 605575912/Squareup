@@ -1,7 +1,19 @@
 package com.squareup.code.utils;
 
 import android.graphics.Bitmap;
-import android.text.TextUtils;
+
+import com.tencent.open.utils.HttpUtils;
+import com.tencent.tauth.IRequestListener;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.UiError;
+
+import org.apache.http.conn.ConnectTimeoutException;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 
 /**
  * Created by Administrator on 2017/06/10 0010.
@@ -248,4 +260,26 @@ public class APPUtils {
 
         return (bitmap);
     }
+
+//    /**
+//     * 获取渠道标识
+//     *
+//     * @param context
+//     * @return
+//     */
+//    public static String getQQAPPID(Context context) {
+//        Context appContent = context.getApplicationContext();
+//        String channel = "";
+//        ApplicationInfo appInfo = null;
+//        try {
+//            appInfo = appContent.getPackageManager().getApplicationInfo(appContent.getPackageName(), PackageManager.GET_META_DATA);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        if (appInfo != null) {
+//
+//            channel = appInfo.metaData.get("UMENG_CHANNEL") + "";
+//        }
+//        return channel;
+//    }
 }

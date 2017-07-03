@@ -41,7 +41,7 @@ public class BaseApplication extends Application {
         Beta.canNotifyUserRestart = false;
         // 设置是否自动合成补丁
         Beta.canAutoPatch = true;
-        PluginHelper.getInstance().applicationOnCreate(getBaseContext());
+//        PluginHelper.getInstance().applicationOnCreate(getBaseContext());
         /**
          *  全量升级状态回调
          */
@@ -145,7 +145,6 @@ public class BaseApplication extends Application {
         MultiDex.install(base);
         PluginHelper.getInstance().applicationAttachBaseContext(base);
         super.attachBaseContext(base);
-
         // you must install multiDex whatever tinker is installed!
         // 安装tinker
         Beta.installTinker();

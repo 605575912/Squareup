@@ -1,9 +1,13 @@
 package com.squareup.code;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.squareup.code.databinding.LauncherLayoutBinding;
@@ -16,9 +20,13 @@ import com.squareup.code.wx.WxpayModel;
 import com.squareup.code.wxapi.WXEntryActivity;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
+import com.squareup.lib.utils.TencentUtils;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 
 /**
@@ -36,6 +44,14 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
     }
 
     PayUtils payUtils;
+    TencentUtils tencentUtils;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        tencentUtils.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +63,12 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                 super.handleMessage(msg);
                 if (msg.what == 0) {
                     handler.removeCallbacksAndMessages(null);
-//                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
+//                    Intent intent = new Intent(LauncherActivity.this, ChooseActivity.class);
 //                    startActivity(intent);
 //                    finish();
                     ShareNotice.getInstance().show(LauncherActivity.this);
-
+                    tencentUtils = new TencentUtils();
+                    tencentUtils.login(LauncherActivity.this);
                 } else {
 
                 }
@@ -69,20 +86,109 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         launcherCache.getCacheData();
         launcherCache.dowlNewWorkData();
 
+//        Observable observable = Observable.create(new ObservableOnSubscribe() {
+//            @Override
+//            public void subscribe(ObservableEmitter e) throws Exception {
+//                e.onNext("Hello");
+//                e.onNext("Hi");
+//                e.onNext("Aloha");
+//                e.onComplete();
+//            }
+//        });
+//        Flowable flowable = Flowable.create(new FlowableOnSubscribe() {
+//            @Override
+//            public void subscribe(FlowableEmitter e) throws Exception {
+//                e.onNext(1);
+//                e.onNext(2);
+//                e.onComplete();
+//            }
+//        }, BackpressureStrategy.BUFFER);
+//        Flowable map = flowable.map(new Function3<String, String, String, Integer>() {
+//            @Override
+//            public Integer apply(String s, String s2, String s3) throws Exception {
+//                return 11;
+//            }
+//        });
 
-//        observable.subscribeOn(Schedulers.computation())
+//        flowable.subscribeOn(Schedulers.computation())
 //                .observeOn(Schedulers.trampoline())
 //                .subscribe(new Consumer<Integer>() {
 //                    @Override
 //                    public void accept(Integer integer) throws Exception {
-//                        Thread thread = Thread.currentThread();
-//                        thread.getName();
-//                        LogUtil.i(thread.getName()+"========3==========");
 //
-//                        LogUtil.i(integer + "===1============");
+//                        LogUtil.i(integer + "===2============");
 //                    }
+//
 //                });
-//        observable.unsubscribeOn(Schedulers.computation());
+//
+//        flowable.unsubscribeOn(Schedulers.computation());
+//
+//
+//        ResourceSubscriber<Integer> subscriber = new ResourceSubscriber<Integer>() {
+//            @Override
+//            public void onStart() {
+//                request(Long.MAX_VALUE);
+//                LogUtil.i("===onStart============");
+//            }
+//
+//            @Override
+//            public void onNext(Integer t) {
+//                LogUtil.i(t + "===t============");
+//            }
+//
+//            @Override
+//            public void onError(Throwable t) {
+//                LogUtil.i("===onError============");
+//                t.printStackTrace();
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//                LogUtil.i("===Done============");
+//            }
+//        };
+//        //创建一个上游 Observable：
+//        Observable<Integer> observable = Observable.create(new ObservableOnSubscribe<Integer>() {
+//            @Override
+//            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
+//                emitter.onNext(1);
+//                emitter.onNext(2);
+//                emitter.onNext(3);
+//                emitter.onComplete();
+//            }
+//        });
+//        //创建一个下游 Observer
+//        Observer<Integer> observer = new Observer<Integer>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//                LogUtil.i("subscribe");
+//            }
+//
+//            @Override
+//            public void onNext(Integer value) {
+//                LogUtil.i("11" + value);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                LogUtil.i("error");
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//                LogUtil.i("complete");
+//            }
+//        };
+//        //建立连接
+//        observable.subscribe(observer);
+//        Flowable.range(1, 10).delay(2, TimeUnit.SECONDS).subscribe(new Consumer<Integer>() {
+//            @Override
+//            public void accept(Integer integer) throws Exception {
+//                LogUtil.i(integer + "===integer============");
+//            }
+//        });
+//
+//        subscriber.dispose();
 
 //
 //        HttpUtils.getInstance(getApplication()).download("https://imgjd3.fruitday.com/images/2017-06-08/9ccb2bcf569412e733570ef949fec618.jpg", new HttpUtils.OnDownloadListener() {
@@ -101,6 +207,74 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
 //                ToastUtils.showToast("onDownloadFailed");
 //            }
 //        });
+    }
+
+    /**
+     * 从本地获取广告图片
+     *
+     * @param path
+     * @param width
+     * @param height
+     * @return
+     */
+    Bitmap getimage(String path, int width, int height) {
+        if (TextUtils.isEmpty(path)) {
+            return null;
+        }
+        File file = new File(path);
+        if (!file.exists()) {
+            return null;
+        }
+        try {
+            BitmapFactory.Options newOpts = new BitmapFactory.Options();
+            newOpts.inJustDecodeBounds = false;
+            newOpts.inSampleSize = 1;
+            Bitmap tempbitmap;
+            try {
+                tempbitmap = BitmapFactory.decodeFile(path, newOpts);
+                if (tempbitmap == null) {
+                    //如果图片为null, 图片不完整则删除掉图片
+                    byte[] bytes = new byte[(int) file.length() + 1];
+                    FileInputStream inputStream = new FileInputStream(path);
+                    inputStream.read(bytes);
+                    tempbitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    if (tempbitmap == null) {
+                        file.delete();
+                    }
+                }
+                return tempbitmap;
+            } catch (OutOfMemoryError e) {
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+            newOpts.inJustDecodeBounds = true;
+            tempbitmap = BitmapFactory.decodeFile(path, newOpts);
+            int sreen = width * height;
+            int image = tempbitmap.getHeight() * tempbitmap.getWidth();
+            if (sreen <= 720) {// 防止过小图
+                sreen = 720 * 1080;
+            }
+            int samplesize = image / sreen;
+            if (samplesize < 2) {
+                samplesize = 2;
+            }
+            newOpts.inSampleSize = samplesize;
+            newOpts.inJustDecodeBounds = false;
+            try {
+                tempbitmap = BitmapFactory.decodeFile(path, newOpts);
+                return tempbitmap;
+            } catch (OutOfMemoryError e) {
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     private void weixinpay(String id) {
@@ -154,4 +328,5 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
             handler.sendEmptyMessage(0);
         }
     }
+
 }
