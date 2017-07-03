@@ -1,9 +1,10 @@
 package com.squareup.lib;
 
-import android.accounts.AccountManager;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 import android.util.Log;
@@ -116,11 +117,44 @@ public class BaseApplication extends Application {
             }
         };
 
-        long start = System.currentTimeMillis();
         // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId,调试时将第三个参数设置为true
         Bugly.init(this, "b5f9e8654b", true);
-        long end = System.currentTimeMillis();
-        Log.e("init time--->", end - start + "ms");
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+            }
+        });
     }
 
     /**
@@ -156,4 +190,13 @@ public class BaseApplication extends Application {
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
     }
+
+    public void Exit() {
+        try {
+            System.exit(0);
+        } catch (
+                Exception e) {
+        }
+    }
+
 }

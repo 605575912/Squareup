@@ -22,6 +22,7 @@ import com.squareup.code.home.tab.TabsBean;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.utils.LoadEmptyViewControl;
 import com.squareup.lib.BaseActivity;
+import com.squareup.lib.BaseApplication;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
 import com.squareup.lib.ImageUtils;
@@ -127,7 +128,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        BaseApplication.application.Exit();
     }
 
     @Override

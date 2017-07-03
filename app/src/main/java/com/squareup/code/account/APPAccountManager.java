@@ -152,7 +152,6 @@ public enum APPAccountManager {
     }
 
     private void AutoLoginQQUser(final Activity activity, final DataBindBaseViewItem.ViewHolder viewHolder) {
-
         if (tencentUtils == null) {
             tencentUtils = new TencentUtils();
         }
@@ -172,6 +171,7 @@ public enum APPAccountManager {
                     APPAccountManager.INSTANCE.setUser(user);
                     state = LOGINSUCCESSSTATE;
                     viewHolder.getViewDataBinding().setVariable(BR.accounmanager, APPAccountManager.INSTANCE);
+                    viewHolder.getViewDataBinding().setVariable(BR.user, APPAccountManager.INSTANCE.getUser());
                 } catch (Exception e) {
                     ToastUtils.showToast(activity.getResources().getString(R.string.login_failed));
                 }
