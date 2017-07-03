@@ -1,6 +1,5 @@
 package com.squareup.code.mine;
 
-import android.accounts.AccountManager;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,8 +10,11 @@ import com.squareup.code.account.APPAccountManager;
 import com.squareup.code.databinding.LoginLayoutBinding;
 import com.squareup.code.utils.TencentUtils;
 import com.squareup.lib.BaseActivity;
+import com.squareup.lib.utils.ToastUtils;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
+
+import org.json.JSONObject;
 
 /**
  * Created by Administrator on 2017/07/03 0003.
@@ -52,7 +54,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         tencentUtils.login(LoginActivity.this, new IUiListener() {
             @Override
             public void onComplete(Object o) {
-                APPAccountManager.INSTANCE.getLoginState();
+                try {
+                    JSONObject jsonObject = (JSONObject) o;
+                    String nickname = jsonObject.getString("nickname");
+                    String gender = jsonObject.getString("gender");
+                    String province = jsonObject.getString("province");
+                    String city = jsonObject.getString("city");
+                    String figureurl_qq_2 = jsonObject.getString("figureurl_qq_2");
+                    APPAccountManager.INSTANCE.getLoginState();
+                    finish();
+                } catch (Exception e) {
+                    ToastUtils.showToast(LoginActivity.this.getResources().getString(R.string.login_failed));
+                }
+
             }
 
             @Override

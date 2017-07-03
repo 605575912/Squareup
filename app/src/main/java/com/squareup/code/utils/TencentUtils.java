@@ -2,10 +2,12 @@ package com.squareup.code.utils;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.squareup.lib.BaseApplication;
 import com.squareup.lib.utils.AppLibUtils;
+import com.squareup.lib.utils.CryptSharedPreferences;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
 import com.tencent.connect.common.Constants;
@@ -32,6 +34,128 @@ public class TencentUtils {
     private String APP_ID = "1106186071";
     IUiListener loginListener;
 
+    private boolean isAccess_token(long ret) {
+        if (ret == 100030 || ret == 100014 || ret == 100015 || ret == 100016) {
+            return false;
+        }
+        return true;
+    }
+
+    public void getUserInfo(final boolean auto, String access_token, String openid, long expires_in, final Activity activity, final IUiListener iUiListener) {
+        QQToken token = new QQToken(access_token);
+        token.setAccessToken(access_token, String.valueOf(expires_in));
+        token.setOpenId(openid);
+        token.setAppId(APP_ID);
+        UserInfo userInfo = new UserInfo(activity.getApplication(), token);
+        userInfo.getUserInfo(new IUiListener() {
+            @Override
+            public void onComplete(Object o) {
+                //{"ret":-1,"msg":"client request's parameters are invalid, invalid openid"}
+//{"ret":0,"msg":"","is_lost":0,"nickname":"梁振雄","gender":"男","province":"广东","city":"广州","figureurl":"http:\/\/qzapp.qlogo.cn\/qzapp\/1106186071\/746C24658F4F0840DB1684E55191DBFF\/30","figureurl_1":"http:\/\/qzapp.qlogo.cn\/qzapp\/1106186071\/746C24658F4F0840DB1684E55191DBFF\/50","figureurl_2":"http:\/\/qzapp.qlogo.cn\/qzapp\/1106186071\/746C24658F4F0840DB1684E55191DBFF\/100","figureurl_qq_1":"http:\/\/q.qlogo.cn\/qqapp\/1106186071\/746C24658F4F0840DB1684E55191DBFF\/40","figureurl_qq_2":"http:\/\/q.qlogo.cn\/qqapp\/1106186071\/746C24658F4F0840DB1684E55191DBFF\/100","is_yellow_vip":"0","vip":"0","yellow_vip_level":"0","level":"0","is_yellow_year_vip":"0"}
+                try {
+                    JSONObject jsonObject = (JSONObject) o;
+                    if (jsonObject.has("ret")) {
+                        long ret = jsonObject.getLong("ret");
+                        if (!isAccess_token(ret)) {
+                            if (!auto) {
+                                login(activity, iUiListener);
+                            }
+
+                        } else {
+                            if (ret == 0) {
+                                if (iUiListener != null) {
+                                    iUiListener.onComplete(o);
+                                }
+                                return;
+                            }
+                        }
+
+                    }
+                } catch (Exception e) {
+
+                }
+                if (iUiListener != null) {
+                    UiError uiError = new UiError(-1, "", "");
+                    iUiListener.onError(uiError);
+                }
+            }
+
+            @Override
+            public void onError(UiError uiError) {
+                if (iUiListener != null) {
+                    iUiListener.onError(uiError);
+                }
+            }
+
+            @Override
+            public void onCancel() {
+                if (iUiListener != null) {
+                    iUiListener.onCancel();
+                }
+            }
+        });
+    }
+
+    public void autoLogin(final Activity activity, final IUiListener iUiListener) {
+        final Tencent mTencent = Tencent.createInstance(APP_ID, BaseApplication.application);
+        if (!mTencent.isSessionValid()) {
+            loginListener = new IUiListener() {
+                @Override
+                public void onComplete(Object o) {
+                    //            {"ret":0,"openid":"746C24658F4F0840DB1684E55191DBFF","access_token":"82B833882A50B72904A7B9CAC0809158","pay_token":"5AC2354CFE49578495255AC035991F08","expires_in":7776000,"pf":"desktop_m_qq-10000144-android-2002-","pfkey":"ba34797aed4f967781d558065898d77d","msg":"","login_cost":192,"query_authority_cost":105,"authority_cost":0}
+                    try {
+                        JSONObject jsonObject = (JSONObject) o;
+                        String openid = jsonObject.getString("openid");
+                        String access_token = jsonObject.getString("access_token");
+                        long expires_in = jsonObject.getLong("expires_in");
+                        saveAccess_token(access_token, openid, expires_in);
+                        getUserInfo(true, access_token, openid, expires_in, activity, iUiListener);
+                    } catch (Exception e) {
+                        if (iUiListener != null) {
+                            UiError uiError = new UiError(-1, "", "");
+                            iUiListener.onError(uiError);
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(UiError uiError) {
+                    if (iUiListener != null) {
+                        iUiListener.onCancel();
+                    }
+                }
+
+                @Override
+                public void onCancel() {
+                    if (iUiListener != null) {
+                        iUiListener.onCancel();
+                    }
+                }
+            };
+            int MODE_MULTI_PROCESS = AppLibUtils.getMODE_MULTI_PROCESS();
+            SharedPreferences sp = CryptSharedPreferences.getSharedPreferences(BaseApplication.application, "qq_token",
+                    MODE_MULTI_PROCESS);
+            String access_token = sp.getString("access_token", "");
+            String openid = sp.getString("openid", "");
+            long expires_in = sp.getLong("expires_in", 0);
+            long expires_date = sp.getLong("expires_date", 0);
+            if (expires_date > System.currentTimeMillis()) {
+                getUserInfo(false, access_token, openid, expires_in, activity, iUiListener);
+            } else {
+                if (iUiListener != null) {
+                    UiError uiError = new UiError(-1, "", "");
+                    iUiListener.onError(uiError);
+                }
+            }
+
+        } else {
+            if (iUiListener != null) {
+                UiError uiError = new UiError(-1, "", "");
+                iUiListener.onError(uiError);
+            }
+        }
+    }
+
     public void login(final Activity activity, final IUiListener iUiListener) {
         final Tencent mTencent = Tencent.createInstance(APP_ID, BaseApplication.application);
         if (!mTencent.isSessionValid()) {
@@ -44,55 +168,8 @@ public class TencentUtils {
                         String openid = jsonObject.getString("openid");
                         String access_token = jsonObject.getString("access_token");
                         long expires_in = jsonObject.getLong("expires_in");
-                        QQToken token = new QQToken(access_token);
-                        token.setAccessToken(access_token, String.valueOf(expires_in));
-                        token.setOpenId(openid);
-                        token.setAppId(APP_ID);
-                        UserInfo userInfo = new UserInfo(activity.getApplication(), token);
-                        userInfo.getUserInfo(new IUiListener() {
-                            @Override
-                            public void onComplete(Object o) {
-                                //{"ret":-1,"msg":"client request's parameters are invalid, invalid openid"}
-//{"ret":0,"msg":"","is_lost":0,"nickname":"梁振雄","gender":"男","province":"广东","city":"广州","figureurl":"http:\/\/qzapp.qlogo.cn\/qzapp\/1106186071\/746C24658F4F0840DB1684E55191DBFF\/30","figureurl_1":"http:\/\/qzapp.qlogo.cn\/qzapp\/1106186071\/746C24658F4F0840DB1684E55191DBFF\/50","figureurl_2":"http:\/\/qzapp.qlogo.cn\/qzapp\/1106186071\/746C24658F4F0840DB1684E55191DBFF\/100","figureurl_qq_1":"http:\/\/q.qlogo.cn\/qqapp\/1106186071\/746C24658F4F0840DB1684E55191DBFF\/40","figureurl_qq_2":"http:\/\/q.qlogo.cn\/qqapp\/1106186071\/746C24658F4F0840DB1684E55191DBFF\/100","is_yellow_vip":"0","vip":"0","yellow_vip_level":"0","level":"0","is_yellow_year_vip":"0"}
-                                try {
-                                    JSONObject jsonObject = (JSONObject) o;
-                                    if (jsonObject.has("ret")) {
-                                        long ret = jsonObject.getLong("ret");
-                                        if (ret == 0) {
-                                            String nickname = jsonObject.getString("nickname");
-                                            String gender = jsonObject.getString("gender");
-                                            String province = jsonObject.getString("province");
-                                            String city = jsonObject.getString("city");
-                                            String figureurl_qq_2 = jsonObject.getString("figureurl_qq_2");
-                                            if (iUiListener != null) {
-                                                iUiListener.onComplete(o);
-                                            }
-                                            return;
-                                        }
-                                    }
-                                } catch (Exception e) {
-
-                                }
-                                if (iUiListener != null) {
-                                    UiError uiError = new UiError(-1, "", "");
-                                    iUiListener.onError(uiError);
-                                }
-                            }
-
-                            @Override
-                            public void onError(UiError uiError) {
-                                if (iUiListener != null) {
-                                    iUiListener.onError(uiError);
-                                }
-                            }
-
-                            @Override
-                            public void onCancel() {
-                                if (iUiListener != null) {
-                                    iUiListener.onCancel();
-                                }
-                            }
-                        });
+                        saveAccess_token(access_token, openid, expires_in);
+                        getUserInfo(false, access_token, openid, expires_in, activity, iUiListener);
                     } catch (Exception e) {
                         if (iUiListener != null) {
                             UiError uiError = new UiError(-1, "", "");
@@ -117,7 +194,21 @@ public class TencentUtils {
             };
 //            应用需要获得哪些API的权限，由“，”分隔。
 //            例如：SCOPE = “get_user_info,add_t”；所有权限用“all”
-            mTencent.login(activity, "all", loginListener);
+
+            int MODE_MULTI_PROCESS = AppLibUtils.getMODE_MULTI_PROCESS();
+            SharedPreferences sp = CryptSharedPreferences.getSharedPreferences(BaseApplication.application, "qq_token",
+                    MODE_MULTI_PROCESS);
+            String access_token = sp.getString("access_token", "");
+            String openid = sp.getString("openid", "");
+            long expires_in = sp.getLong("expires_in", 0);
+            long expires_date = sp.getLong("expires_date", 0);
+//            editor.putLong("expires_date", System.currentTimeMillis() + expires_in * 1000);
+            if (expires_date > System.currentTimeMillis()) {
+                getUserInfo(false, access_token, openid, expires_in, activity, iUiListener);
+            } else {
+                mTencent.login(activity, "all", loginListener);
+            }
+
         } else {
             if (iUiListener != null) {
                 UiError uiError = new UiError(-1, "", "");
@@ -133,6 +224,18 @@ public class TencentUtils {
                 Tencent.handleResultData(data, loginListener);
             }
         }
+    }
+
+    private void saveAccess_token(String access_token, String openid, long expires_in) {
+        int MODE_MULTI_PROCESS = AppLibUtils.getMODE_MULTI_PROCESS();
+        SharedPreferences sp = CryptSharedPreferences.getSharedPreferences(BaseApplication.application, "qq_token",
+                MODE_MULTI_PROCESS);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("access_token", access_token);
+        editor.putString("openid", openid);
+        editor.putLong("expires_in", expires_in);
+        editor.putLong("expires_date", System.currentTimeMillis() + expires_in * 1000);
+        editor.commit();
     }
 
     public void logout() {

@@ -254,5 +254,15 @@ public class AppLibUtils {
                 (String) packageManager.getApplicationLabel(applicationInfo);
         return applicationName;
     }
-
+    public static int getMODE_MULTI_PROCESS() {
+        int MODE_MULTI_PROCESS = Context.MODE_PRIVATE;
+       int mVersion = Integer.parseInt(Build.VERSION.SDK);// Integer.parseInt(Build.VERSION.SDK);
+        if (mVersion >= 9) {
+            Object obj = ReflectHelper.getStaticFieldValue(Context.class, "MODE_MULTI_PROCESS");
+            if (obj != null && obj instanceof Integer) {
+                MODE_MULTI_PROCESS = (Integer) obj;
+            }
+        }
+        return MODE_MULTI_PROCESS;
+    }
 }
