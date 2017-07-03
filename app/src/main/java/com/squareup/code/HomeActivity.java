@@ -1,5 +1,6 @@
 package com.squareup.code;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.code.account.APPAccountManager;
 import com.squareup.code.databinding.ActivityMainBinding;
 import com.squareup.code.home.tab.TabAdapter;
 import com.squareup.code.home.tab.TabFragment;
@@ -24,7 +26,6 @@ import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
 import com.squareup.lib.ImageUtils;
 import com.squareup.lib.utils.AppLibUtils;
-import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -162,5 +163,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 ImageUtils.loadImage(getActivity(), tabsBean.getNormalimgurl(), imageView);
             }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        APPAccountManager.INSTANCE.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -1,6 +1,7 @@
 package com.squareup.lib;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -112,4 +113,6 @@ public class BaseActivity extends FragmentActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);//反注册EventBus
     }
+
+
 }

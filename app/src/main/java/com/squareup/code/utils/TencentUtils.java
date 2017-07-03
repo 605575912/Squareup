@@ -217,14 +217,7 @@ public class TencentUtils {
         }
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Tencent.onActivityResultData(requestCode, resultCode, data, loginListener);
-        if (requestCode == Constants.REQUEST_API) {
-            if (resultCode == Constants.REQUEST_LOGIN) {
-                Tencent.handleResultData(data, loginListener);
-            }
-        }
-    }
+
 
     private void saveAccess_token(String access_token, String openid, long expires_in) {
         int MODE_MULTI_PROCESS = AppLibUtils.getMODE_MULTI_PROCESS();

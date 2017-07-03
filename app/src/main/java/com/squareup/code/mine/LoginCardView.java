@@ -36,6 +36,7 @@ public class LoginCardView extends DataBindBaseViewItem implements View.OnClickL
             viewHolder.getViewDataBinding().setVariable(BR.user, APPAccountManager.INSTANCE.getUser());
             viewHolder.getViewDataBinding().setVariable(BR.loginview, this);
             viewHolder.getViewDataBinding().setVariable(BR.accounmanager, APPAccountManager.INSTANCE);
+            APPAccountManager.INSTANCE.AutoLoginUser(activity,viewHolder);
         }
     }
 

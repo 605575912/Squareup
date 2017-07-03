@@ -44,14 +44,8 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
     }
 
     PayUtils payUtils;
-    TencentUtils tencentUtils;
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        tencentUtils.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
 
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
