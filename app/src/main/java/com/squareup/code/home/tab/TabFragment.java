@@ -181,7 +181,7 @@ public class TabFragment extends BaseFrament {
         if (dataUnit.getMinecards() != null) {
             for (MineCard mineCard : dataUnit.getMinecards()) {
                 if (mineCard.getLogincard() != null) {
-                    LoginCardView loginCardView = new LoginCardView();
+                    LoginCardView loginCardView = new LoginCardView(getActivity());
                     list.add(loginCardView);
                     MineSpaceView mineSpaceView = new MineSpaceView();
                     list.add(mineSpaceView);

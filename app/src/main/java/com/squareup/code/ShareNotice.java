@@ -1,7 +1,9 @@
 package com.squareup.code;
 
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
@@ -19,7 +21,6 @@ import android.widget.RelativeLayout;
 import com.squareup.code.wxapi.WXEntryActivity;
 import com.squareup.lib.BaseApplication;
 import com.squareup.lib.utils.AppLibUtils;
-import com.squareup.lib.utils.LogUtil;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
@@ -78,7 +79,12 @@ public class ShareNotice implements View.OnClickListener {
                             temp = value;
                             v.setTranslationY(value);
                             if (temp == -params.height) {
-                                wm.removeView(v);
+                                try {
+                                    wm.removeView(v);
+                                } catch (Exception e) {
+
+                                }
+
                                 ishideing = false;
                             }
                         }
@@ -92,7 +98,7 @@ public class ShareNotice implements View.OnClickListener {
         }
     };
 
-    public void show(Context context) {
+    public void show(final Activity context) {
         temp = 0;
         v = LayoutInflater.from(context).inflate(R.layout.share_layout, null);
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -154,6 +160,9 @@ public class ShareNotice implements View.OnClickListener {
                 if (temp != value) {
                     temp = value;
                     v.setTranslationY(value);
+                    if (temp == -50) {
+//
+                    }
                     if (temp == 0) {
                         handler.sendEmptyMessageDelayed(0, 5100);
                     }
@@ -163,6 +172,7 @@ public class ShareNotice implements View.OnClickListener {
         animator.setDuration(duration);
         animator.setFloatValues(-params.height, 0);
         animator.start();
+
     }
 
     @Override

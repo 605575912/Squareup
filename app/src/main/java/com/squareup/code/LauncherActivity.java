@@ -15,12 +15,12 @@ import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
 import com.squareup.code.pay.PayUtils;
+import com.squareup.code.utils.TencentUtils;
 import com.squareup.code.views.RadioTextView;
 import com.squareup.code.wx.WxpayModel;
 import com.squareup.code.wxapi.WXEntryActivity;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
-import com.squareup.lib.utils.TencentUtils;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -63,12 +63,16 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                 super.handleMessage(msg);
                 if (msg.what == 0) {
                     handler.removeCallbacksAndMessages(null);
-//                    Intent intent = new Intent(LauncherActivity.this, ChooseActivity.class);
-//                    startActivity(intent);
-//                    finish();
-                    ShareNotice.getInstance().show(LauncherActivity.this);
-                    tencentUtils = new TencentUtils();
-                    tencentUtils.login(LauncherActivity.this);
+                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+//                    ShareNotice.getInstance().show(LauncherActivity.this);
+
+
+//                    tencentUtils = new TencentUtils();
+//                    tencentUtils.login(LauncherActivity.this);
+//                    tencentUtils.share(LauncherActivity.this, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+//                    tencentUtils.share(LauncherActivity.this, QQShare.SHARE_TO_QQ_TYPE_APP);
                 } else {
 
                 }
@@ -313,6 +317,7 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                     launcherMode.getItems().get(0).setCounttime(5);
                     activityMainBinding.setItemsbean(launcherMode.getItems().get(0));
                     handler.sendEmptyMessageDelayed(0, 5000);
+                    handler.sendEmptyMessageDelayed(1, 5500);
                 } else {
                     handler.sendEmptyMessageDelayed(0, 1000);
                 }

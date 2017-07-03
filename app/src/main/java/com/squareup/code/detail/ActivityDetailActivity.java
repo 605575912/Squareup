@@ -271,7 +271,7 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
             if (dataUnit.getMinecards() != null) {
                 for (MineCard mineCard : dataUnit.getMinecards()) {
                     if (mineCard.getLogincard() != null) {
-                        LoginCardView loginCardView = new LoginCardView();
+                        LoginCardView loginCardView = new LoginCardView(ActivityDetailActivity.this);
                         list.add(loginCardView);
                         MineSpaceView mineSpaceView = new MineSpaceView();
                         list.add(mineSpaceView);

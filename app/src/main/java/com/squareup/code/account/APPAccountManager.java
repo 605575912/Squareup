@@ -1,6 +1,5 @@
 package com.squareup.code.account;
 
-import com.squareup.code.MyApplication;
 import com.squareup.code.utils.URLUtils;
 import com.squareup.lib.HttpUtils;
 
@@ -10,11 +9,11 @@ import com.squareup.lib.HttpUtils;
 
 public enum APPAccountManager {
     INSTANCE;
-    int state = 0;
-    final int LUCCESSSTATE = 1;
-    final int UNLOGINSTATE = 0;
-    final int LOGININGSTATE = 2;
-    final int LOGINFAILSTATE = -1;
+    int state = LOGINFAILSTATE;
+    public static final int SUCCESSSTATE = 1;
+//    public static final int UNLOGINSTATE = 0;
+    public static final int LOGININGSTATE = 2;
+    public static final int LOGINFAILSTATE = -1;
     private User user;
 
     public User getUser() {
@@ -28,8 +27,12 @@ public enum APPAccountManager {
         return state;
     }
 
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public String getLoginStateText() {
-        if (state == LUCCESSSTATE) {
+        if (state == SUCCESSSTATE) {
             return getUser().getName();
         }
         if (state == LOGININGSTATE) {
@@ -57,7 +60,7 @@ public enum APPAccountManager {
             @Override
             public void success(Object model, String data) {
                 if (model instanceof LoginModel) {
-                    state = LUCCESSSTATE;
+                    state = SUCCESSSTATE;
                     LoginModel loginModel = (LoginModel) model;
                     user = loginModel.getUser();
 //                    FileUtils.saveFile(FileUtils.getFile(filename), data);

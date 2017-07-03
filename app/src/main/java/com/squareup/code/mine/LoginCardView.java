@@ -1,9 +1,10 @@
 package com.squareup.code.mine;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.squareup.code.BR;
 import com.squareup.code.R;
@@ -16,11 +17,16 @@ import com.squareup.lib.viewfactory.DataBindBaseViewItem;
  */
 
 public class LoginCardView extends DataBindBaseViewItem implements View.OnClickListener {
+    Activity activity;
+
+    public LoginCardView(Activity activity) {
+        this.activity = activity;
+    }
+
     @Override
     public int createViewID(ViewGroup parent) {
         return R.layout.mine_login;
     }
-
 
 
     @Override
@@ -35,6 +41,14 @@ public class LoginCardView extends DataBindBaseViewItem implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        ToastUtils.showToast("===");
+        if (APPAccountManager.INSTANCE.getLoginState() == APPAccountManager.LOGINFAILSTATE) {
+            Intent intent = new Intent();
+            intent.setClass(activity, LoginActivity.class);
+            activity.startActivity(intent);
+        } else {
+            ToastUtils.showToast("查看信息");
+        }
+
+
     }
 }
