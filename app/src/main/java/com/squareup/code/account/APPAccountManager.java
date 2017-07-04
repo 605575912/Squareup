@@ -120,7 +120,7 @@ public enum APPAccountManager {
         if (tencentUtils == null) {
             tencentUtils = new TencentUtils();
         }
-        tencentUtils.login(activity, new IUiListener() {
+        loginListener = new IUiListener() {
             @Override
             public void onComplete(Object o) {
                 try {
@@ -148,14 +148,15 @@ public enum APPAccountManager {
             public void onCancel() {
                 state = LOGINFAILSTATE;
             }
-        });
+        };
+        tencentUtils.login(activity, loginListener);
     }
 
     private void AutoLoginQQUser(final Activity activity, final DataBindBaseViewItem.ViewHolder viewHolder) {
         if (tencentUtils == null) {
             tencentUtils = new TencentUtils();
         }
-        tencentUtils.autoLogin(activity, new IUiListener() {
+        loginListener = new IUiListener() {
             @Override
             public void onComplete(Object o) {
                 try {
@@ -190,7 +191,8 @@ public enum APPAccountManager {
                 state = LOGINFAILSTATE;
                 viewHolder.getViewDataBinding().setVariable(BR.accounmanager, APPAccountManager.INSTANCE);
             }
-        });
+        };
+        tencentUtils.autoLogin(activity, loginListener);
     }
 
 

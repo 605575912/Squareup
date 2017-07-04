@@ -1,1 +1,1 @@
-include ':app', ':alllib', ':DroidPlugin', ':zxinglibrary', ':twinklingRefreshLaoutlibrary', ':OpenIMSDK_2.0.2.1', ':xgpush'
+include ':app', ':alllib', ':DroidPlugin', ':zxinglibrary', ':twinklingRefreshLaoutlibrary', ':OpenIMSDK_2.0.2.1', ':xgpush', ':qqshare'

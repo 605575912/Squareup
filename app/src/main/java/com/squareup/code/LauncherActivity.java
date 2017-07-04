@@ -1,5 +1,6 @@
 package com.squareup.code;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -64,11 +65,11 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                 super.handleMessage(msg);
                 if (msg.what == 0) {
                     handler.removeCallbacksAndMessages(null);
-                    YWCom.INSTANCE.login(LauncherActivity.this,"testpro1","taobao1234");
+//                    YWCom.INSTANCE.login(LauncherActivity.this,"testpro1","taobao1234");
 
-//                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
-//                    startActivity(intent);
-//                    finish();
+                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
 //                    ShareNotice.getInstance().show(LauncherActivity.this);
 
 
