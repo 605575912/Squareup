@@ -1,6 +1,7 @@
 package com.squareup.code;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.squareup.code.databinding.LauncherLayoutBinding;
@@ -21,6 +23,11 @@ import com.squareup.code.wx.WxpayModel;
 import com.squareup.code.wxapi.WXEntryActivity;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
+import com.squareup.lib.utils.LogUtil;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
+import com.tencent.android.tpush.common.Constants;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -57,9 +64,9 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                 super.handleMessage(msg);
                 if (msg.what == 0) {
                     handler.removeCallbacksAndMessages(null);
-                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+//                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
+//                    startActivity(intent);
+//                    finish();
 //                    ShareNotice.getInstance().show(LauncherActivity.this);
 
 
@@ -83,6 +90,33 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         launcherCache = new LauncherCache();
         launcherCache.getCacheData();
         launcherCache.dowlNewWorkData();
+        //代码内动态注册access ID
+        //XGPushConfig.setAccessId(this,2100250470);
+        //开启信鸽的日志输出，线上版本不建议调用
+        XGPushConfig.enableDebug(this,true);
+
+
+                /*
+        注册信鸽服务的接口
+        如果仅仅需要发推送消息调用这段代码即可
+        */
+        XGPushManager.registerPush(getApplicationContext(),
+                new XGIOperateCallback() {
+                    @Override
+                    public void onSuccess(Object data, int flag) {
+//                        Log.w(Constants.LogTag, "+++ register push sucess. token:" + data+"flag" +flag);
+
+                        LogUtil.i("==============onSuccess=====");
+                    }
+                    @Override
+                    public void onFail(Object data, int errCode, String msg) {
+                        LogUtil.i("==============onFail=====");
+//                        Log.w(Constants.LogTag,
+//                                "+++ register push fail. token:" + data
+//                                        + ", errCode:" + errCode + ",msg:");
+
+                    }
+                });
 
 //        Observable observable = Observable.create(new ObservableOnSubscribe() {
 //            @Override

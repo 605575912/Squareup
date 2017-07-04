@@ -90,11 +90,11 @@ android {
 }
 
 dependencies {
-    //    compile fileTree(include: ['*.jar'], dir: 'src/main/libs')
+    compile fileTree(include: ['*.jar'], dir: 'src/main/libs')
     compile project(':alllib')
     //        compile 'com.android.support:multidex:1.0.1'
     //    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testCompile 'junit:junit:4.12'
+//    testCompile 'junit:junit:4.12'
     compile project(':zxinglibrary')
     compile project(':twinklingRefreshLaoutlibrary')
 }
