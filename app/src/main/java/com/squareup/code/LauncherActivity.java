@@ -1,7 +1,5 @@
 package com.squareup.code;
 
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,25 +7,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
+import com.alibaba.mobileim.IYWLoginService;
+import com.alibaba.mobileim.YWAPI;
+import com.alibaba.mobileim.YWIMKit;
+import com.alibaba.mobileim.YWLoginParam;
+import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
 import com.squareup.code.pay.PayUtils;
-import com.squareup.code.utils.TencentUtils;
 import com.squareup.code.views.RadioTextView;
 import com.squareup.code.wx.WxpayModel;
 import com.squareup.code.wxapi.WXEntryActivity;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.utils.LogUtil;
-import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
-import com.tencent.android.tpush.XGPushManager;
-import com.tencent.android.tpush.common.Constants;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -53,7 +50,6 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
     PayUtils payUtils;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +60,34 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                 super.handleMessage(msg);
                 if (msg.what == 0) {
                     handler.removeCallbacksAndMessages(null);
+                    final String userid = "testpro1";
+//此对象获取到后，保存为全局对象，供APP使用
+//此对象跟用户相关，如果切换了用户，需要重新获取
+                    YWIMKit mIMKit = YWAPI.getIMKitInstance(userid, "24533266");
+                    //开始登录
+                    String password = "taobao1234";
+                    IYWLoginService loginService = mIMKit.getLoginService();
+                    YWLoginParam loginParam = YWLoginParam.createLoginParam(userid, password);
+                    loginService.login(loginParam, new IWxCallback() {
+
+                        @Override
+                        public void onSuccess(Object... arg0) {
+                            LogUtil.i("onSuccess=============" + arg0);
+                        }
+
+                        @Override
+                        public void onProgress(int arg0) {
+                            // TODO Auto-generated method stub
+                            LogUtil.i("=============" + arg0);
+                        }
+
+                        @Override
+                        public void onError(int errCode, String description) {
+                            //如果登录失败，errCode为错误码,description是错误的具体描述信息
+                            LogUtil.i("onError=============" + description);
+                        }
+                    });
+
 //                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
 //                    startActivity(intent);
 //                    finish();
@@ -90,33 +114,7 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         launcherCache = new LauncherCache();
         launcherCache.getCacheData();
         launcherCache.dowlNewWorkData();
-        //代码内动态注册access ID
-        //XGPushConfig.setAccessId(this,2100250470);
-        //开启信鸽的日志输出，线上版本不建议调用
-        XGPushConfig.enableDebug(this,true);
 
-
-                /*
-        注册信鸽服务的接口
-        如果仅仅需要发推送消息调用这段代码即可
-        */
-        XGPushManager.registerPush(getApplicationContext(),
-                new XGIOperateCallback() {
-                    @Override
-                    public void onSuccess(Object data, int flag) {
-//                        Log.w(Constants.LogTag, "+++ register push sucess. token:" + data+"flag" +flag);
-
-                        LogUtil.i("==============onSuccess=====");
-                    }
-                    @Override
-                    public void onFail(Object data, int errCode, String msg) {
-                        LogUtil.i("==============onFail=====");
-//                        Log.w(Constants.LogTag,
-//                                "+++ register push fail. token:" + data
-//                                        + ", errCode:" + errCode + ",msg:");
-
-                    }
-                });
 
 //        Observable observable = Observable.create(new ObservableOnSubscribe() {
 //            @Override

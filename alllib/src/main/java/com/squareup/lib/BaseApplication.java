@@ -7,9 +7,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.multidex.MultiDex;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.alibaba.mobileim.YWAPI;
+import com.alibaba.wxlib.util.SysUtil;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.morgoo.droidplugin.PluginHelper;
 import com.tencent.bugly.Bugly;
@@ -30,9 +31,23 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        application = this;
+
+        final String APP_KEY = "24533266";
+//必须首先执行这部分代码, 如果在":TCMSSevice"进程中，无需进行云旺（OpenIM）和app业务的初始化，以节省内存;
+        SysUtil.setApplication(this);
+        if (SysUtil.isTCMSServiceProcess(this)) {
+            return;
+        }
+//第一个参数是Application Context
+//这里的APP_KEY即应用创建时申请的APP_KEY，同时初始化必须是在主进程中
+        if (SysUtil.isMainProcess()) {
+            YWAPI.init(application, APP_KEY);
+        }
+
         ViewTarget.setTagId(com.squareup.lib.R.id.glide_id);
 
-        application = this;
+
         setStrictMode();
         // 设置是否关闭热更新能力，默认为true
         Beta.enableHotfix = true;
@@ -116,6 +131,8 @@ public class BaseApplication extends Application {
 
             }
         };
+
+
 
         // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId,调试时将第三个参数设置为true
         Bugly.init(this, "b5f9e8654b", true);
