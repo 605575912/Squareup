@@ -63,7 +63,7 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                     final String userid = "testpro1";
 //此对象获取到后，保存为全局对象，供APP使用
 //此对象跟用户相关，如果切换了用户，需要重新获取
-                    YWIMKit mIMKit = YWAPI.getIMKitInstance(userid, "24533266");
+                    YWIMKit mIMKit = YWAPI.getIMKitInstance(userid, "23015524");
                     //开始登录
                     String password = "taobao1234";
                     IYWLoginService loginService = mIMKit.getLoginService();
