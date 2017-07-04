@@ -10,17 +10,13 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.alibaba.mobileim.IYWLoginService;
-import com.alibaba.mobileim.YWAPI;
-import com.alibaba.mobileim.YWIMKit;
-import com.alibaba.mobileim.YWLoginParam;
-import com.alibaba.mobileim.channel.event.IWxCallback;
+
+import com.baidu.mobstat.StatService;
 import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
 import com.squareup.code.pay.PayUtils;
-import com.squareup.code.utils.YWCom;
 import com.squareup.code.views.RadioTextView;
 import com.squareup.code.wx.WxpayModel;
 import com.squareup.code.wxapi.WXEntryActivity;
@@ -93,6 +89,14 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         launcherCache = new LauncherCache();
         launcherCache.getCacheData();
         launcherCache.dowlNewWorkData();
+
+// 开发时调用，建议上线前关闭，以免影响性能
+        StatService.setDebugOn(true);
+        StatService.start(this);
+//        StatService.setAppChannel();...)
+
+
+
         //代码内动态注册access ID
         //XGPushConfig.setAccessId(this,2100250470);
         //开启信鸽的日志输出，线上版本不建议调用

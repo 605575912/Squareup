@@ -60,6 +60,11 @@
 
 -keep public class * implements com.bumptech.glide.module.GlideModule
 
+#百度统计
+-keep class com.baidu.bottom.** { *; }
+-keep class com.baidu.kirin.** { *; }
+-keep class com.baidu.mobstat.** { *; }
+
 #DroidPlugin
 -dontwarn com.morgoo.**
 -keep class com.morgoo.**{*;}
