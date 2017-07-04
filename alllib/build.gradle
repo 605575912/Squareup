@@ -128,4 +128,5 @@ dependencies {
     //    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
     //    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
     compile project(':OpenIMSDK_2.0.2.1')
+    compile project(':xgpush')
 }
