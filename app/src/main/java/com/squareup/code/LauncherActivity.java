@@ -19,6 +19,7 @@ import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
 import com.squareup.code.pay.PayUtils;
+import com.squareup.code.utils.YWCom;
 import com.squareup.code.views.RadioTextView;
 import com.squareup.code.wx.WxpayModel;
 import com.squareup.code.wxapi.WXEntryActivity;
@@ -60,33 +61,7 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                 super.handleMessage(msg);
                 if (msg.what == 0) {
                     handler.removeCallbacksAndMessages(null);
-                    final String userid = "testpro1";
-//此对象获取到后，保存为全局对象，供APP使用
-//此对象跟用户相关，如果切换了用户，需要重新获取
-                    YWIMKit mIMKit = YWAPI.getIMKitInstance(userid, "23015524");
-                    //开始登录
-                    String password = "taobao1234";
-                    IYWLoginService loginService = mIMKit.getLoginService();
-                    YWLoginParam loginParam = YWLoginParam.createLoginParam(userid, password);
-                    loginService.login(loginParam, new IWxCallback() {
-
-                        @Override
-                        public void onSuccess(Object... arg0) {
-                            LogUtil.i("onSuccess=============" + arg0);
-                        }
-
-                        @Override
-                        public void onProgress(int arg0) {
-                            // TODO Auto-generated method stub
-                            LogUtil.i("=============" + arg0);
-                        }
-
-                        @Override
-                        public void onError(int errCode, String description) {
-                            //如果登录失败，errCode为错误码,description是错误的具体描述信息
-                            LogUtil.i("onError=============" + description);
-                        }
-                    });
+                    YWCom.INSTANCE.login("testpro1","taobao1234");
 
 //                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
 //                    startActivity(intent);

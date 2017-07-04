@@ -33,18 +33,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         application = this;
 
-        final String APP_KEY = "23015524";
-//        final String APP_KEY = "24533266";
-//必须首先执行这部分代码, 如果在":TCMSSevice"进程中，无需进行云旺（OpenIM）和app业务的初始化，以节省内存;
-        SysUtil.setApplication(this);
-        if (SysUtil.isTCMSServiceProcess(this)) {
-            return;
-        }
-//第一个参数是Application Context
-//这里的APP_KEY即应用创建时申请的APP_KEY，同时初始化必须是在主进程中
-        if (SysUtil.isMainProcess()) {
-            YWAPI.init(application, APP_KEY);
-        }
+
 
         ViewTarget.setTagId(com.squareup.lib.R.id.glide_id);
 
