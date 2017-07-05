@@ -1,4 +1,4 @@
-package com.squareup.code.upload;
+package com.tencent.cos;
 
 import android.app.Activity;
 import android.app.AlertDialog;

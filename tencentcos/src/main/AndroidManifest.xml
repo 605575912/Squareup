@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+    package="com.tencent.cos">
+
+    <application>
+        <activity android:name=".FileUploadActivity" />
+        <activity android:name=".FileDownloadActivity" />
+        <activity android:name=".DirActivity" />
+        <activity android:name=".OtherActivity" />
+        <activity android:name=".MainActivity" />
+    </application>
+
+</manifest>

@@ -1,4 +1,4 @@
-package com.squareup.code.upload;
+package com.tencent.cos;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,16 +23,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.squareup.code.R;
-import com.squareup.code.upload.samples.BizServer;
-import com.squareup.code.upload.samples.DeleteObjectSamples;
-import com.squareup.code.upload.samples.GetObjeceMetadataSamples;
-import com.squareup.code.upload.samples.PutObjectSamples;
-import com.squareup.code.upload.samples.UpdateObjectSamples;
 import com.tencent.cos.model.COSRequest;
 import com.tencent.cos.model.COSResult;
 import com.tencent.cos.model.PutObjectRequest;
 import com.tencent.cos.model.PutObjectResult;
+import com.tencent.cos.sample.BizServer;
+import com.tencent.cos.sample.DeleteObjectSamples;
+import com.tencent.cos.sample.GetObjeceMetadataSamples;
+import com.tencent.cos.sample.PutObjectSamples;
+import com.tencent.cos.sample.UpdateObjectSamples;
 import com.tencent.cos.task.listener.IUploadTaskListener;
 import com.tencent.cos.utils.FileUtils;
 
@@ -99,35 +98,35 @@ public class FileUploadActivity extends Activity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch(id){
-            case R.id.add:
-                onAdd();
-                break;
-            case R.id.upload:
-                upload();
-                break;
-            case R.id.delete:
-                delete();
-                break;
-            case R.id.stat:
-                query();
-                break;
-            case R.id.update:
-                update();
-                break;
-            case R.id.url:
-                download();
-                break;
-            case R.id.uploadlist:
-                uploadList();
-                break;
-            case R.id.uploadConcurrent:
-                uploadConcurrent();
-                break;
-            case R.id.uploadSlice:
-                uploadSlice();
-            default:
-                break;
+        if (id == R.id.add) {
+            onAdd();
+
+        } else if (id == R.id.upload) {
+            upload();
+
+        } else if (id == R.id.delete) {
+            delete();
+
+        } else if (id == R.id.stat) {
+            query();
+
+        } else if (id == R.id.update) {
+            update();
+
+        } else if (id == R.id.url) {
+            download();
+
+        } else if (id == R.id.uploadlist) {
+            uploadList();
+
+        } else if (id == R.id.uploadConcurrent) {
+            uploadConcurrent();
+
+        } else if (id == R.id.uploadSlice) {
+            uploadSlice();
+
+
+        } else {
         }
     }
 

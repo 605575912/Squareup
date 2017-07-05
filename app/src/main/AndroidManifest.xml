@@ -36,11 +36,7 @@
         <activity android:name=".detail.ActivityDetailActivity"></activity>
         <activity android:name=".map.MapActivity"></activity>
 
-        <activity android:name=".upload.FileUploadActivity" />
-        <activity android:name=".upload.FileDownloadActivity" />
-        <activity android:name=".upload.DirActivity" />
-        <activity android:name=".upload.OtherActivity" />
-        <activity android:name=".upload.MainActivity" />
+
         <activity android:name=".MusicActivity"></activity>
         <activity android:name=".search.SearchActivity"></activity>
         <activity android:name=".search.SearchHisActivity"></activity>

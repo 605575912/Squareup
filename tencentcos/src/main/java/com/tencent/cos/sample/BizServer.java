@@ -1,4 +1,4 @@
-package com.squareup.code.upload.samples;
+package com.tencent.cos.sample;
 
 import android.content.Context;
 import android.text.TextUtils;

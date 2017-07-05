@@ -1,8 +1,7 @@
-package com.squareup.code.upload.samples;
+package com.tencent.cos.sample;
 
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.tencent.cos.model.COSRequest;

@@ -1,4 +1,4 @@
-package com.squareup.code.upload;
+package com.tencent.cos;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,9 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.squareup.code.R;
-import com.squareup.code.upload.samples.BizServer;
-import com.squareup.lib.HttpUtils;
 
 /**
  * Created by bradyxiao on 2016/9/13.
@@ -69,7 +66,7 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
-        HttpUtils.INSTANCE.getAsynThreadHttp("http://gz.file.myqcloud.com/files/v2/" + BizServer.appid + "/" + BizServer.bucket + "?op=list&num=10"
-        );
+//        HttpUtils.INSTANCE.getAsynThreadHttp("http://gz.file.myqcloud.com/files/v2/" + BizServer.appid + "/" + BizServer.bucket + "?op=list&num=10"
+//        );
     }
 }
