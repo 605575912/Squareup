@@ -69,11 +69,9 @@ import java.util.List;
 
 public class ActivityDetailActivity extends BaseActivity implements View.OnClickListener {
     RecyclerView recyclerView;
-    RecyclerViewAdapter adapter;
     FrameLayout frameLayout;
     LoadEmptyViewControl loadEmptyViewControl;
     IWXAPI iwxapi;
-    List<BaseViewItem> list;
     private LocationService locationService;
 
     @Override
@@ -92,8 +90,6 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
         recyclerView.setLayoutManager(wrapContentLinearLayoutManager);
         loadEmptyViewControl = new LoadEmptyViewControl(getActivity());
         loadEmptyViewControl.addLoadView(frameLayout);
-        list = new ArrayList<BaseViewItem>();
-        adapter = new RecyclerViewAdapter(getActivity(), list);
         recyclerView.setAdapter(adapter);
         TextView backtext = (TextView) findViewById(R.id.backtext);
         HttpUtils.INSTANCE.getAsynMainHttp("file:///android_asset/my.txt", DataUnit.class);//返回根据JSON解析的对象

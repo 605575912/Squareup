@@ -1,7 +1,6 @@
 package com.squareup.lib;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,10 +11,15 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.squareup.lib.utils.AppLibUtils;
+import com.squareup.lib.viewfactory.BaseViewItem;
+import com.squareup.lib.viewfactory.RecyclerViewAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/05/25 0025.
@@ -23,6 +27,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class BaseActivity extends FragmentActivity {
     public View titleView;
+    public List<BaseViewItem> list;
+    public RecyclerViewAdapter adapter;
 
     @Override
     public void setContentView(int layoutResID) {
@@ -88,6 +94,8 @@ public class BaseActivity extends FragmentActivity {
         if (NeedEventBus()) {
             EventBus.getDefault().register(this);
         }
+        list = new ArrayList<BaseViewItem>();
+        adapter = new RecyclerViewAdapter(getActivity(), list);
     }
 
     //是否透明状态栏

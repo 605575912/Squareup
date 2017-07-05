@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.squareup.code.BR;
 import com.squareup.code.R;
 import com.squareup.code.account.APPAccountManager;
-import com.squareup.lib.utils.ToastUtils;
+import com.squareup.code.userinfo.UserinfoActivity;
 import com.squareup.lib.viewfactory.DataBindBaseViewItem;
 
 /**
@@ -36,7 +36,7 @@ public class LoginCardView extends DataBindBaseViewItem implements View.OnClickL
             viewHolder.getViewDataBinding().setVariable(BR.user, APPAccountManager.INSTANCE.getUser());
             viewHolder.getViewDataBinding().setVariable(BR.loginview, this);
             viewHolder.getViewDataBinding().setVariable(BR.accounmanager, APPAccountManager.INSTANCE);
-            APPAccountManager.INSTANCE.AutoLoginUser(activity,viewHolder);
+            APPAccountManager.INSTANCE.AutoLoginUser(activity, viewHolder);
         }
     }
 
@@ -47,9 +47,9 @@ public class LoginCardView extends DataBindBaseViewItem implements View.OnClickL
             intent.setClass(activity, LoginActivity.class);
             activity.startActivity(intent);
         } else {
-            ToastUtils.showToast("查看信息");
+            Intent intent = new Intent();
+            intent.setClass(activity, UserinfoActivity.class);
+            activity.startActivity(intent);
         }
-
-
     }
 }

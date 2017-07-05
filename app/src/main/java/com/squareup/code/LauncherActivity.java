@@ -10,7 +10,6 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 
-
 import com.baidu.mobstat.StatService;
 import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.home.tab.TabsCache;
@@ -21,6 +20,7 @@ import com.squareup.code.views.RadioTextView;
 import com.squareup.code.wx.WxpayModel;
 import com.squareup.code.wxapi.WXEntryActivity;
 import com.squareup.lib.BaseActivity;
+import com.squareup.lib.BuildConfig;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.utils.LogUtil;
 import com.tencent.android.tpush.XGIOperateCallback;
@@ -91,16 +91,15 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         launcherCache.dowlNewWorkData();
 
 // 开发时调用，建议上线前关闭，以免影响性能
-        StatService.setDebugOn(true);
+        StatService.setDebugOn(BuildConfig.DEBUG);
         StatService.start(this);
 //        StatService.setAppChannel();...)
-
 
 
         //代码内动态注册access ID
         //XGPushConfig.setAccessId(this,2100250470);
         //开启信鸽的日志输出，线上版本不建议调用
-        XGPushConfig.enableDebug(this,true);
+        XGPushConfig.enableDebug(this, true);
 
 
                 /*
@@ -115,6 +114,7 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
 
                         LogUtil.i("==============onSuccess=====");
                     }
+
                     @Override
                     public void onFail(Object data, int errCode, String msg) {
                         LogUtil.i("==============onFail=====");
