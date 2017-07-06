@@ -14,13 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.code.R;
-import com.squareup.code.upload.samples.BizServer;
-import com.squareup.code.upload.samples.CreateDirSamples;
-import com.squareup.code.upload.samples.GetObjeceMetadataSamples;
-import com.squareup.code.upload.samples.ListDirSamples;
-import com.squareup.code.upload.samples.RemoveEmptyDirSample;
-import com.squareup.code.upload.samples.UpdateObjectSamples;
+import com.tencent.cos.sample.BizServer;
+import com.tencent.cos.sample.CreateDirSamples;
+import com.tencent.cos.sample.GetObjeceMetadataSamples;
+import com.tencent.cos.sample.ListDirSamples;
+import com.tencent.cos.sample.RemoveEmptyDirSample;
+import com.tencent.cos.sample.UpdateObjectSamples;
+
 
 /**
  * Created by bradyxiao on 2016/9/13.
@@ -57,22 +57,21 @@ public class DirActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
-            case R.id.create:
-                createDir();
-                break;
-            case R.id.delete:
-                deleteDir();
-                break;
-            case R.id.update:
-                updateDir();
-                break;
-            case R.id.stat:
-                statDir();
-                break;
-            case R.id.listDir:
-                listDir();
-                break;
+        if (id == R.id.create) {
+            createDir();
+
+        } else if (id == R.id.delete) {
+            deleteDir();
+
+        } else if (id == R.id.update) {
+            updateDir();
+
+        } else if (id == R.id.stat) {
+            statDir();
+
+        } else if (id == R.id.listDir) {
+            listDir();
+
         }
     }
     /**

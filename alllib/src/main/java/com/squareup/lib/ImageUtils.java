@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
 
@@ -55,7 +56,7 @@ public class ImageUtils {
                 .placeholder(drawable)
                 .error(drawable)
                 .priority(Priority.HIGH);
-        Glide.with(context).load(url).apply(options).into(imageView);
+        Glide.with(context).load(url).transition(new DrawableTransitionOptions()).apply(options).into(imageView);
     }
 //    public static void loadImageAsBitmap(Context context, String url, ImageView imageView, int defaultResId) {
 //        Glide.with(context).load(url).asBitmap().centerCrop().placeholder(defaultResId).into(imageView);

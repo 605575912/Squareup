@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.squareup.code.R;
-import com.squareup.code.upload.samples.BizServer;
-import com.squareup.code.upload.samples.GetObjectSamples;
+
+import com.tencent.cos.sample.BizServer;
+import com.tencent.cos.sample.GetObjectSamples;
 
 import java.io.File;
 
@@ -46,10 +46,9 @@ public class FileDownloadActivity extends Activity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id) {
-            case R.id.download:
-                onDownload();
-                break;
+        if (id == R.id.download) {
+            onDownload();
+
         }
     }
     public void onDownload(){

@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.squareup.code.R;
-import com.squareup.code.upload.samples.BizServer;
-import com.squareup.code.upload.samples.BucketSamples;
+import com.tencent.cos.sample.BizServer;
+import com.tencent.cos.sample.BucketSamples;
+
 
 /**
  * Created by bradyxiao on 2016/9/13.
