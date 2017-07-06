@@ -8,6 +8,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
@@ -15,6 +17,7 @@ import android.os.Environment;
 import android.os.RemoteException;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.v7.graphics.Palette;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
@@ -373,4 +376,103 @@ public class AppLibUtils {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
+
+    void PaletteColor(Bitmap bitmap) {
+        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                // palette为生成的调色板
+                Palette.Swatch s1 = palette.getVibrantSwatch(); //充满活力的色板
+                Palette.Swatch s2 = palette.getDarkVibrantSwatch(); //充满活力的暗色类型色板
+                Palette.Swatch s3 = palette.getLightVibrantSwatch(); //充满活力的亮色类型色板
+                Palette.Swatch s4 = palette.getMutedSwatch(); //黯淡的色板
+                Palette.Swatch s5 = palette.getDarkMutedSwatch(); //黯淡的暗色类型色板（翻译过来没有原汁原味的赶脚啊！）
+                Palette.Swatch s6 = palette.getLightMutedSwatch(); //黯淡的亮色类型色板
+//                if (s1 != null) {
+//                    v_0.setTag(s1.getRgb());
+//
+//                    v_0.setBackgroundColor(s1.getRgb());
+//
+//                    tv_0.setText(toHexFromColor(s1.getRgb()) + "\nVibrant");
+//                } else {
+//                    v_0.setTag(null);
+//                    v_0.setBackgroundColor(Color.parseColor("#ffeeee"));
+//                    tv_0.setText("无法获取改颜色" + "\nVibrant");
+//                }
+//                if (s2 != null) {
+//                    v_1.setTag(s2.getRgb());
+//                    v_1.setBackgroundColor(s2.getRgb());
+//                    tv_1.setText(toHexFromColor(s2.getRgb()) + "\nDarkVibrant");
+//                } else {
+//                    v_1.setTag(null);
+//                    v_1.setBackgroundColor(Color.parseColor("#ffeeee"));
+//                    tv_1.setText("无法获取改颜色" + "\nDarkVibrant");
+//                }
+//                if (s3 != null) {
+//                    v_2.setTag(s3.getRgb());
+//                    v_2.setBackgroundColor(s3.getRgb());
+//                    tv_2.setText(toHexFromColor(s3.getRgb()) + "\nLightVibrant");
+//                } else {
+//                    v_2.setTag(null);
+//                    v_2.setBackgroundColor(Color.parseColor("#ffeeee"));
+//                    tv_2.setText("无法获取改颜色" + "\nLightVibrant");
+//                }
+//                if (s4 != null) {
+//                    v_3.setTag(s4.getRgb());
+//                    v_3.setBackgroundColor(s4.getRgb());
+//                    tv_3.setText(toHexFromColor(s4.getRgb()) + "\nMuted");
+//                } else {
+//                    v_3.setBackgroundColor(Color.parseColor("#ffeeee"));
+//                    v_3.setTag(null);
+//                    tv_3.setText("无法获取改颜色" + "\nMuted");
+//                }
+//                if (s5 != null) {
+//                    v_4.setTag(s5.getRgb());
+//                    v_4.setBackgroundColor(s5.getRgb());
+//                    tv_4.setText(toHexFromColor(s5.getRgb()) + "\nDarkMuted");
+//                } else {
+//                    v_4.setBackgroundColor(Color.parseColor("#ffeeee"));
+//                    v_4.setTag(null);
+//                    tv_4.setText("无法获取改颜色" + "\nDarkMuted");
+//                }
+//                if (s6 != null) {
+//                    v_5.setTag(s6.getRgb());
+//                    v_5.setBackgroundColor(s6.getRgb());
+//                    tv_5.setText(toHexFromColor(s6.getRgb()) + "\nLightMuted");
+//                } else {
+//                    v_5.setBackgroundColor(Color.parseColor("#ffeeee"));
+//                    v_5.setTag(null);
+//                    tv_5.setText("无法获取改颜色" + "\nLightMuted");
+//                }
+
+
+            }
+
+        });
+    }
+
+    private static String toHexFromColor(int color) {
+        String a, r, g, b;
+
+        StringBuilder su = new StringBuilder();
+        a = Integer.toHexString(Color.alpha(color));
+        r = Integer.toHexString(Color.red(color));
+        g = Integer.toHexString(Color.green(color));
+        b = Integer.toHexString(Color.blue(color));
+        a = a.length() == 1 ? "0" + a : a;
+        r = r.length() == 1 ? "0" + r : r;
+        g = g.length() == 1 ? "0" + g : g;
+        b = b.length() == 1 ? "0" + b : b;
+        a = a.toUpperCase();
+        r = r.toUpperCase();
+        g = g.toUpperCase();
+        b = b.toUpperCase();
+        su.append("#");
+        su.append(a);
+        su.append(r);
+        su.append(g);
+        su.append(b);
+        //0xFF0000FF
+        return su.toString();
+    }
 }
