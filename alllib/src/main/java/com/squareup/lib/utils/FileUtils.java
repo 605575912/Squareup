@@ -1,5 +1,6 @@
 package com.squareup.lib.utils;
 
+import android.Manifest;
 import android.os.Environment;
 import android.text.TextUtils;
 
@@ -23,9 +24,16 @@ public class FileUtils {
      */
     public static String getDiskCacheDir() {
         String cachePath;
+        if (!PermissionUtil.selfPermissionGranted(BaseApplication.application, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            return BaseApplication.application.getCacheDir().getPath();
+        }
+        if (!PermissionUtil.selfPermissionGranted(BaseApplication.application, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            return BaseApplication.application.getCacheDir().getPath();
+        }
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                 || !Environment.isExternalStorageRemovable()) {
             if (BaseApplication.application.getExternalCacheDir() == null) {
+
                 cachePath = BaseApplication.application.getCacheDir().getPath();
             } else {
                 cachePath = BaseApplication.application.getExternalCacheDir().getPath();
@@ -57,7 +65,7 @@ public class FileUtils {
                 return file;
             }
         }
-        return null;
+        return file;
     }
 
     public static String readFile(String name) {

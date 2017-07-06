@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import android.os.RemoteException;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.graphics.Palette;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import com.morgoo.droidplugin.pm.PluginManager;
 import com.squareup.lib.BaseApplication;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -474,5 +477,74 @@ public class AppLibUtils {
         su.append(b);
         //0xFF0000FF
         return su.toString();
+    }
+
+
+    /**
+     * 从本地获取广告图片
+     *
+     * @param path
+     * @param width
+     * @param height
+     * @return
+     */
+    Bitmap getimage(String path, int width, int height) {
+        if (TextUtils.isEmpty(path)) {
+            return null;
+        }
+        File file = new File(path);
+        if (!file.exists()) {
+            return null;
+        }
+        try {
+            BitmapFactory.Options newOpts = new BitmapFactory.Options();
+            newOpts.inJustDecodeBounds = false;
+            newOpts.inSampleSize = 1;
+            Bitmap tempbitmap;
+            try {
+                tempbitmap = BitmapFactory.decodeFile(path, newOpts);
+                if (tempbitmap == null) {
+                    //如果图片为null, 图片不完整则删除掉图片
+                    byte[] bytes = new byte[(int) file.length() + 1];
+                    FileInputStream inputStream = new FileInputStream(path);
+                    inputStream.read(bytes);
+                    tempbitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    if (tempbitmap == null) {
+                        file.delete();
+                    }
+                }
+                return tempbitmap;
+            } catch (OutOfMemoryError e) {
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+            newOpts.inJustDecodeBounds = true;
+            tempbitmap = BitmapFactory.decodeFile(path, newOpts);
+            int sreen = width * height;
+            int image = tempbitmap.getHeight() * tempbitmap.getWidth();
+            if (sreen <= 720) {// 防止过小图
+                sreen = 720 * 1080;
+            }
+            int samplesize = image / sreen;
+            if (samplesize < 2) {
+                samplesize = 2;
+            }
+            newOpts.inSampleSize = samplesize;
+            newOpts.inJustDecodeBounds = false;
+            try {
+                tempbitmap = BitmapFactory.decodeFile(path, newOpts);
+                return tempbitmap;
+            } catch (OutOfMemoryError e) {
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }

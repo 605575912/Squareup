@@ -9,8 +9,6 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 import android.widget.Toast;
 
-import com.alibaba.mobileim.YWAPI;
-import com.alibaba.wxlib.util.SysUtil;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.morgoo.droidplugin.PluginHelper;
 import com.tencent.bugly.Bugly;

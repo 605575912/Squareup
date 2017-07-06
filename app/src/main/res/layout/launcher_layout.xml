@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="itemsbean"
             type="com.squareup.code.launcher.LauncherMode.ItemsBean"></variable>
@@ -33,13 +34,21 @@
             android:textColor="#ffffff"
             app:launchertime="@{itemsbean.counttime}" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.squareup.code.views.AutoLinkTextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:lineSpacingExtra="7dp"
             android:text="@{itemsbean.content}"
             android:textColor="@android:color/white"
             android:textSize="25sp" />
+
+        <com.squareup.code.views.AllanimationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </RelativeLayout>
 </layout>

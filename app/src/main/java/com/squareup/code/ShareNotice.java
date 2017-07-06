@@ -3,10 +3,10 @@ package com.squareup.code;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
@@ -98,16 +98,25 @@ public class ShareNotice implements View.OnClickListener {
         }
     };
 
-    public void show(final Activity context) {
+    public void show(Context context) {
         temp = 0;
         v = LayoutInflater.from(context).inflate(R.layout.share_layout, null);
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_APPLICATION,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+//        params = new WindowManager.LayoutParams(
+//                WindowManager.LayoutParams.MATCH_PARENT,
+//                WindowManager.LayoutParams.WRAP_CONTENT,
+//                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
+//                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                PixelFormat.TRANSLUCENT);
+        params = new WindowManager.LayoutParams(WindowManager.LayoutParams.TYPE_TOAST,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE| WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                        | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
                 PixelFormat.TRANSLUCENT);
+
+//        int sdk = Integer.parseInt(Build.VERSION.SDK);
+//        if (sdk < 19){ //Android 4.3之前的版本的TYPE_TOAST不支持响应TOUCH事件，会导致浮窗不能点击、拖动
+//            params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+//        }
         params.flags = params.flags | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
         params.flags = params.flags | WindowManager.LayoutParams.FLAG_FULLSCREEN;
         params.alpha = 1.0f;
@@ -160,9 +169,6 @@ public class ShareNotice implements View.OnClickListener {
                 if (temp != value) {
                     temp = value;
                     v.setTranslationY(value);
-                    if (temp == -50) {
-//
-                    }
                     if (temp == 0) {
                         handler.sendEmptyMessageDelayed(0, 5100);
                     }

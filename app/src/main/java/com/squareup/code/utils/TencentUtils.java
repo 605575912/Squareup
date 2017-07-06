@@ -297,18 +297,18 @@ public class TencentUtils {
         final Bundle params = new Bundle();
         if (shareType != QQShare.SHARE_TO_QQ_TYPE_IMAGE) {
             params.putString(QQShare.SHARE_TO_QQ_TITLE, "title");
-            params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://www.baidu.com");
+            params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://dev.m.imay.com/share.html?room_id=114764&scheme=m.imay.com&host=com.imay.live");
             params.putString(QQShare.SHARE_TO_QQ_SUMMARY, "summary");
         }
         if (shareType == QQShare.SHARE_TO_QQ_TYPE_IMAGE) {
             params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, "http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/fenxiangxiaoxidaoQQ-dingxiangfenxiang-01.png");
         } else {
-            params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/fenxiangxiaoxidaoQQ-dingxiangfenxiang-01.png");
+            params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "http://img.imay.com/pic-0-4744057643658611742-5387.jpg");
         }
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, AppLibUtils.getApplicationName(BaseApplication.application));
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, shareType);
-        params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE);//好友
-//        params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN);//Qzone
+//        params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE);//好友
+        params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN);//Qzone
         if (shareType == QQShare.SHARE_TO_QQ_TYPE_AUDIO) {
 //            params.putString(QQShare.SHARE_TO_QQ_AUDIO_URL, mEditTextAudioUrl.getText().toString());
         }
