@@ -34,7 +34,7 @@ import java.util.List;
 public class DataBindImage {
     @BindingAdapter("loginface")
     public static void setLogin(ImageView iv, String userface) {
-        ImageUtils.loadImage(iv.getContext(), userface, iv, R.drawable.takeout_feedback_avatar_custom_default);
+        ImageUtils.loadCircleImage(iv.getContext(), userface, iv, R.drawable.takeout_feedback_avatar_custom_default);
     }
 
     @BindingAdapter("launcher")

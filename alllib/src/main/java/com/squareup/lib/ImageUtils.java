@@ -11,15 +11,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.TransitionOptions;
-import com.bumptech.glide.load.Transformation;
-import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
-import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 
 
@@ -37,7 +32,6 @@ public class ImageUtils {
     }
 
     public static void loadImage(Context context, String url, ImageView imageView, int defaultResId) {
-
         if (defaultResId == 0) {
             if (TextUtils.isEmpty(url)) {
                 imageView.setImageResource(defaultResId);
@@ -58,6 +52,40 @@ public class ImageUtils {
         }
     }
 
+    public static void loadCircleImage(Context context, String url, ImageView imageView, int defaultResId) {
+        if (defaultResId == 0) {
+            if (TextUtils.isEmpty(url)) {
+                imageView.setImageResource(defaultResId);
+                return;
+            }
+            Glide.with(context).load(url).into(imageView);
+        } else {
+            try {
+                Drawable drawable = context.getResources().getDrawable(defaultResId);
+                loadCircleImage(context, url, imageView, drawable);
+            } catch (Exception e) {
+                if (TextUtils.isEmpty(url)) {
+                    return;
+                }
+                Glide.with(context).load(url).into(imageView);
+            }
+
+        }
+    }
+
+    public static void loadCircleImage(Context context, String url, ImageView imageView, Drawable drawable) {
+        if (TextUtils.isEmpty(url)) {
+            imageView.setImageDrawable(drawable);
+            return;
+        }
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(drawable)
+                .error(drawable)
+                .priority(Priority.HIGH).dontAnimate().transform(new GlideCircleTransform(context));
+        Glide.with(context).load(url).apply(options).into(imageView);
+    }
+
     public static void loadImage(Context context, String url, ImageView imageView, Drawable drawable) {
         if (TextUtils.isEmpty(url)) {
             imageView.setImageDrawable(drawable);
@@ -67,14 +95,14 @@ public class ImageUtils {
                 .centerCrop()
                 .placeholder(drawable)
                 .error(drawable)
-                .priority(Priority.HIGH);
-        Glide.with(context).load(url).transition(new GlideCircleTransform(context)).apply(options).into(imageView);
+                .priority(Priority.HIGH).dontAnimate();
+        Glide.with(context).load(url).apply(options).into(imageView);
     }
 //    public static void loadImageAsBitmap(Context context, String url, ImageView imageView, int defaultResId) {
 //        Glide.with(context).load(url).asBitmap().centerCrop().placeholder(defaultResId).into(imageView);
 //    }
 
-    static class GlideCircleTransform extends TransitionOptions {
+    static class GlideCircleTransform extends BitmapTransformation {
 
         private Paint mBorderPaint;
         private float mBorderWidth;
@@ -125,8 +153,20 @@ public class ImageUtils {
         }
 
 
+        @Override
+        public void updateDiskCacheKey(MessageDigest messageDigest) {
 
+        }
 
+        @Override
+        public boolean equals(Object o) {
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return 0;
+        }
 
 
     }
