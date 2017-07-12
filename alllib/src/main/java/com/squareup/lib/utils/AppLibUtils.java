@@ -21,6 +21,7 @@ import android.provider.MediaStore;
 import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.morgoo.droidplugin.pm.PluginManager;
@@ -151,20 +152,24 @@ public class AppLibUtils {
 //        return density;
 //    }
 
-    public static double getdensity(Activity activity) {
+    public static double getdensity(Context context) {
         if (density > 0) {
             return density;
         }
+        if (context == null) {
+            return 1;
+        }
         Point point;
-        DisplayMetrics dm = activity.getResources().getDisplayMetrics();
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
         density = dm.density;
         if (Build.VERSION.SDK_INT > 13) {
-            dm = activity.getResources().getDisplayMetrics();
+            dm = context.getResources().getDisplayMetrics();
             point = new Point();
+            WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             if (Build.VERSION.SDK_INT > 16) {
-                activity.getWindowManager().getDefaultDisplay().getRealSize(point);
+                wm.getDefaultDisplay().getRealSize(point);
             } else {
-                activity.getWindowManager().getDefaultDisplay().getSize(point);
+                wm.getDefaultDisplay().getSize(point);
             }
             double x = Math.pow(point.x / dm.xdpi, 2);
             double y = Math.pow(point.y / dm.ydpi, 2);
@@ -266,9 +271,10 @@ public class AppLibUtils {
                 (String) packageManager.getApplicationLabel(applicationInfo);
         return applicationName;
     }
+
     public static int getMODE_MULTI_PROCESS() {
         int MODE_MULTI_PROCESS = Context.MODE_PRIVATE;
-       int mVersion = Integer.parseInt(Build.VERSION.SDK);// Integer.parseInt(Build.VERSION.SDK);
+        int mVersion = Integer.parseInt(Build.VERSION.SDK);// Integer.parseInt(Build.VERSION.SDK);
         if (mVersion >= 9) {
             Object obj = ReflectHelper.getStaticFieldValue(Context.class, "MODE_MULTI_PROCESS");
             if (obj != null && obj instanceof Integer) {
@@ -277,7 +283,6 @@ public class AppLibUtils {
         }
         return MODE_MULTI_PROCESS;
     }
-
 
 
     /**

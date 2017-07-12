@@ -16,6 +16,6 @@
     </declare-styleable>
     <declare-styleable name="MindleViewPager">
         <attr name="animator" format="boolean" />
-        <attr name="pagemargin" format="dimension" />
+        <attr name="margin" format="dimension" />
     </declare-styleable>
 </resources>

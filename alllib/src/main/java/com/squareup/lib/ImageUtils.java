@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -72,6 +74,38 @@ public class ImageUtils {
 
         }
     }
+    public static void loadRoundImage(Context context, String url, ImageView imageView, int defaultResId) {
+        if (defaultResId == 0) {
+            if (TextUtils.isEmpty(url)) {
+                imageView.setImageResource(defaultResId);
+                return;
+            }
+            Glide.with(context).load(url).into(imageView);
+        } else {
+            try {
+                Drawable drawable = context.getResources().getDrawable(defaultResId);
+                loadRoundImage(context, url, imageView, drawable);
+            } catch (Exception e) {
+                if (TextUtils.isEmpty(url)) {
+                    return;
+                }
+                Glide.with(context).load(url).into(imageView);
+            }
+
+        }
+    }
+    public static void loadRoundImage(Context context, String url, ImageView imageView, Drawable drawable) {
+        if (TextUtils.isEmpty(url)) {
+            imageView.setImageDrawable(drawable);
+            return;
+        }
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(drawable)
+                .error(drawable)
+                .priority(Priority.HIGH).dontAnimate().transform(new RoundTransform(20));
+        Glide.with(context).load(url).apply(options).into(imageView);
+    }
 
     public static void loadCircleImage(Context context, String url, ImageView imageView, Drawable drawable) {
         if (TextUtils.isEmpty(url)) {
@@ -98,9 +132,58 @@ public class ImageUtils {
                 .priority(Priority.HIGH).dontAnimate();
         Glide.with(context).load(url).apply(options).into(imageView);
     }
-//    public static void loadImageAsBitmap(Context context, String url, ImageView imageView, int defaultResId) {
+
+    //    public static void loadImageAsBitmap(Context context, String url, ImageView imageView, int defaultResId) {
 //        Glide.with(context).load(url).asBitmap().centerCrop().placeholder(defaultResId).into(imageView);
 //    }
+    static class RoundTransform extends BitmapTransformation {
+        int radius;
+
+        public RoundTransform(int radius) {
+            this.radius = radius;
+        }
+
+        protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+            return circleCrop(toTransform, outWidth, outHeight);
+        }
+
+        private Bitmap circleCrop(Bitmap source, int outWidth, int outHeight) {
+            if (source == null) return null;
+//            int width = source.getWidth();
+//            int height = source.getHeight();
+
+            final Paint paint = new Paint();
+            paint.setAntiAlias(true);
+
+            Bitmap bitmap = Bitmap.createBitmap(outWidth, outHeight, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+
+            RectF rect = new RectF(0, 0, outWidth, outHeight);
+            canvas.drawRoundRect(rect, radius, radius, paint);
+
+            paint.setXfermode(new PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
+            canvas.drawBitmap(source, 0, 0, paint);
+            return bitmap;
+        }
+
+
+        @Override
+        public void updateDiskCacheKey(MessageDigest messageDigest) {
+
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return 0;
+        }
+
+
+    }
 
     static class GlideCircleTransform extends BitmapTransformation {
 

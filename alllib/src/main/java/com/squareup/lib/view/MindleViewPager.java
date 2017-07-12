@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
 import com.squareup.lib.R;
+import com.squareup.lib.utils.AppLibUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -34,9 +35,10 @@ import java.util.List;
 public class MindleViewPager extends RelativeLayout {
     private ViewPager viewPager;
     private boolean animator = false;
-    private int pagemargin = 0;
+    private int margin = 0;
     LinearLayout indicator;
     ViewPager.OnPageChangeListener listener;
+    private long delaytime = 5000;
 
     public MindleViewPager(Context context) {
         super(context);
@@ -73,14 +75,14 @@ public class MindleViewPager extends RelativeLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         isdeotry = false;
-        handler.sendEmptyMessageDelayed(0, 5000);
+        handler.sendEmptyMessageDelayed(0, delaytime);
     }
 
     private void init(Context context, AttributeSet attrs) {
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MindleViewPager);
             animator = a.getBoolean(R.styleable.MindleViewPager_animator, false);
-            pagemargin = (int) a.getDimension(R.styleable.MindleViewPager_pagemargin, 0f);
+            margin = (int) a.getDimension(R.styleable.MindleViewPager_margin, 0f);
             a.recycle();
         }
 
@@ -92,7 +94,7 @@ public class MindleViewPager extends RelativeLayout {
 
         if (animator) {
             viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-            viewPager.setPageMargin(pagemargin);
+//            viewPager.setPageMargin(pagemargin);
         }
         setOnTouchListener(new OnTouchListener() {
 
@@ -102,11 +104,22 @@ public class MindleViewPager extends RelativeLayout {
             }
 
         });
+        viewPager.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
+                    handler.removeCallbacksAndMessages(null);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    handler.sendEmptyMessageDelayed(0, delaytime);
+                }
+                return false;
+            }
+        });
         addView(viewPager);
         indicator = new LinearLayout(context);
         indicator.setOrientation(LinearLayout.HORIZONTAL);
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.bottomMargin = 30;
+        params.bottomMargin = margin / 2;
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         addView(indicator, params);
@@ -163,6 +176,10 @@ public class MindleViewPager extends RelativeLayout {
         if (animator) {
             viewPager.setPageMargin(marginPixels);
         }
+    }
+
+    public ViewPager getViewPager() {
+        return viewPager;
     }
 
     public void setOnPageChangeListener(final ViewPager.OnPageChangeListener listener) {
@@ -225,7 +242,6 @@ public class MindleViewPager extends RelativeLayout {
 
         private void setCurrentItem(int item, boolean somoth) {
             int current = viewPager.getCurrentItem();
-            //如果页面相隔大于1,就设置页面切换的动画的时间为0
             if (Math.abs(current - item) > 1) {
                 scroller.setNoDuration(true);
                 viewPager.setCurrentItem(item, somoth);
@@ -242,7 +258,6 @@ public class MindleViewPager extends RelativeLayout {
             try {
                 Field field = cl.getDeclaredField("mScroller");
                 field.setAccessible(true);
-                //利用反射设置mScroller域为自己定义的MScroller
                 field.set(viewPager, scroller);
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
@@ -299,7 +314,7 @@ public class MindleViewPager extends RelativeLayout {
                 int i = viewPager.getCurrentItem();
                 viewPager.setCurrentItem(i + 1, true);
                 handler.removeCallbacksAndMessages(null);
-                handler.sendEmptyMessageDelayed(0, 5000);
+                handler.sendEmptyMessageDelayed(0, delaytime);
             }
         }
     };
@@ -322,16 +337,18 @@ public class MindleViewPager extends RelativeLayout {
         }
         handler.removeCallbacksAndMessages(null);
         indicator.removeAllViews();
+        indicator.setGravity(Gravity.CENTER_VERTICAL);
         if (list != null && list.size() > 0) {
             if (selected != 0 && normal != 0) {
+                int banner_indicator = (int) (AppLibUtils.getdensity(getContext()) * 3);
                 for (int i = 0; i < list.size(); i++) {
                     ImageView imageView = new ImageView(getContext());
-                    imageView.setPadding(10, 0, 10, 0);
+                    imageView.setPadding(banner_indicator, 0, banner_indicator, 0);
                     imageView.setImageResource(normal);
                     indicator.addView(imageView);
                 }
             }
-            handler.sendEmptyMessageDelayed(0, 2000);
+            handler.sendEmptyMessageDelayed(0, delaytime);
         }
     }
 
@@ -366,7 +383,7 @@ public class MindleViewPager extends RelativeLayout {
             if (lunAdapter != null) {
                 View o = lunAdapter.getview(container, a);
                 if (o != null) {
-                    (container).addView(o);
+                    (container).addView(o, -1);
                     return o;
                 }
             }
@@ -377,7 +394,7 @@ public class MindleViewPager extends RelativeLayout {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            (container).removeView((ImageView) object);
+            (container).removeView((View) object);
         }
     }
 
@@ -386,9 +403,9 @@ public class MindleViewPager extends RelativeLayout {
         imageView.setImageResource(id);
     }
 
-    private static final float MAX_SCALE = 1.1999f;
+    public static final float MAX_SCALE = 1.2f;
     private static final float MIN_SCALE = 1.0f;//0.85f
-    private static final float VIEW_SCALE = 0.5f;
+    public static final float VIEW_SCALE = 0.7f;
 
     private class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         @Override
@@ -400,7 +417,6 @@ public class MindleViewPager extends RelativeLayout {
             { // [-1,1]
                 float scaleFactor = MIN_SCALE + (1 - Math.abs(position)) * (MAX_SCALE - MIN_SCALE);
                 view.setScaleX(scaleFactor);
-                //每次滑动后进行微小的移动目的是为了防止在三星的某些手机上出现两边的页面为显示的情况
                 if (position > 0) {
                     view.setTranslationX(-scaleFactor * 2);
                 } else if (position < 0) {
@@ -439,11 +455,15 @@ public class MindleViewPager extends RelativeLayout {
                         defaulth = parentparams.height;
                     }
                 }
-                h = (int) (defaulth / (MAX_SCALE));
+                h = (int) ((defaulth - (margin * 2)) / MAX_SCALE);
                 w = (int) (defaultw * VIEW_SCALE);
+                viewPager.setPageMargin((defaultw - w) / 3);
                 LayoutParams params = new LayoutParams(
                         w,
                         h);
+                params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                float padding = (h * (MAX_SCALE - 1)) / 2;
+                params.topMargin = (int) (margin + padding);
                 viewPager.setLayoutParams(params);
             }
             super.onMeasure(MeasureSpec.makeMeasureSpec(defaultw, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(defaulth, MeasureSpec.EXACTLY));
@@ -451,4 +471,5 @@ public class MindleViewPager extends RelativeLayout {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
+
 }

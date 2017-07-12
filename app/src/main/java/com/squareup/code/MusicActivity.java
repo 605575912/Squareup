@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
@@ -42,7 +43,7 @@ public class MusicActivity extends Activity {
         final TwinklingRefreshLayout refreshLayout = (TwinklingRefreshLayout) findViewById(R.id.refresh);
         ProgressLayout headerView = new ProgressLayout(this);
         refreshLayout.setHeaderView(headerView);
-//        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+//        recyclerView.setOnScrollListener(new AbsListView.OnScrollListener() {
 //            @Override
 //            public void onScrollStateChanged(AbsListView view, int scrollState) {
 //            }

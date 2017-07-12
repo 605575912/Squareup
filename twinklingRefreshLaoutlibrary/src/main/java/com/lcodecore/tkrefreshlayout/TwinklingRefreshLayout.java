@@ -119,7 +119,7 @@ public class TwinklingRefreshLayout extends RelativeLayout implements PullListen
     private final int mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
     //设置手势动作的监听器
     private PullListener pullListener = this;
-    View title;
+    private View title;
     private final NestedScrollingChildHelper mChildHelper;
 
     public TwinklingRefreshLayout(Context context) {

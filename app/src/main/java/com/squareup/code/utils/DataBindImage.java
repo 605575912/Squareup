@@ -34,7 +34,7 @@ import java.util.List;
 public class DataBindImage {
     @BindingAdapter("loginface")
     public static void setLogin(ImageView iv, String userface) {
-        ImageUtils.loadCircleImage(iv.getContext(), userface, iv, R.drawable.takeout_feedback_avatar_custom_default);
+        ImageUtils.loadRoundImage(iv.getContext(), userface, iv, R.drawable.takeout_feedback_avatar_custom_default);
     }
 
     @BindingAdapter("launcher")
@@ -70,7 +70,7 @@ public class DataBindImage {
             public View getview(ViewGroup container, int position) {
                 ImageView imageView = new ImageView(container.getContext());
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                ImageUtils.loadImage(container.getContext(), bannerModels.get(position).getImgurl(), imageView);
+                ImageUtils.loadImage(container.getContext(), "http://img.imay.com/2017-07-06_595e117c3d0a2.jpg", imageView);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
