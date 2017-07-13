@@ -45,12 +45,12 @@ public class PermissionsGrantActivity extends Activity {
     private int mReqCode; // 记录请求码
     private int[] mGrantResults;
 
-    public  interface PermissionHandler {
+    public interface PermissionHandler {
         /**
          * @param grantedpermissions 获得授权的权限
          * @param denied_permissions 被拒的权限
          */
-         void onPermissionsResult(String[] grantedpermissions, String[] denied_permissions);
+        void onPermissionsResult(String[] grantedpermissions, String[] denied_permissions);
     }
 
     public static void grantPermissions(Context context, String[] permissions, PermissionHandler handler) {
@@ -64,7 +64,7 @@ public class PermissionsGrantActivity extends Activity {
             return;
         }
         String[] denied_permissions = getGrantPermissions(context, permissions, PackageManager.PERMISSION_DENIED);
-        if (denied_permissions == null) { // 全部被授权，直接回调handler
+        if (denied_permissions == null || permissions == null || permissions.length == 0) { // 全部被授权，直接回调handler
             handler.onPermissionsResult(permissions, null);
             return;
         }
@@ -360,9 +360,10 @@ public class PermissionsGrantActivity extends Activity {
             return false;
         }
     }
+
     public static Object callMethod(Object obj, String methodname, Class<?> types[], Object values[]) {
         // 注：数组类型为:基本类型+[].class,如String[]写成 new Class<?>[]{String[].class}
-        if(obj==null){
+        if (obj == null) {
             return null;
         }
         Class<?> classz = obj.getClass();
@@ -377,15 +378,17 @@ public class PermissionsGrantActivity extends Activity {
         }
         return retValue;
     }
-    public static <T> T callMethod(Object receiver,Method method, Object... args) {
+
+    public static <T> T callMethod(Object receiver, Method method, Object... args) {
         try {
-            return (T) method.invoke(receiver,args);
+            return (T) method.invoke(receiver, args);
         } catch (IllegalAccessException e) {
         } catch (InvocationTargetException e) {
-        }catch(Exception e){
+        } catch (Exception e) {
         }
         return null;
     }
+
     /**
      * 判断指定的权限是否全部被“不再显示”所拒绝的
      *

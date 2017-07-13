@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -74,6 +73,7 @@ public class ImageUtils {
 
         }
     }
+
     public static void loadRoundImage(Context context, String url, ImageView imageView, int defaultResId) {
         if (defaultResId == 0) {
             if (TextUtils.isEmpty(url)) {
@@ -94,6 +94,7 @@ public class ImageUtils {
 
         }
     }
+
     public static void loadRoundImage(Context context, String url, ImageView imageView, Drawable drawable) {
         if (TextUtils.isEmpty(url)) {
             imageView.setImageDrawable(drawable);
@@ -151,19 +152,28 @@ public class ImageUtils {
             if (source == null) return null;
 //            int width = source.getWidth();
 //            int height = source.getHeight();
-
-            final Paint paint = new Paint();
+            if (source == null) return null;
+            Bitmap result = Bitmap.createBitmap(outWidth, outHeight, Bitmap.Config.ARGB_8888);
+            Bitmap newsource = Bitmap.createScaledBitmap(source, outWidth, outHeight, true);
+            Canvas canvas = new Canvas(result);
+            Paint paint = new Paint();
+            paint.setShader(new BitmapShader(newsource, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
             paint.setAntiAlias(true);
+            RectF rectF = new RectF(0f, 0f, outWidth, outHeight);
+            canvas.drawRoundRect(rectF, radius, radius, paint);
 
-            Bitmap bitmap = Bitmap.createBitmap(outWidth, outHeight, Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bitmap);
-
-            RectF rect = new RectF(0, 0, outWidth, outHeight);
-            canvas.drawRoundRect(rect, radius, radius, paint);
-
-            paint.setXfermode(new PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
-            canvas.drawBitmap(source, 0, 0, paint);
-            return bitmap;
+//            final Paint paint = new Paint();
+//            paint.setAntiAlias(true);
+//
+//            Bitmap bitmap = Bitmap.createBitmap(outWidth, outHeight, Bitmap.Config.ARGB_8888);
+//            Canvas canvas = new Canvas(bitmap);
+//
+//            RectF rect = new RectF(0, 0, outWidth, outHeight);
+//            canvas.drawRoundRect(rect, radius, radius, paint);
+//
+//            paint.setXfermode(new PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
+//            canvas.drawBitmap(source, 0, 0, paint);
+            return result;
         }
 
 

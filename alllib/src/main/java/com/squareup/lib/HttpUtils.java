@@ -32,8 +32,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -176,7 +174,7 @@ public enum HttpUtils {
 
     public String getAsynMainHttp(final File file, final Class jsonmodel) {
         if (file != null && file.exists()) {
-            getAsynMainHttp(file.getPath(),jsonmodel);
+            getAsynMainHttp(file.getPath(), jsonmodel);
             return file.getPath();
         } else {
             failed(0, "", "file not exists");
@@ -464,9 +462,13 @@ public enum HttpUtils {
     private String getNameFromUrl(String url) {
         int i = url.lastIndexOf("/");
         int n = url.lastIndexOf(".");
-        if (i > -1 && n > -1) {
-            return AppLibUtils.getMd5(url) + url.substring(i + 1);
+        if (i > -1 && n > -1 && i < url.length() - 1) {
+            return AppLibUtils.getMd5(url) + url.substring(i + 1, n).replace(".", "");
         }
+        return AppLibUtils.getMd5(url);
+    }
+
+    private String getTempName(String url) {
         return AppLibUtils.getMd5(url);
     }
 
@@ -496,6 +498,7 @@ public enum HttpUtils {
                         listener.onDownloadFailed();
                         return;
                     }
+                    File tempfile = FileUtils.getFile(getTempName(url));
                     ResponseBody body = response.body();
                     if (body == null) {
                         listener.onDownloadFailed();
@@ -503,7 +506,7 @@ public enum HttpUtils {
                     }
                     is = body.byteStream();
                     long total = body.contentLength();
-                    fos = new FileOutputStream(file);
+                    fos = new FileOutputStream(tempfile);
                     long sum = 0;
                     while ((len = is.read(buf)) != -1) {
                         fos.write(buf, 0, len);
@@ -514,6 +517,7 @@ public enum HttpUtils {
                     }
                     fos.flush();
                     // 下载完成
+                    tempfile.renameTo(file);
                     listener.onDownloadSuccess();
                 } catch (Exception e) {
                     listener.onDownloadFailed();
