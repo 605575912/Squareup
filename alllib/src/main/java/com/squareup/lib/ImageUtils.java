@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -150,29 +152,32 @@ public class ImageUtils {
 
         private Bitmap circleCrop(Bitmap source, int outWidth, int outHeight) {
             if (source == null) return null;
-//            int width = source.getWidth();
-//            int height = source.getHeight();
-            if (source == null) return null;
             Bitmap result = Bitmap.createBitmap(outWidth, outHeight, Bitmap.Config.ARGB_8888);
-            Bitmap newsource = Bitmap.createScaledBitmap(source, outWidth, outHeight, true);
+            int sourcewidth = source.getWidth();
+            int sourceheight = source.getHeight();
+            float sale = sourcewidth * 1.0f / sourceheight;
+            float outsale = outWidth * 1.0f / outHeight;
+            float destwidth;
+            float destheight;
+            Rect srcR = new Rect(0, 0, 0, 0);
+            if (outsale > sale) {
+                destheight = (sourcewidth / outsale);
+                srcR.right = sourcewidth;
+                srcR.top = (int) ((sourceheight - destheight) / 2);
+                srcR.bottom = srcR.top + (int) destheight;
+            } else {
+                destwidth = (sourceheight * outsale);
+                srcR.left = (int) ((sourcewidth - destwidth) / 2);
+                srcR.right = srcR.left + (int) destwidth;
+                srcR.bottom = sourceheight;
+            }
             Canvas canvas = new Canvas(result);
             Paint paint = new Paint();
-            paint.setShader(new BitmapShader(newsource, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
             paint.setAntiAlias(true);
-            RectF rectF = new RectF(0f, 0f, outWidth, outHeight);
-            canvas.drawRoundRect(rectF, radius, radius, paint);
-
-//            final Paint paint = new Paint();
-//            paint.setAntiAlias(true);
-//
-//            Bitmap bitmap = Bitmap.createBitmap(outWidth, outHeight, Bitmap.Config.ARGB_8888);
-//            Canvas canvas = new Canvas(bitmap);
-//
-//            RectF rect = new RectF(0, 0, outWidth, outHeight);
-//            canvas.drawRoundRect(rect, radius, radius, paint);
-//
-//            paint.setXfermode(new PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
-//            canvas.drawBitmap(source, 0, 0, paint);
+            RectF rect = new RectF(0, 0, outWidth, outHeight);
+            canvas.drawRoundRect(rect, radius, radius, paint);
+            paint.setXfermode(new PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
+            canvas.drawBitmap(source, srcR, rect, paint);
             return result;
         }
 

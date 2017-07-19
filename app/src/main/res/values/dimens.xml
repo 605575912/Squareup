@@ -14,4 +14,9 @@
 
 
     <dimen name="share_notiecH">122dip</dimen>
+    <dimen name="title_height">130dp</dimen>
+    <dimen name="title_image">14dp</dimen>
+    <dimen name="title_image_left">20dp</dimen>
+    <dimen name="meilititle_bottom">20dp</dimen>
+    <dimen name="title_top">20dp</dimen>
 </resources>

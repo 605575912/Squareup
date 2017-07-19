@@ -26,4 +26,5 @@
     <string name="qq">QQ</string>
     <string name="phone">手机</string>
     <string name="login_failed">登录失败</string>
+    <string name="recharge_m">魅钻余额</string>
 </resources>

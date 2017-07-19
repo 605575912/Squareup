@@ -47,6 +47,10 @@
             android:textColor="@android:color/white"
             android:textSize="25sp" />
 
+        <com.squareup.code.views.RechargeTitle
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.squareup.code.views.RechargeTitle>
+
         <com.squareup.code.views.AllanimationView
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
