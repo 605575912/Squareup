@@ -20,19 +20,19 @@ public class ToastUtils {
             @Override
             public void run() {
                 if (toast == null) {
-                    toast = Toast.makeText(BaseApplication.application, text, Toast.LENGTH_LONG);
+                    toast = Toast.makeText(BaseApplication.getApplication(), text, Toast.LENGTH_LONG);
                 }
                 toast.setText(text);
                 toast.show();
             }
         };
-        Handler handler = new Handler(BaseApplication.application.getMainLooper());
+        Handler handler = new Handler(BaseApplication.getApplication().getMainLooper());
         handler.post(toastRunnable);
     }
 
     public static void showToast(final int resId) {
         try {
-            CharSequence s = BaseApplication.application.getResources().getText(resId);
+            CharSequence s = BaseApplication.getApplication().getResources().getText(resId);
             showToast(s);
         } catch (Exception e) {
             showToast(String.valueOf(resId));

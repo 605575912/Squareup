@@ -97,7 +97,7 @@ public class TencentUtils {
     }
 
     public void autoLogin(final Activity activity, final IUiListener iUiListener) {
-        final Tencent mTencent = Tencent.createInstance(APP_ID, BaseApplication.application);
+        final Tencent mTencent = Tencent.createInstance(APP_ID, BaseApplication.getApplication());
         if (!mTencent.isSessionValid()) {
             loginListener = new IUiListener() {
                 @Override
@@ -133,7 +133,7 @@ public class TencentUtils {
                 }
             };
             int MODE_MULTI_PROCESS = AppLibUtils.getMODE_MULTI_PROCESS();
-            SharedPreferences sp = CryptSharedPreferences.getSharedPreferences(BaseApplication.application, "qq_token",
+            SharedPreferences sp = CryptSharedPreferences.getSharedPreferences(BaseApplication.getApplication(), "qq_token",
                     MODE_MULTI_PROCESS);
             String access_token = sp.getString("access_token", "");
             String openid = sp.getString("openid", "");
@@ -157,7 +157,7 @@ public class TencentUtils {
     }
 
     public void login(final Activity activity, final IUiListener iUiListener) {
-        final Tencent mTencent = Tencent.createInstance(APP_ID, BaseApplication.application);
+        final Tencent mTencent = Tencent.createInstance(APP_ID, BaseApplication.getApplication());
         if (!mTencent.isSessionValid()) {
             loginListener = new IUiListener() {
                 @Override
@@ -196,7 +196,7 @@ public class TencentUtils {
 //            例如：SCOPE = “get_user_info,add_t”；所有权限用“all”
 
             int MODE_MULTI_PROCESS = AppLibUtils.getMODE_MULTI_PROCESS();
-            SharedPreferences sp = CryptSharedPreferences.getSharedPreferences(BaseApplication.application, "qq_token",
+            SharedPreferences sp = CryptSharedPreferences.getSharedPreferences(BaseApplication.getApplication(), "qq_token",
                     MODE_MULTI_PROCESS);
             String access_token = sp.getString("access_token", "");
             String openid = sp.getString("openid", "");
@@ -221,7 +221,7 @@ public class TencentUtils {
 
     private void saveAccess_token(String access_token, String openid, long expires_in) {
         int MODE_MULTI_PROCESS = AppLibUtils.getMODE_MULTI_PROCESS();
-        SharedPreferences sp = CryptSharedPreferences.getSharedPreferences(BaseApplication.application, "qq_token",
+        SharedPreferences sp = CryptSharedPreferences.getSharedPreferences(BaseApplication.getApplication(), "qq_token",
                 MODE_MULTI_PROCESS);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("access_token", access_token);
@@ -232,9 +232,9 @@ public class TencentUtils {
     }
 
     public void logout() {
-        Tencent mTencent = Tencent.createInstance(APP_ID, BaseApplication.application);
+        Tencent mTencent = Tencent.createInstance(APP_ID, BaseApplication.getApplication());
         if (!mTencent.isSessionValid()) {
-            mTencent.logout(BaseApplication.application);
+            mTencent.logout(BaseApplication.getApplication());
         }
 
     }
@@ -305,7 +305,7 @@ public class TencentUtils {
         } else {
             params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "http://img.imay.com/pic-0-4744057643658611742-5387.jpg");
         }
-        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, AppLibUtils.getApplicationName(BaseApplication.application));
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, AppLibUtils.getApplicationName(BaseApplication.getApplication()));
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, shareType);
 //        params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE);//好友
         params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN);//Qzone
@@ -344,7 +344,7 @@ public class TencentUtils {
 
             }
         };
-        Tencent mTencent = Tencent.createInstance(APP_ID, BaseApplication.application);
+        Tencent mTencent = Tencent.createInstance(APP_ID, BaseApplication.getApplication());
         mTencent.shareToQQ(activity, params, loginListener);
     }
 }

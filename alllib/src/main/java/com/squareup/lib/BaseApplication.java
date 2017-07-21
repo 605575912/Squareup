@@ -24,13 +24,16 @@ import static android.os.Build.VERSION.SDK_INT;
  * @since 2017/1/3
  */
 public class BaseApplication extends Application {
-    public static BaseApplication application;
+    private static Application application;
+
+    public static Application getApplication() {
+        return TestBaseApplication.application;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         application = this;
-
 
 
         ViewTarget.setTagId(com.squareup.lib.R.id.glide_id);
@@ -121,7 +124,6 @@ public class BaseApplication extends Application {
         };
 
 
-
         // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId,调试时将第三个参数设置为true
         Bugly.init(this, "b5f9e8654b", true);
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
@@ -166,7 +168,7 @@ public class BaseApplication extends Application {
      * 如果想更新so，可以将System.loadLibrary替换成Beta.loadLibrary
      */
     static {
-        Beta.loadLibrary("mylib");
+//        Beta.loadLibrary("mylib");
     }
 
     protected void enabledStrictMode() {
@@ -196,7 +198,7 @@ public class BaseApplication extends Application {
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
     }
 
-    public void Exit() {
+    public static void Exit() {
         try {
             System.exit(0);
         } catch (

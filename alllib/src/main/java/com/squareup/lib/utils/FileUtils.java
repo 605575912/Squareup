@@ -24,22 +24,22 @@ public class FileUtils {
      */
     public static String getDiskCacheDir() {
         String cachePath;
-        if (!PermissionUtil.selfPermissionGranted(BaseApplication.application, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            return BaseApplication.application.getCacheDir().getPath();
+        if (!PermissionUtil.selfPermissionGranted(BaseApplication.getApplication(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            return BaseApplication.getApplication().getCacheDir().getPath();
         }
-        if (!PermissionUtil.selfPermissionGranted(BaseApplication.application, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            return BaseApplication.application.getCacheDir().getPath();
+        if (!PermissionUtil.selfPermissionGranted(BaseApplication.getApplication(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            return BaseApplication.getApplication().getCacheDir().getPath();
         }
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                 || !Environment.isExternalStorageRemovable()) {
-            if (BaseApplication.application.getExternalCacheDir() == null) {
+            if (BaseApplication.getApplication().getExternalCacheDir() == null) {
 
-                cachePath = BaseApplication.application.getCacheDir().getPath();
+                cachePath = BaseApplication.getApplication().getCacheDir().getPath();
             } else {
-                cachePath = BaseApplication.application.getExternalCacheDir().getPath();
+                cachePath = BaseApplication.getApplication().getExternalCacheDir().getPath();
             }
         } else {
-            cachePath = BaseApplication.application.getCacheDir().getPath();
+            cachePath = BaseApplication.getApplication().getCacheDir().getPath();
         }
         return cachePath;
     }

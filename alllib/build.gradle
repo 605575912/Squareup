@@ -127,4 +127,5 @@ dependencies {
     compile project(':OpenIMSDK_2.0.2.1')
     compile project(':xgpush')
     compile project(':qqshare')
+
 }

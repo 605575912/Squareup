@@ -221,7 +221,7 @@ public class ShareNotice implements View.OnClickListener {
 
     private IWXAPI create() {
         if (iwxapi == null) {
-            iwxapi = WXAPIFactory.createWXAPI(BaseApplication.application, WXEntryActivity.APP_ID, true);
+            iwxapi = WXAPIFactory.createWXAPI(BaseApplication.getApplication(), WXEntryActivity.APP_ID, true);
             iwxapi.registerApp(WXEntryActivity.APP_ID);
         }
         return iwxapi;

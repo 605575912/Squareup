@@ -128,7 +128,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        BaseApplication.application.Exit();
+        BaseApplication.Exit();
     }
 
     @Override

@@ -47,6 +47,7 @@ import com.squareup.code.utils.LoadEmptyViewControl;
 import com.squareup.code.wx.Util;
 import com.squareup.code.wxapi.WXEntryActivity;
 import com.squareup.lib.BaseActivity;
+import com.squareup.lib.BaseApplication;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.HttpUtils;
 import com.squareup.lib.utils.LogUtil;
@@ -512,7 +513,7 @@ public class ActivityDetailActivity extends BaseActivity implements View.OnClick
 
     private IWXAPI create() {
         if (iwxapi == null) {
-            iwxapi = WXAPIFactory.createWXAPI(MyApplication.application, WXEntryActivity.APP_ID, true);
+            iwxapi = WXAPIFactory.createWXAPI(BaseApplication.getApplication(), WXEntryActivity.APP_ID, true);
             iwxapi.registerApp(WXEntryActivity.APP_ID);
         }
         return iwxapi;

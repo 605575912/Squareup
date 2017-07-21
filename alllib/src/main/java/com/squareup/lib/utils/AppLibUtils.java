@@ -130,9 +130,9 @@ public class AppLibUtils {
 
     public static int getStatusBarHeight() {
         int result = 0;
-        int resourceId = BaseApplication.application.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = BaseApplication.getApplication().getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            result = BaseApplication.application.getResources().getDimensionPixelSize(resourceId);
+            result = BaseApplication.getApplication().getResources().getDimensionPixelSize(resourceId);
         }
         return result;
     }

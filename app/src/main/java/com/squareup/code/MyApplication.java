@@ -32,7 +32,7 @@ public class MyApplication extends BaseApplication {
 //第一个参数是Application Context
 //这里的APP_KEY即应用创建时申请的APP_KEY，同时初始化必须是在主进程中
         if (SysUtil.isMainProcess()) {
-            YWAPI.init(application, YWCom.APP_KEY);
+            YWAPI.init(BaseApplication.getApplication(), YWCom.APP_KEY);
         }
 
         /***

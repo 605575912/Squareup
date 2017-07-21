@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.squareup.code.MyApplication;
 import com.squareup.code.WebViewFactory;
+import com.squareup.lib.BaseApplication;
 import com.squareup.lib.activity.PoxyActivity;
 import com.squareup.lib.utils.LogUtil;
 
@@ -24,7 +25,7 @@ public class LauncherUrl {
             return null;
         }
         if (url.startsWith("http://") || url.startsWith("https://")) {
-            Intent intent = PoxyActivity.startIntent(MyApplication.application, WebViewFactory.class.getName());
+            Intent intent = PoxyActivity.startIntent(BaseApplication.getApplication(), WebViewFactory.class.getName());
             intent.putExtra(WebViewFactory.EXTRA_NAME_URL, url);
             return intent;
         }
@@ -34,7 +35,7 @@ public class LauncherUrl {
                 if (path.equals(uri.getPath())) {
                     String type = uri.getQueryParameter(parameter);
                     if ("1".equals(type)) {
-                        Intent intent = PoxyActivity.startIntent(MyApplication.application, WebViewFactory.class.getName());
+                        Intent intent = PoxyActivity.startIntent(BaseApplication.getApplication(), WebViewFactory.class.getName());
                         intent.putExtra(WebViewFactory.EXTRA_NAME_URL, "http://www.baidu.com");
                         return intent;
                     }

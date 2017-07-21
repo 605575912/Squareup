@@ -42,7 +42,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-import static com.squareup.lib.BaseApplication.application;
 
 /**
  * Created by Administrator on 2017/05/25 0025.
@@ -154,8 +153,8 @@ public enum HttpUtils {
                 .sslSocketFactory(createSSLSocketFactory())
                 .hostnameVerifier(new TrustAllHostnameVerifier())
                 .cache(new Cache(FileUtils.getFile("cache"), 1000 * 1024))
-                .addInterceptor(new CaheInterceptor(application))
-                .addNetworkInterceptor(new CaheInterceptor(application)).build();
+                .addInterceptor(new CaheInterceptor(BaseApplication.getApplication()))
+                .addNetworkInterceptor(new CaheInterceptor(BaseApplication.getApplication())).build();
 
     }
 
@@ -287,7 +286,7 @@ public enum HttpUtils {
     }
 
     private void getAsynHttp(final int type, final String url, final Class jsonmodel) {
-        if (TextUtils.isEmpty(url) || !PermissionsGrantActivity.checkAllPermissionsGranted(application, new String[]{
+        if (TextUtils.isEmpty(url) || !PermissionsGrantActivity.checkAllPermissionsGranted(BaseApplication.getApplication(), new String[]{
                 Manifest.permission.INTERNET})
                 ) {
             failed(type, url, "未能获取数据");
@@ -301,7 +300,7 @@ public enum HttpUtils {
                     InputStream inputStream = null;
                     try {
                         String temp = url.substring("file:///android_asset/".length());
-                        inputStream = application.getAssets().open(temp);
+                        inputStream = BaseApplication.getApplication().getAssets().open(temp);
                         InputStreamReader inputReader = new InputStreamReader(inputStream);
                         BufferedReader bufReader = new BufferedReader(inputReader);
                         String line;
@@ -366,7 +365,7 @@ public enum HttpUtils {
     }
 
     private void postAsynHttp(final int type, final String url, final Class jsonmodel, FormBody.Builder builder) {
-        if (TextUtils.isEmpty(url) || application == null || !PermissionsGrantActivity.checkAllPermissionsGranted(application, new String[]{
+        if (TextUtils.isEmpty(url) || BaseApplication.getApplication() == null || !PermissionsGrantActivity.checkAllPermissionsGranted(BaseApplication.getApplication(), new String[]{
                 Manifest.permission.INTERNET})
                 ) {
             return;
@@ -380,7 +379,7 @@ public enum HttpUtils {
                     InputStream inputStream = null;
                     try {
                         String temp = url.substring("file:///android_asset/".length());
-                        inputStream = application.getAssets().open(temp);
+                        inputStream = BaseApplication.getApplication().getAssets().open(temp);
                         InputStreamReader inputReader = new InputStreamReader(inputStream);
                         BufferedReader bufReader = new BufferedReader(inputReader);
                         String line;
