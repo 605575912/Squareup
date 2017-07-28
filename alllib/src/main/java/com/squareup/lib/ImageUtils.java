@@ -106,7 +106,7 @@ public class ImageUtils {
                 .centerCrop()
                 .placeholder(drawable)
                 .error(drawable)
-                .priority(Priority.HIGH).dontAnimate().transform(new RoundTransform(20));
+                .priority(Priority.HIGH).dontAnimate().transform(new RoundTransform(20, imageView));
         Glide.with(context).load(url).apply(options).into(imageView);
     }
 
@@ -141,9 +141,11 @@ public class ImageUtils {
 //    }
     static class RoundTransform extends BitmapTransformation {
         int radius;
+        ImageView imageView;
 
-        public RoundTransform(int radius) {
+        public RoundTransform(int radius, ImageView imageView) {
             this.radius = radius;
+            this.imageView = imageView;
         }
 
         protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
@@ -152,6 +154,10 @@ public class ImageUtils {
 
         private Bitmap circleCrop(Bitmap source, int outWidth, int outHeight) {
             if (source == null) return null;
+            if (imageView != null) {
+                outHeight = imageView.getMeasuredHeight();
+                outWidth = imageView.getMeasuredWidth();
+            }
             Bitmap result = Bitmap.createBitmap(outWidth, outHeight, Bitmap.Config.ARGB_8888);
             int sourcewidth = source.getWidth();
             int sourceheight = source.getHeight();

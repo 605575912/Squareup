@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.squareup.code.GridImageLayout;
 import com.squareup.code.R;
 import com.squareup.code.home.banner.BannerModel;
 import com.squareup.code.views.RadioTextView;
@@ -25,6 +26,7 @@ import com.squareup.lib.ImageUtils;
 import com.squareup.lib.utils.AppLibUtils;
 import com.squareup.lib.view.MindleViewPager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -117,5 +119,15 @@ public class DataBindImage {
             params.topMargin = AppLibUtils.getStatusBarHeight();
         }
         radioTextView.setTime(time);
+    }
+
+    @BindingAdapter("GridImage")
+    public static void setGridImage(GridImageLayout gridImageLayout, int time) {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("https://imgs.imay.com/pic-5220-1484979984-2500.jpg");
+        list.add("https://imgs.imay.com/pic-5220-1484979984-2500.jpg");
+        list.add("https://imgs.imay.com/pic-5220-1484979984-2500.jpg");
+        gridImageLayout.setModels(list, "");
+
     }
 }

@@ -3,14 +3,18 @@ package com.squareup.code;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.baidu.mobstat.StatService;
 import com.squareup.code.databinding.LauncherLayoutBinding;
@@ -45,6 +49,42 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
     LauncherLayoutBinding activityMainBinding;
     LauncherCache launcherCache;
     Handler handler;
+    int radius = 32;
+
+    private Bitmap roundCrop(Bitmap source, int outWidth, int outHeight, ImageView imageView) {
+        if (source == null) return null;
+        Bitmap result = Bitmap.createBitmap(outWidth, outHeight, Bitmap.Config.ARGB_8888);
+        if (imageView != null) {
+            outHeight = imageView.getMeasuredWidth();
+            outWidth = imageView.getMeasuredWidth();
+        }
+        int sourcewidth = source.getWidth();
+        int sourceheight = source.getHeight();
+        float sale = sourcewidth * 1.0f / sourceheight;
+        float outsale = outWidth * 1.0f / outHeight;
+        float destwidth;
+        float destheight;
+        Rect srcR = new Rect(0, 0, 0, 0);
+        if (outsale >= sale) {
+            destheight = (sourcewidth / outsale);
+            srcR.right = sourcewidth;
+            srcR.top = (int) ((sourceheight - destheight) / 2);
+            srcR.bottom = srcR.top + (int) destheight;
+        } else {
+            destwidth = (sourceheight * outsale);
+            srcR.left = (int) ((sourcewidth - destwidth) / 2);
+            srcR.right = srcR.left + (int) destwidth;
+            srcR.bottom = sourceheight;
+        }
+        Canvas canvas = new Canvas(result);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        RectF rect = new RectF(0, 0, outWidth, outHeight);
+        canvas.drawRoundRect(rect, radius, radius, paint);
+        paint.setXfermode(new PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(source, srcR, rect, paint);
+        return result;
+    }
 
     @Override
     protected boolean isAllTranslucentStatus() {

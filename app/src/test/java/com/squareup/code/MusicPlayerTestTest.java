@@ -1,28 +1,31 @@
 package com.squareup.code;
 
-import com.squareup.lib.TestBaseApplication;
+import android.app.Application;
+import android.content.Intent;
+
+import com.squareup.code.mine.LoginActivity;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowApplication;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Administrator on 2017/07/21 0021.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class,sdk = 21,application = TestApplication.class)
+@Config(constants = BuildConfig.class, sdk = 21, application = TestApplication.class)
 public class MusicPlayerTestTest {
     @Before
     public void setUp() throws Exception {
-        LauncherActivity sampleActivity = Robolectric.setupActivity(LauncherActivity.class);
-        assertNotNull(sampleActivity);
-        assertEquals(sampleActivity.getTitle(), "Squareup");
-
+        System.out.println("开始一个案例：");
     }
 
     @Test
@@ -31,22 +34,24 @@ public class MusicPlayerTestTest {
         assertNotNull(sampleActivity);
         assertEquals(sampleActivity.getTitle(), "Squareup");
     }
+
     @Test
     public void testStartActivity() {
         //按钮点击后跳转到下一个Activity
 //        forwardBtn.performClick();
-//        Intent expectedIntent = new Intent(sampleActivity, LoginActivity.class);
+//        LauncherActivity sampleActivity = Robolectric.setupActivity(LauncherActivity.class);
+//        Intent expectedIntent = new Intent(sampleActivity, HomeActivity.class);
 //        Intent actualIntent = ShadowApplication.getInstance().getNextStartedActivity();
 //        assertEquals(expectedIntent, actualIntent);
     }
 
     @Test
     public void testResources() {
-//        Application application = RuntimeEnvironment.application;
-//        String appName = application.getString(R.string.app_name);
-//        String activityTitle = application.getString(R.string.title_activity_simple);
-//        assertEquals("LoveUT", appName);
-//        assertEquals("SimpleActivity",activityTitle);
+        Application application = RuntimeEnvironment.application;
+        String appName = application.getString(R.string.app_name);
+        String activityTitle = application.getString(R.string.str_loading);
+        assertEquals("LoveUT", appName);
+        assertEquals("SimpleActivity",activityTitle);
     }
 
     @Test

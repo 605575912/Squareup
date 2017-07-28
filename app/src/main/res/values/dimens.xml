@@ -19,4 +19,5 @@
     <dimen name="title_image_left">20dp</dimen>
     <dimen name="meilititle_bottom">20dp</dimen>
     <dimen name="title_top">20dp</dimen>
+    <dimen name="imayhot_padding">3dp</dimen>
 </resources>
