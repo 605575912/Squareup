@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.squareup.code.mine.LoginActivity;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,8 +15,11 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 /**
  * Created by Administrator on 2017/07/21 0021.
@@ -26,10 +30,17 @@ public class MusicPlayerTestTest {
     @Before
     public void setUp() throws Exception {
         System.out.println("开始一个案例：");
+
+    }
+
+    @After
+    public void setAfter() throws Exception {
+        System.out.println("结束一个案例：");
     }
 
     @Test
     public void testplay() throws Exception {
+        List list = mock(List.class);   //mock得到一个对象，也可以用@mock注入一个对象
         LauncherActivity sampleActivity = Robolectric.setupActivity(LauncherActivity.class);
         assertNotNull(sampleActivity);
         assertEquals(sampleActivity.getTitle(), "Squareup");
@@ -50,8 +61,8 @@ public class MusicPlayerTestTest {
         Application application = RuntimeEnvironment.application;
         String appName = application.getString(R.string.app_name);
         String activityTitle = application.getString(R.string.str_loading);
-        assertEquals("LoveUT", appName);
-        assertEquals("SimpleActivity",activityTitle);
+        assertEquals("Squareup", appName);
+//        assertEquals("SimpleActivity",activityTitle);
     }
 
     @Test

@@ -37,7 +37,6 @@
         <activity android:name=".map.MapActivity"></activity>
 
 
-        <activity android:name=".MusicActivity"></activity>
         <activity android:name=".search.SearchActivity"></activity>
         <activity android:name=".search.SearchHisActivity"></activity>
         <activity android:name=".mine.LoginActivity"></activity>
