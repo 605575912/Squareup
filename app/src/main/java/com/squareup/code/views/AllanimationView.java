@@ -72,8 +72,8 @@ public class AllanimationView extends SurfaceView implements SurfaceHolder.Callb
     private void init() {
         mHolder = getHolder();
         mHolder.addCallback(this);
-        mHolder.setFormat(PixelFormat.TRANSLUCENT);
         setZOrderOnTop(true);
+        mHolder.setFormat(PixelFormat.TRANSPARENT);
         setFocusable(true);
     }
 
