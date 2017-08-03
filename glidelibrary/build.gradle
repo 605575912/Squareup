@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'src/main/libs')
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.9.5'
+    testCompile 'org.robolectric:robolectric:3.4-rc4'
+    testCompile 'org.robolectric:supportv4:3.4-rc4'
+    testCompile 'org.robolectric:resources:3.4-rc4'
+    testCompile 'org.robolectric:multidex:3.4-rc4'
+    testCompile 'org.robolectric:annotations:3.4-rc4'
+    testCompile 'org.mockito:mockito-core:2.8.47'
+    provided 'com.android.support:support-v4:25.3.1'
+    provided 'com.android.support:appcompat-v7:25.3.1'
+    compile project(':gif_decoder')
+}
