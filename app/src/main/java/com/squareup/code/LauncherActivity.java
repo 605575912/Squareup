@@ -1,5 +1,6 @@
 package com.squareup.code;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -108,9 +109,9 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                     handler.removeCallbacksAndMessages(null);
 //                    YWCom.INSTANCE.login(LauncherActivity.this,"testpro1","taobao1234");
 
-//                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
-//                    startActivity(intent);
-//                    finish();
+                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
 //                    ShareNotice.getInstance().show(LauncherActivity.this);
 
 //                    tencentUtils = new TencentUtils();
@@ -118,28 +119,28 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
 //                    tencentUtils.share(LauncherActivity.this, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
 //                    tencentUtils.share(LauncherActivity.this, QQShare.SHARE_TO_QQ_TYPE_APP);
 
-                    musicPlayer = new MusicPlayer();
-                    musicPlayer.download("http://192.168.30.13:8080/music/a.mp3", new MusicPlayer.OnDownloadListener() {
-                        @Override
-                        public void onDownloadSuccess(File file) {
-                            Log.i("TAG", "========" + file.getPath());
-                            try {
-                                musicPlayer.play(file.getPath());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onDownloading(int progress) {
-
-                        }
-
-                        @Override
-                        public void onDownloadFailed() {
-
-                        }
-                    });
+//                    musicPlayer = new MusicPlayer();
+//                    musicPlayer.download("http://192.168.30.13:8080/music/a.mp3", new MusicPlayer.OnDownloadListener() {
+//                        @Override
+//                        public void onDownloadSuccess(File file) {
+//                            Log.i("TAG", "========" + file.getPath());
+//                            try {
+//                                musicPlayer.play(file.getPath());
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onDownloading(int progress) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onDownloadFailed() {
+//
+//                        }
+//                    });
 
 
                 } else {

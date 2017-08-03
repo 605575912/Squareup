@@ -8,7 +8,9 @@ import android.graphics.Paint;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -17,6 +19,8 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.ViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.security.MessageDigest;
 
@@ -97,7 +101,7 @@ public class ImageUtils {
         }
     }
 
-    public static void loadRoundImage(Context context, String url, ImageView imageView, Drawable drawable) {
+    public static void loadRoundImage(Context context, String url, final ImageView imageView, Drawable drawable) {
         if (TextUtils.isEmpty(url)) {
             imageView.setImageDrawable(drawable);
             return;

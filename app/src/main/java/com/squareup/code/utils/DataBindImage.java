@@ -44,7 +44,6 @@ public class DataBindImage {
         Drawable drawable = new Drawable() {
             @Override
             public void draw(@NonNull Canvas canvas) {
-                canvas.drawColor(Color.TRANSPARENT);
             }
 
             @Override
@@ -121,13 +120,5 @@ public class DataBindImage {
         radioTextView.setTime(time);
     }
 
-    @BindingAdapter("GridImage")
-    public static void setGridImage(GridImageLayout gridImageLayout, int time) {
-        ArrayList<String> list = new ArrayList<>();
-        list.add("https://imgs.imay.com/pic-5220-1484979984-2500.jpg");
-        list.add("https://imgs.imay.com/pic-5220-1484979984-2500.jpg");
-        list.add("https://imgs.imay.com/pic-5220-1484979984-2500.jpg");
-        gridImageLayout.setModels(list, "");
 
-    }
 }

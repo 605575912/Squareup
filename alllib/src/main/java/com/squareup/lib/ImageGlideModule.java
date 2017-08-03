@@ -3,6 +3,7 @@ package com.squareup.lib;
 
 import android.content.Context;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.Registry;
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
@@ -34,11 +35,16 @@ public class ImageGlideModule implements GlideModule {
 //        LogUtil.i("ImageGlideModule 自定义缓存");
     }
 
-    @Override
-    public void registerComponents(Context context, Registry registry) {
-//        Glide.with(context).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(HttpManager.getInstance().getClient()));
-        registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(HttpUtils.INSTANCE.getmOkHttpClient()));
+//    @Override
+//    public void registerComponents(Context context, Registry registry) {
+////        Glide.with(context).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(HttpManager.getInstance().getClient()));
+//        registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(HttpUtils.INSTANCE.getmOkHttpClient()));
+//
+//    }
 
+    @Override
+    public void registerComponents(Context context, Glide glide, Registry registry) {
+        registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(HttpUtils.INSTANCE.getmOkHttpClient()));
     }
 }
 //    public class OkHttpStreamFetcher implements DataFetcher<InputStream> {

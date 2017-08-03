@@ -20,7 +20,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            app:launcher="@{itemsbean.imgurl}" />
+            android:background="@drawable/shape_placeholder"
+             />
 
 
 
@@ -52,6 +53,6 @@
 
         <com.squareup.code.views.AllanimationView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="500dp" />
     </RelativeLayout>
 </layout>
