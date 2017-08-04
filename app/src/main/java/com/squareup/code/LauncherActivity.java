@@ -102,8 +102,6 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.launcher_layout);
 //        SimpleDraweeView iv_ = (SimpleDraweeView) activityMainBinding.getRoot().findViewById(R.id.iv_);
-//                    Uri uri = Uri.parse("asset:///tabimg/ic_vector_home_pressed.png");
-//        iv_.setImageURI(uri);
 //        DraweeController controller = Fresco.newDraweeControllerBuilder()
 //                .setUri("http://192.168.30.13:8080/img/m.webp")
 //                .setAutoPlayAnimations(true)

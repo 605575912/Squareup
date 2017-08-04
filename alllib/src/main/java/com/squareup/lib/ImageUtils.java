@@ -48,27 +48,25 @@ public class ImageUtils {
         if (imageView == null) {
             return;
         }
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setUri(url)
-                .setAutoPlayAnimations(true)
-                .build();
-        GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
-        if (hierarchy != null && defaultResId != 0) {
-            hierarchy.setPlaceholderImage(defaultResId);
+
+        if (url != null && url.startsWith("asset://")) {
+            Uri uri = Uri.parse(url);
+            imageView.setImageURI(uri);
+        } else {
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setUri(url)
+                    .setAutoPlayAnimations(true)
+                    .build();
+            GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
+            if (hierarchy != null && defaultResId != 0) {
+                hierarchy.setPlaceholderImage(defaultResId);
 //            RoundingParams roundingParams = new RoundingParams();
 //            roundingParams.setCornersRadius(Resources.getSystem().getDisplayMetrics().density * radius);
 //            hierarchy.setRoundingParams(roundingParams);
+            }
+            imageView.setController(controller);
         }
-//        if (url != null && url.startsWith("file:///")) {
-//            url = url.substring("file:///".length());
-//            Uri uri = Uri.parse("asset:///" +
-//                    "android_asset/tabimg/ic_vector_home_normal.png");
-//            imageView.setImageURI(uri);
-//        } else {
-//            imageView.setImageURI(url);
-//        }
 
-        imageView.setController(controller);
 
     }
 
