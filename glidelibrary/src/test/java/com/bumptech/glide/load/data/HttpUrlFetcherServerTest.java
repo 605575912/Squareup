@@ -7,9 +7,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.TestUtil;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.Headers;
-import com.bumptech.glide.testutil.TestUtil;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;

@@ -4,8 +4,7 @@ package com.bumptech.glide.gifdecoder;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Shared utility classes for tests.

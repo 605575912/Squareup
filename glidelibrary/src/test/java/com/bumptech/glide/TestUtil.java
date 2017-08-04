@@ -1,11 +1,10 @@
 package com.bumptech.glide;
 
-
+import static com.google.common.truth.Truth.assertThat;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Shared utility classes for tests.

@@ -7,7 +7,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import com.bumptech.glide.gifdecoder.test.GifBytesTestUtil;
-import com.bumptech.glide.testutil.TestUtil;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
