@@ -202,11 +202,11 @@ public class AllanimationView extends SurfaceView implements SurfaceHolder.Callb
                 }
                 try {
                     Thread.sleep(50);
+                    mHolder.unlockCanvasAndPost(canvas);
                 } catch (Exception e) {
                     e.printStackTrace();
                     return;
                 }
-                mHolder.unlockCanvasAndPost(canvas);
             }
         }
 

@@ -65,7 +65,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         LinearLayout indexLayout = null;
         for (TabsBean tabsBean : tabModel.getTabs()) {
             LinearLayout linearLayout = new LinearLayout(getActivity());
-            ImageView imageView = new ImageView(getActivity());
+            SimpleDraweeView imageView = new SimpleDraweeView(getActivity());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             params.weight = 1;
             indexLayout = tabsBean.getIndex() == 1 ? linearLayout : indexLayout;

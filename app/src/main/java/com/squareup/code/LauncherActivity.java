@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -100,13 +101,14 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.launcher_layout);
-//        SimpleDraweeView iv_ = (SimpleDraweeView) activityMainBinding.getRoot().findViewById(R.id.iv_);
-//        iv_.setImageURI("http://192.168.30.13:8080/img/m.webp");
-//        DraweeController controller = Fresco.newDraweeControllerBuilder()
-//                .setUri("http://192.168.30.13:8080/img/m.webp")
-//                .setAutoPlayAnimations(true)
-//                .build();
-//        iv_.setController(controller);
+        SimpleDraweeView iv_ = (SimpleDraweeView) activityMainBinding.getRoot().findViewById(R.id.iv_);
+//                    Uri uri = Uri.parse("asset://tabimg/ic_vector_home_normal.png");
+//        iv_.setImageURI(uri);
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri("http://192.168.30.13:8080/img/m.webp")
+                .setAutoPlayAnimations(true)
+                .build();
+        iv_.setController(controller);
 
         handler = new Handler() {
             @Override
@@ -116,10 +118,10 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                     handler.removeCallbacksAndMessages(null);
 //                    YWCom.INSTANCE.login(LauncherActivity.this,"testpro1","taobao1234");
 
-                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                    ShareNotice.getInstance().show(LauncherActivity.this);
+//                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                    ShareNotice.getInstance().show(LauncherActivity.this);
 
 //                    tencentUtils = new TencentUtils();
 //                    tencentUtils.login(LauncherActivity.this);
@@ -422,21 +424,21 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onEventMain(EventMainObject event) {
-        if (event.getCommand().equals(launcherCache.getCommand())) {
-            if (event.getData() instanceof LauncherMode) {
-                LauncherMode launcherMode = (LauncherMode) event.getData();
-                if (launcherMode.getItems() != null && launcherMode.getItems().size() > 0) {
-                    launcherMode.getItems().get(0).setCounttime(5);
-                    activityMainBinding.setItemsbean(launcherMode.getItems().get(0));
-                    handler.sendEmptyMessageDelayed(0, 5000);
-                    handler.sendEmptyMessageDelayed(1, 5500);
-                } else {
-                    handler.sendEmptyMessageDelayed(0, 1000);
-                }
-            } else {
-                handler.sendEmptyMessageDelayed(0, 1000);
-            }
-        }
+//        if (event.getCommand().equals(launcherCache.getCommand())) {
+//            if (event.getData() instanceof LauncherMode) {
+//                LauncherMode launcherMode = (LauncherMode) event.getData();
+//                if (launcherMode.getItems() != null && launcherMode.getItems().size() > 0) {
+//                    launcherMode.getItems().get(0).setCounttime(5);
+//                    activityMainBinding.setItemsbean(launcherMode.getItems().get(0));
+//                    handler.sendEmptyMessageDelayed(0, 5000);
+//                    handler.sendEmptyMessageDelayed(1, 5500);
+//                } else {
+//                    handler.sendEmptyMessageDelayed(0, 1000);
+//                }
+//            } else {
+//                handler.sendEmptyMessageDelayed(0, 1000);
+//            }
+//        }
     }
 
     @Override

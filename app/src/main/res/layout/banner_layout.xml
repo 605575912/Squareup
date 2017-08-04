@@ -16,6 +16,6 @@
     <com.squareup.lib.view.MindleViewPager
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:animator="true"
+        app:animator="false"
         app:banners="@{lists}" />
 </layout>

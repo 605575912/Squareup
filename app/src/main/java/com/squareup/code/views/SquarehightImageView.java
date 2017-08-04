@@ -6,12 +6,14 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 
 /**
  * Created by liangzhenxiong on 2017/04/08 0008.
  */
 
-public class SquarehightImageView extends ImageView {
+public class SquarehightImageView extends SimpleDraweeView {
     public SquarehightImageView(Context context) {
         super(context);
         init(context);

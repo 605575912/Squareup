@@ -2,6 +2,7 @@ package com.squareup.lib;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.widget.ImageView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -58,6 +59,15 @@ public class ImageUtils {
 //            roundingParams.setCornersRadius(Resources.getSystem().getDisplayMetrics().density * radius);
 //            hierarchy.setRoundingParams(roundingParams);
         }
+//        if (url != null && url.startsWith("file:///")) {
+//            url = url.substring("file:///".length());
+//            Uri uri = Uri.parse("asset:///" +
+//                    "android_asset/tabimg/ic_vector_home_normal.png");
+//            imageView.setImageURI(uri);
+//        } else {
+//            imageView.setImageURI(url);
+//        }
+
         imageView.setController(controller);
 
     }
@@ -130,7 +140,7 @@ public class ImageUtils {
 //        Glide.with(context).load(url).apply(options).into(imageView);
     }
 
-    public static void loadImage(Context context, String url, ImageView imageView, Drawable drawable) {
+    public static void loadImage(Context context, String url, SimpleDraweeView imageView, Drawable drawable) {
 //        if (TextUtils.isEmpty(url)) {
 //            imageView.setImageDrawable(drawable);
 //            return;
@@ -141,6 +151,21 @@ public class ImageUtils {
 //                .error(drawable)
 //                .priority(Priority.HIGH).dontAnimate();
 //        Glide.with(context).load(url).apply(options).into(imageView);
+        if (imageView == null) {
+            return;
+        }
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(url)
+                .setAutoPlayAnimations(true)
+                .build();
+        GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
+//        if (hierarchy != null && defaultResId != 0) {
+//            hierarchy.setPlaceholderImage(defaultResId);
+////            RoundingParams roundingParams = new RoundingParams();
+////            roundingParams.setCornersRadius(Resources.getSystem().getDisplayMetrics().density * radius);
+////            hierarchy.setRoundingParams(roundingParams);
+//        }
+        imageView.setController(controller);
     }
 
     //    public static void loadImageAsBitmap(Context context, String url, ImageView imageView, int defaultResId) {

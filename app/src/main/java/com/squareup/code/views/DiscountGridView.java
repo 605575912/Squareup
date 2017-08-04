@@ -46,6 +46,9 @@ public class DiscountGridView extends CunGridView {
         if (out > 0) {
             heng++;
         }
+        if (heng < 1) {
+            heng = 1;
+        }
         int h = getMeasuredHeight() / heng;
         if (heng > 1) {
             for (int i = 0; i < heng; i++) {

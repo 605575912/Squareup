@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_placeholder"
             app:launcher="@{itemsbean.imgurl}"
             android:scaleType="fitXY" />
 

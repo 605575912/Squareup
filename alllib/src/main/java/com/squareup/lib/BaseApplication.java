@@ -10,10 +10,13 @@ import android.support.multidex.MultiDex;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+//import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
+//import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.morgoo.droidplugin.PluginHelper;
-import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
+
+import okhttp3.OkHttpClient;
 
 import static android.os.Build.VERSION.SDK_INT;
 
@@ -35,7 +38,13 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
+//        ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
+//                .newBuilder(application, HttpUtils.INSTANCE.getmOkHttpClient())
+////                . // other setters
+////    . // setNetworkFetchProducer is already called for you
+//                .build();
         Fresco.initialize(application);
+//        Fresco.initialize(application);
 
 //        ViewTarget.setTagId(com.squareup.lib.R.id.glide_id);
 
