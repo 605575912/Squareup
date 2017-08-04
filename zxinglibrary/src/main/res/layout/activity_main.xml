@@ -17,7 +17,7 @@
         android:textColor="#ff646464"
         android:textSize="18sp" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/ECoder_image"
         android:layout_width="180dp"
         android:layout_height="180dp"

@@ -20,7 +20,7 @@
         android:background="@android:color/white"
         android:contentDescription="@string/aliwx_app_name" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image_detail_default_view"
         android:layout_width="106dip"
         android:layout_height="106dip"
@@ -28,7 +28,7 @@
         android:contentDescription="@string/aliwx_app_name"
         android:src="@drawable/aliwx_default_photo" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image_detail_download_fail_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

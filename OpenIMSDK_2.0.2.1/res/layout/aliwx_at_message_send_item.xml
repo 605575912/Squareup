@@ -4,7 +4,7 @@
     android:layout_height="65dp"
     android:background="@drawable/aliwx_friend_item_bg">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/aliwx_send_at_message_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/aliwx_send_at_message_unread_notify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

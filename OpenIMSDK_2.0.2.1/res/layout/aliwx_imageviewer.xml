@@ -93,7 +93,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/aliwx_send_original_check_left_margin">
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/send_original_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

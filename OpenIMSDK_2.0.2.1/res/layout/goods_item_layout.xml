@@ -91,7 +91,7 @@
                         android:visibility="gone"
                         android:gravity="center">
 
-                        <ImageView
+                        <com.facebook.drawee.view.SimpleDraweeView
                             android:id="@+id/goods_collect_icon"
                             android:layout_width="16dp"
                             android:layout_height="16dp"

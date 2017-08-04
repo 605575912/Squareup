@@ -42,7 +42,7 @@
         android:visibility="gone"
         >
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="115dp"

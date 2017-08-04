@@ -3,13 +3,13 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center">
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_arrow"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/ic_arrow"/>
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_loading"
         android:visibility="gone"
         android:layout_width="34dp"

@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.code.R;
 import com.squareup.lib.ImageUtils;
 import com.squareup.lib.viewfactory.BaseViewItem;
@@ -92,7 +93,7 @@ public class ColumnView implements BaseViewItem {
             if (convertView == null) {
                 convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.column_item, parent, false);
                 holder = new ViewHolder();
-                holder.image = (ImageView) convertView.findViewById(R.id.image);
+                holder.image = (SimpleDraweeView) convertView.findViewById(R.id.image);
                 holder.tx_ = (TextView) convertView.findViewById(R.id.tx_);
                 convertView.setTag(holder); //绑定ViewHolder对象
             } else {
@@ -105,7 +106,7 @@ public class ColumnView implements BaseViewItem {
         }
 
         class ViewHolder {
-            ImageView image;
+            SimpleDraweeView image;
             TextView tx_;
         }
     }

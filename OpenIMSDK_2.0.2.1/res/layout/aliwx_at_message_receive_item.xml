@@ -18,7 +18,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/aliwx_receive_at_msg_unread_notify"
             android:layout_width="10dp"
             android:layout_height="10dp"

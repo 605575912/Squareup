@@ -24,7 +24,7 @@
             android:textColor="#FF202123"
             android:textSize="16sp" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/share"
             android:focusable="false"
             android:layout_width="12dp"
@@ -57,35 +57,35 @@
             android:paddingBottom="13dp"
             android:paddingTop="13dp">
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/share_wx"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ico_fxweixinxz" />
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/share_py"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ico_fxpyqxz" />
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/share_qq"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ico_fxwqqxz" />
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/share_sin"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ico_fxweiboxz" />
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/share_zone"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

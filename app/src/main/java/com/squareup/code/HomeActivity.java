@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.code.account.APPAccountManager;
 import com.squareup.code.databinding.ActivityMainBinding;
 import com.squareup.code.home.tab.TabAdapter;
@@ -154,7 +155,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             } else {
                 tabsBean.setIndex(0);
             }
-            ImageView imageView = (ImageView) ((LinearLayout) tabs_layout.getChildAt(i)).getChildAt(0);
+            SimpleDraweeView imageView = (SimpleDraweeView) ((LinearLayout) tabs_layout.getChildAt(i)).getChildAt(0);
             if (tabsBean.getIndex() == 1) {
                 transtatus = tabsBean.isTranstatus();
                 setStatus(transtatus);

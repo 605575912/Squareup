@@ -20,14 +20,14 @@
         android:textColor="@color/aliwx_record_color"
         android:textSize="@dimen/aliwx_font_third_grade" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/toast_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:src="@drawable/aliwx_record_delete" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/hold_to_speak_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -7,7 +7,7 @@
     android:focusableInTouchMode="true"
     android:gravity="center">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/gif"
         android:layout_width="@dimen/aliwx_gif_item_size"
         android:layout_gravity="center_vertical"

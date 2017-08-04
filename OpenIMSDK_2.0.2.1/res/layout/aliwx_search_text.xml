@@ -77,7 +77,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/aliwx_common_half_safe_margin" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/aliwx_noresult_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

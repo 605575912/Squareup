@@ -24,7 +24,7 @@
         android:indeterminateDrawable="@drawable/aliwx_my_progress"
         android:visibility="gone" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/download_right_audio_fail"
         android:layout_width="25dip"
         android:layout_height="252dip"
@@ -34,7 +34,7 @@
         android:src="@android:drawable/ic_menu_close_clear_cancel"
         android:visibility="gone" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/right_audio_notplaying"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,19 +55,19 @@
         android:flipInterval="500"
         android:visibility="gone" >
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitEnd"
             android:src="@drawable/aliwx_chatto_voice_playing_f1" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitEnd"
             android:src="@drawable/aliwx_chatto_voice_playing_f2" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitEnd"

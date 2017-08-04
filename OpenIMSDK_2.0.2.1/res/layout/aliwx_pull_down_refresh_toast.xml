@@ -22,7 +22,7 @@
         android:textColor="@color/aliwx_top_grade_color"
         android:textSize="@dimen/aliwx_font_third_grade" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/refresh_toast_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

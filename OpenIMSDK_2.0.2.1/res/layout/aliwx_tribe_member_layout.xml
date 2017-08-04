@@ -8,7 +8,7 @@
         android:id="@+id/aliwx_title"
         layout="@layout/aliwx_common_simple_title" />
     
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/aliwx_empty_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             android:focusableInTouchMode="false"
             android:gravity="center" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/aliwx_head"
             style="@style/aliwx_common_head_style"
             android:layout_centerVertical="true"

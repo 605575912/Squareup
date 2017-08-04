@@ -26,7 +26,7 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/aliwx_unread_text_size"/>
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/receive_not_remind_unread_iv"
         android:layout_width="10dp"
         android:layout_height="10dp"
@@ -129,7 +129,7 @@
             android:textSize="@dimen/aliwx_conversation_content_text_size" />
     </LinearLayout>
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/receive_not_remind_icon_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -138,7 +138,7 @@
         android:layout_alignTop="@id/content_layout"/>
 
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sweep_arrow"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/aliwx_conversation_item_height"

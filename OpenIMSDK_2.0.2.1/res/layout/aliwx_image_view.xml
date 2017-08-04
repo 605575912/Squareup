@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:background="@color/aliwx_common_bg_color" >
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/wx_bg_image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

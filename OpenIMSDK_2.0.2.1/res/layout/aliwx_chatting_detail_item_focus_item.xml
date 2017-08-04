@@ -17,7 +17,7 @@
 	        android:layout_marginTop="15dip"
 	        android:layout_marginLeft="10dip">
 	
-	        <ImageView
+	        <com.facebook.drawee.view.SimpleDraweeView
 	            android:id="@+id/focus_goods_detail_item_pic"
 	            android:layout_width="85dip"
 	            android:layout_height="85dip"

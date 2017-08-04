@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/iv_"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -146,7 +146,7 @@
                 android:gravity="top"
                 android:orientation="horizontal">
 
-                <ImageView
+                <com.facebook.drawee.view.SimpleDraweeView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"

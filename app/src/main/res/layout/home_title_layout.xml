@@ -38,7 +38,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="14sp" />
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center_vertical"
@@ -57,7 +57,7 @@
             android:onClick="@{onclick.onClick}"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -79,7 +79,7 @@
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_gravity="center_vertical"

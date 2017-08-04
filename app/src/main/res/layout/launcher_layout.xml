@@ -14,15 +14,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitXY"
             android:background="@drawable/shape_placeholder"
-             />
-
+            app:launcher="@{itemsbean.imgurl}"
+            android:scaleType="fitXY" />
 
 
         <com.squareup.code.views.RadioTextView

@@ -127,5 +127,10 @@ dependencies {
     compile project(':OpenIMSDK_2.0.2.1')
     compile project(':xgpush')
     compile project(':qqshare')
-    compile project(':glidelibrary')
+//    compile project(':glidelibrary')
+    compile 'com.facebook.fresco:fresco:1.4.0'
+    compile 'com.facebook.fresco:animated-webp:1.4.0'
+    compile 'com.facebook.fresco:webpsupport:1.4.0'
+    // 在 API < 14 上的机器支持 WebP 时，需要添加
+//    compile 'com.facebook.fresco:animated-base-support:1.4.0'
 }

@@ -14,7 +14,7 @@
         android:textColor="@color/aliwx_color_gray_01"
         android:textSize="@dimen/aliwx_common_text_size" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/feedback_right_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

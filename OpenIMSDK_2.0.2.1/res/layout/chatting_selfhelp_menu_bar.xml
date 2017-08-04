@@ -18,7 +18,7 @@
         android:paddingTop="12dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/selfhelp_bar_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

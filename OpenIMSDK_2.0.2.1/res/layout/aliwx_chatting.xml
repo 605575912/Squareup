@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/wx_chat_bg_image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

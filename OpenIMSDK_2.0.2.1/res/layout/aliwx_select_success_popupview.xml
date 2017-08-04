@@ -25,7 +25,7 @@
             android:paddingRight="16dp"
             android:paddingTop="22dp" >
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_width="37dp"
                 android:layout_height="37dp"
                 android:src="@drawable/aliwx_common_checkbox_normal" />

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/aliwx_common_title_style">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/chat_back"
         style="@style/aliwx_common_title_left_btn_shadow"
         android:layout_width="wrap_content"

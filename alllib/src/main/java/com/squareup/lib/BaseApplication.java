@@ -9,7 +9,7 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 import android.widget.Toast;
 
-import com.bumptech.glide.request.target.ViewTarget;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.morgoo.droidplugin.PluginHelper;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
@@ -35,9 +35,9 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
+        Fresco.initialize(application);
 
-
-        ViewTarget.setTagId(com.squareup.lib.R.id.glide_id);
+//        ViewTarget.setTagId(com.squareup.lib.R.id.glide_id);
 
 
         setStrictMode();
@@ -126,7 +126,7 @@ public class BaseApplication extends Application {
 
 
         // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId,调试时将第三个参数设置为true
-        Bugly.init(this, "b5f9e8654b", true);
+//        Bugly.init(this, "b5f9e8654b", true);
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {

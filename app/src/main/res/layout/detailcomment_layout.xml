@@ -24,32 +24,32 @@
         android:background="@android:color/white"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_0"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_1"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_gravity="center_vertical" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_2"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_gravity="center_vertical" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_3"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_gravity="center_vertical" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_4"
             android:layout_width="15dp"
             android:layout_height="15dp"
@@ -71,7 +71,7 @@
             android:gravity="right"
             android:text="@{res.getString(R.string.str_comment,data.count)}" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_r"
             android:layout_width="10dp"
             android:layout_height="10dp"

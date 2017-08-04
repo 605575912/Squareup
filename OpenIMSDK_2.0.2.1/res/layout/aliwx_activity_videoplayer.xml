@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="44dp" >
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_back"
             android:layout_width="54dp"
             android:layout_height="fill_parent"
@@ -33,14 +33,14 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/img_cover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:layout_centerInParent="true" />
         
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_playbutton"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -74,7 +74,7 @@
         android:layout="@layout/aliwx_chatting_detail_download_video_progress"/>
 
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/aliwx_download_fail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

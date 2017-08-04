@@ -39,7 +39,7 @@
             android:focusableInTouchMode="false"
             android:gravity="center" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/aliwx_head"
             style="@style/aliwx_common_head_style"
             android:layout_centerVertical="true"

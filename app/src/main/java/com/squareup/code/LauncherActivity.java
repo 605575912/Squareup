@@ -13,11 +13,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.baidu.mobstat.StatService;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
@@ -39,7 +41,6 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 
 
 /**
@@ -99,7 +100,13 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.launcher_layout);
-
+//        SimpleDraweeView iv_ = (SimpleDraweeView) activityMainBinding.getRoot().findViewById(R.id.iv_);
+//        iv_.setImageURI("http://192.168.30.13:8080/img/m.webp");
+//        DraweeController controller = Fresco.newDraweeControllerBuilder()
+//                .setUri("http://192.168.30.13:8080/img/m.webp")
+//                .setAutoPlayAnimations(true)
+//                .build();
+//        iv_.setController(controller);
 
         handler = new Handler() {
             @Override
@@ -112,7 +119,7 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                     Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
-//                    ShareNotice.getInstance().show(LauncherActivity.this);
+                    ShareNotice.getInstance().show(LauncherActivity.this);
 
 //                    tencentUtils = new TencentUtils();
 //                    tencentUtils.login(LauncherActivity.this);

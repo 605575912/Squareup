@@ -10,7 +10,7 @@
         android:layout_height="@dimen/aliwx_common_head_size"
         android:scaleType="fitXY"
         />
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="10dp"
         android:layout_height="10dp"
         android:layout_alignParentRight="true"

@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewParent;
 import android.widget.ImageView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 /**
  * 跟GaussBgBlurLayout 搭配使用的图片控件，目的是用于同步刷新高斯模糊背景
  * @author lhy
  *
  */
-public class GaussImageView extends ImageView {
+public class GaussImageView extends SimpleDraweeView {
 
     public GaussImageView(Context context, AttributeSet attrs, int defStyle) {
 	super(context, attrs, defStyle);

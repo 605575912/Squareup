@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:background="@android:color/white">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -32,7 +32,7 @@
             android:textColor="#979696"
             android:textSize="15sp" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/share"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -42,7 +42,7 @@
             android:paddingRight="10dp"
             android:src="@drawable/ic_action_share" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/favorite"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -52,7 +52,7 @@
             android:paddingRight="10dp"
             android:src="@drawable/ic_action_favorite_off" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/more"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

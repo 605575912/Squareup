@@ -10,6 +10,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.code.R;
 import com.squareup.lib.ImageUtils;
 import com.squareup.lib.viewfactory.BaseViewItem;
@@ -91,7 +92,7 @@ public class DiscountView implements BaseViewItem {
             if (convertView == null) {
                 convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.discount_item, parent, false);
                 holder = new ViewHolder();
-                holder.image = (ImageView) convertView.findViewById(R.id.image);
+                holder.image = (SimpleDraweeView) convertView.findViewById(R.id.image);
                 holder.tx_ = (TextView) convertView.findViewById(R.id.tx_);
                 holder.tx_content = (TextView) convertView.findViewById(R.id.tx_content);
                 convertView.setTag(holder); //绑定ViewHolder对象
@@ -112,7 +113,7 @@ public class DiscountView implements BaseViewItem {
         }
 
         class ViewHolder {
-            ImageView image;
+            SimpleDraweeView image;
             TextView tx_;
             TextView tx_content;
         }

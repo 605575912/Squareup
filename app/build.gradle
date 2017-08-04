@@ -12,7 +12,9 @@ android {
         versionCode Integer.parseInt(project.versionCode)
         versionName project.versionName
         multiDexEnabled true
-
+        ndk {
+            abiFilters 'armeabi'
+        }
     }
     dataBinding{
         enabled true

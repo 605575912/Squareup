@@ -57,7 +57,7 @@
                 android:layout_height="match_parent"
                 android:visibility="gone">
 
-                <ImageView
+                <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/reply_bar_menu_notify"
                     android:layout_width="5dp"
                     android:layout_height="5dp"
@@ -66,7 +66,7 @@
                     android:layout_toLeftOf="@+id/menu_line"
                     android:src="@drawable/aliwx_unread_hint"/>
 
-                <ImageView
+                <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/reply_bar_show_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                     android:id="@+id/reply_bar_expand"
                     style="@style/aliwx_chatting_detail_expand_style"/>
 
-                <ImageView
+                <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/reply_bar_expand_newfunc"
                     android:layout_width="6dp"
                     android:layout_height="6dp"
@@ -330,7 +330,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/forward_msg_icon"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
@@ -364,7 +364,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/delete_msg_icon"
                 android:layout_width="13dp"
                 android:layout_height="13dp"

@@ -15,10 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.squareup.code.GridImageLayout;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.code.R;
 import com.squareup.code.home.banner.BannerModel;
 import com.squareup.code.views.RadioTextView;
@@ -69,7 +66,7 @@ public class DataBindImage {
         mindleViewPager.setAdapter(new MindleViewPager.LunAdapter() {
             @Override
             public View getview(ViewGroup container, int position) {
-                ImageView imageView = new ImageView(container.getContext());
+                SimpleDraweeView imageView = new SimpleDraweeView(container.getContext());
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 ImageUtils.loadImage(container.getContext(), "http://img.imay.com/2017-07-06_595e117c3d0a2.jpg", imageView);
                 imageView.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +82,9 @@ public class DataBindImage {
     }
 
     @BindingAdapter("iconurl")
-    public static void setImage(ImageView iv, String userface) {
+    public static void setImage(SimpleDraweeView iv, String userface) {
+//        userface = "http://192.168.30.13:8080/img/out.gif";
+//        Glide.with(iv.getContext()).asGif().load(userface).into(iv);
         ImageUtils.loadImage(iv.getContext(), userface, iv, R.drawable.placeholder_error);
     }
 
@@ -99,12 +98,12 @@ public class DataBindImage {
                 } catch (Exception ignored) {
                 }
             } else {
-                Glide.with(iv.getContext()).load(userface).into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                        iv.setBackgroundDrawable(resource);
-                    }
-                });
+//                Glide.with(iv.getContext()).load(userface).into(new SimpleTarget<Drawable>() {
+//                    @Override
+//                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+//                        iv.setBackgroundDrawable(resource);
+//                    }
+//                });
             }
 
         }
