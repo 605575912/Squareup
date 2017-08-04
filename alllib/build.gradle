@@ -133,5 +133,5 @@ dependencies {
     compile 'com.facebook.fresco:webpsupport:1.4.0'
     // 在 API < 14 上的机器支持 WebP 时，需要添加
     //    compile 'com.facebook.fresco:animated-base-support:1.4.0'
-//    compile 'com.facebook.fresco:imagepipeline-okhttp3:1.4.0'
+    compile 'com.facebook.fresco:imagepipeline-okhttp3:1.4.0'
 }
