@@ -112,6 +112,7 @@ dependencies {
     compile project(':twinklingRefreshLaoutlibrary')
     compile project(':tencentcos')
     testCompile 'org.mockito:mockito-core:2.8.47'
+
 }
 // 依赖插件脚本
 //apply from: 'tinker-support.gradle'

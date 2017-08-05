@@ -16,6 +16,8 @@ import com.morgoo.droidplugin.PluginHelper;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
 
+import okhttp3.Address;
+
 import static android.os.Build.VERSION.SDK_INT;
 
 /**
