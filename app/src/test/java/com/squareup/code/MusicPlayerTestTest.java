@@ -1,9 +1,6 @@
 package com.squareup.code;
 
 import android.app.Application;
-import android.content.Intent;
-
-import com.squareup.code.mine.LoginActivity;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,7 +10,6 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowApplication;
 
 import java.util.List;
 
@@ -38,9 +34,32 @@ public class MusicPlayerTestTest {
         System.out.println("结束一个案例：");
     }
 
+    float mPhysicalCoeff = 207560.8f;
+    private float mFlingFriction = 0.015f;
+    private static final float INFLEXION = 0.35f; // Tension lines cross at (INFLEXION, 1)
+
+    private double getSplineFlingDistance(int velocity) {
+        final double l = getSplineDeceleration(velocity);
+        return mFlingFriction * mPhysicalCoeff * Math.exp(2.3582017 / 1.3582017 * l);
+    }
+
+    private double getSplineDeceleration(int velocity) {
+        return Math.log(INFLEXION * Math.abs(velocity) / (mFlingFriction * mPhysicalCoeff));
+    }
+
+    private double velocityfromdistance(double distance) {
+        double exp = distance / (mFlingFriction * mPhysicalCoeff);
+        return Math.exp(Math.log(exp) / (2.3582017 / 1.3582017)) * (mFlingFriction * mPhysicalCoeff) / INFLEXION;
+    }
+
     @Test
     public void testplay() throws Exception {
         List list = mock(List.class);   //mock得到一个对象，也可以用@mock注入一个对象
+        int velocity = 8459;
+        double d = getSplineFlingDistance(velocity);//8459 ->2852.988119201405
+        ;//8459 ->2852.988119201405
+        System.out.println("结束一个案例：" + d);
+        System.out.println("结果====：" + velocityfromdistance(d));
         LauncherActivity sampleActivity = Robolectric.setupActivity(LauncherActivity.class);
         assertNotNull(sampleActivity);
         assertEquals(sampleActivity.getTitle(), "Squareup");
