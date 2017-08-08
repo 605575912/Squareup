@@ -1,26 +1,19 @@
 package com.squareup.code;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.baidu.mobstat.StatService;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
@@ -40,9 +33,6 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-
 
 /**
  * Created by Administrator on 2017/05/31 0031.
@@ -50,7 +40,7 @@ import java.io.FileInputStream;
 
 public class LauncherActivity extends BaseActivity implements View.OnClickListener {
     LauncherLayoutBinding activityMainBinding;
-    LauncherCache launcherCache;
+    LauncherCache launcherCache = new LauncherCache();
     Handler handler;
     int radius = 32;
 
@@ -107,7 +97,7 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
 //                .setAutoPlayAnimations(true)
 //                .build();
 //        iv_.setController(controller);
-
+        launcherPenster = new LauncherPenster();
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -116,9 +106,7 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                     handler.removeCallbacksAndMessages(null);
 //                    YWCom.INSTANCE.login(LauncherActivity.this,"testpro1","taobao1234");
 
-                    Intent intent = new Intent(LauncherActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
+                    launcherPenster.startHome(LauncherActivity.this);
 //                    ShareNotice.getInstance().show(LauncherActivity.this);
 
 //                    tencentUtils = new TencentUtils();
@@ -161,11 +149,6 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
 //            payUtils = new PayUtils(LauncherActivity.this);
 //            payUtils.payV2("data", handler);
         }
-        TabsCache tabsCache = new TabsCache();
-        tabsCache.dowlNewWorkData();
-        launcherCache = new LauncherCache();
-        launcherCache.getCacheData();
-        launcherCache.dowlNewWorkData();
 
 // 开发时调用，建议上线前关闭，以免影响性能
         StatService.setDebugOn(BuildConfig.DEBUG);
@@ -177,7 +160,7 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         //XGPushConfig.setAccessId(this,2100250470);
         //开启信鸽的日志输出，线上版本不建议调用
         XGPushConfig.enableDebug(this, true);
-
+        launcherPenster.workCache(launcherCache,new TabsCache());
 
                 /*
         注册信鸽服务的接口
@@ -325,73 +308,8 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
 //        });
     }
 
-    /**
-     * 从本地获取广告图片
-     *
-     * @param path
-     * @param width
-     * @param height
-     * @return
-     */
-    Bitmap getimage(String path, int width, int height) {
-        if (TextUtils.isEmpty(path)) {
-            return null;
-        }
-        File file = new File(path);
-        if (!file.exists()) {
-            return null;
-        }
-        try {
-            BitmapFactory.Options newOpts = new BitmapFactory.Options();
-            newOpts.inJustDecodeBounds = false;
-            newOpts.inSampleSize = 1;
-            Bitmap tempbitmap;
-            try {
-                tempbitmap = BitmapFactory.decodeFile(path, newOpts);
-                if (tempbitmap == null) {
-                    //如果图片为null, 图片不完整则删除掉图片
-                    byte[] bytes = new byte[(int) file.length() + 1];
-                    FileInputStream inputStream = new FileInputStream(path);
-                    inputStream.read(bytes);
-                    tempbitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    if (tempbitmap == null) {
-                        file.delete();
-                    }
-                }
-                return tempbitmap;
-            } catch (OutOfMemoryError e) {
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-            newOpts.inJustDecodeBounds = true;
-            tempbitmap = BitmapFactory.decodeFile(path, newOpts);
-            int sreen = width * height;
-            int image = tempbitmap.getHeight() * tempbitmap.getWidth();
-            if (sreen <= 720) {// 防止过小图
-                sreen = 720 * 1080;
-            }
-            int samplesize = image / sreen;
-            if (samplesize < 2) {
-                samplesize = 2;
-            }
-            newOpts.inSampleSize = samplesize;
-            newOpts.inJustDecodeBounds = false;
-            try {
-                tempbitmap = BitmapFactory.decodeFile(path, newOpts);
-                return tempbitmap;
-            } catch (OutOfMemoryError e) {
+    LauncherPenster launcherPenster;
 
-            } catch (Exception e) {
-                e.printStackTrace();
-
-
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
 
     private void weixinpay(String id) {
         IWXAPI mapi = null;

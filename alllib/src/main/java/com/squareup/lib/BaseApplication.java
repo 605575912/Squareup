@@ -30,8 +30,8 @@ public class BaseApplication extends Application {
     private static Application application;
 
     public static Application getApplication() {
-//        return TestBaseApplication.application;
-        return application;
+        return TestBaseApplication.application;
+//        return application;
     }
 
     @Override
@@ -178,7 +178,7 @@ public class BaseApplication extends Application {
      * 如果想更新so，可以将System.loadLibrary替换成Beta.loadLibrary
      */
     static {
-        Beta.loadLibrary("mylib");
+//        Beta.loadLibrary("mylib");
     }
 
     protected void enabledStrictMode() {

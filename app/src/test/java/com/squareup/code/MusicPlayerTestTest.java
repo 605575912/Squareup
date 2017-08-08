@@ -15,7 +15,10 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Administrator on 2017/07/21 0021.
@@ -34,32 +37,37 @@ public class MusicPlayerTestTest {
         System.out.println("结束一个案例：");
     }
 
-    float mPhysicalCoeff = 207560.8f;
-    private float mFlingFriction = 0.015f;
-    private static final float INFLEXION = 0.35f; // Tension lines cross at (INFLEXION, 1)
+    @Test
+    public void testList() throws Exception {
+        //mock creation
+        List mockedList = mock(List.class);
+// using mock object
+//        mockedList.add("one");
+//        mockedList.clear();
+//        mockedList.add("3"); // no verify? OK
+//
+//// verification
+//        verify(mockedList).add("one");
+//        verify(mockedList).clear();
+////        verify(mockedList).add("2"); // this will throw an exception
+//        System.out.println("结案例：");
+//
+//        when(mockedList.get(0)).thenReturn("first");
+//        System.out.println(mockedList.get(0));
 
-    private double getSplineFlingDistance(int velocity) {
-        final double l = getSplineDeceleration(velocity);
-        return mFlingFriction * mPhysicalCoeff * Math.exp(2.3582017 / 1.3582017 * l);
+        when(mockedList.get(anyInt())).thenReturn("element");
+
+// following prints "element"
+        System.out.println(mockedList.get(anyInt()));
+
+// you can also verify using an argument matcher
+        verify(mockedList).get(anyInt());
     }
 
-    private double getSplineDeceleration(int velocity) {
-        return Math.log(INFLEXION * Math.abs(velocity) / (mFlingFriction * mPhysicalCoeff));
-    }
-
-    private double velocityfromdistance(double distance) {
-        double exp = distance / (mFlingFriction * mPhysicalCoeff);
-        return Math.exp(Math.log(exp) / (2.3582017 / 1.3582017)) * (mFlingFriction * mPhysicalCoeff) / INFLEXION;
-    }
 
     @Test
     public void testplay() throws Exception {
         List list = mock(List.class);   //mock得到一个对象，也可以用@mock注入一个对象
-        int velocity = 8459;
-        double d = getSplineFlingDistance(velocity);//8459 ->2852.988119201405
-        ;//8459 ->2852.988119201405
-        System.out.println("结束一个案例：" + d);
-        System.out.println("结果====：" + velocityfromdistance(d));
         LauncherActivity sampleActivity = Robolectric.setupActivity(LauncherActivity.class);
         assertNotNull(sampleActivity);
         assertEquals(sampleActivity.getTitle(), "Squareup");
