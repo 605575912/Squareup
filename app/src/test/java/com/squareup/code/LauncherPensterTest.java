@@ -61,17 +61,5 @@ public class LauncherPensterTest {
         verify(nulauncherCache, times(0)).dowlNewWorkData();
     }
 
-    @Test
-    public void getimage() throws Exception {
-//        LauncherPenster penster = new LauncherPenster();
-//        LauncherActivity sampleActivity = Robolectric.setupActivity(LauncherActivity.class);
-//        penster.startHome(sampleActivity);
-//        Intent expectedIntent = new Intent(sampleActivity, HomeActivity.class);
-//        Intent actualIntent = ShadowApplication.getInstance().getNextStartedActivity();
-//        assertEquals(expectedIntent.getComponent(), actualIntent.getComponent());
-//
-//        LauncherActivity activity = mock(LauncherActivity.class);
-//        penster.startHome(activity);
-//        verify(activity).finish(); // this will throw an exception
-    }
+
 }

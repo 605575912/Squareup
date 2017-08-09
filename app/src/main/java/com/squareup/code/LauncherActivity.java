@@ -38,46 +38,10 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  * Created by Administrator on 2017/05/31 0031.
  */
 
-public class LauncherActivity extends BaseActivity implements View.OnClickListener {
+public class LauncherActivity extends BaseActivity {
     LauncherLayoutBinding activityMainBinding;
     LauncherCache launcherCache = new LauncherCache();
     Handler handler;
-    int radius = 32;
-
-    private Bitmap roundCrop(Bitmap source, int outWidth, int outHeight, ImageView imageView) {
-        if (source == null) return null;
-        Bitmap result = Bitmap.createBitmap(outWidth, outHeight, Bitmap.Config.ARGB_8888);
-        if (imageView != null) {
-            outHeight = imageView.getMeasuredWidth();
-            outWidth = imageView.getMeasuredWidth();
-        }
-        int sourcewidth = source.getWidth();
-        int sourceheight = source.getHeight();
-        float sale = sourcewidth * 1.0f / sourceheight;
-        float outsale = outWidth * 1.0f / outHeight;
-        float destwidth;
-        float destheight;
-        Rect srcR = new Rect(0, 0, 0, 0);
-        if (outsale >= sale) {
-            destheight = (sourcewidth / outsale);
-            srcR.right = sourcewidth;
-            srcR.top = (int) ((sourceheight - destheight) / 2);
-            srcR.bottom = srcR.top + (int) destheight;
-        } else {
-            destwidth = (sourceheight * outsale);
-            srcR.left = (int) ((sourcewidth - destwidth) / 2);
-            srcR.right = srcR.left + (int) destwidth;
-            srcR.bottom = sourceheight;
-        }
-        Canvas canvas = new Canvas(result);
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        RectF rect = new RectF(0, 0, outWidth, outHeight);
-        canvas.drawRoundRect(rect, radius, radius, paint);
-        paint.setXfermode(new PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(source, srcR, rect, paint);
-        return result;
-    }
 
     @Override
     protected boolean isAllTranslucentStatus() {
@@ -103,10 +67,10 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if (msg.what == 0) {
-                    handler.removeCallbacksAndMessages(null);
+                    removeCallbacksAndMessages(null);
 //                    YWCom.INSTANCE.login(LauncherActivity.this,"testpro1","taobao1234");
 
-                    launcherPenster.startHome(LauncherActivity.this);
+//                    launcherPenster.startHome(LauncherActivity.this);
 //                    ShareNotice.getInstance().show(LauncherActivity.this);
 
 //                    tencentUtils = new TencentUtils();
@@ -160,7 +124,7 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         //XGPushConfig.setAccessId(this,2100250470);
         //开启信鸽的日志输出，线上版本不建议调用
         XGPushConfig.enableDebug(this, true);
-        launcherPenster.workCache(launcherCache,new TabsCache());
+        launcherPenster.workCache(launcherCache, new TabsCache());
 
                 /*
         注册信鸽服务的接口
@@ -357,9 +321,8 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v instanceof RadioTextView) {
+    public void onFinishClick(View v) {
+        if (v instanceof RadioTextView && handler != null) {
             handler.sendEmptyMessage(0);
         }
     }

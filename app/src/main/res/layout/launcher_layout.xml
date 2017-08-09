@@ -24,13 +24,12 @@
 
 
         <com.squareup.code.views.RadioTextView
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:gravity="center"
-            android:onClick="onClick"
+            android:onClick="onFinishClick"
             android:text="跳过"
             android:textColor="#ffffff"
             app:launchertime="@{itemsbean.counttime}" />
