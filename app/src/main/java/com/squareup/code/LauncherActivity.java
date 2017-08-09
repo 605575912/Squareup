@@ -21,6 +21,7 @@ import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 
 
+
 /**
  * Created by Administrator on 2017/05/31 0031.
  */
@@ -42,16 +43,12 @@ public class LauncherActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.launcher_layout);
-//        SimpleDraweeView iv_ = (SimpleDraweeView) activityMainBinding.getRoot().findViewById(R.id.iv_);
-//        DraweeController controller = Fresco.newDraweeControllerBuilder()
-//                .setUri("http://192.168.30.13:8080/img/m.webp")
-//                .setAutoPlayAnimations(true)
-//                .build();
-//        iv_.setController(controller);
+
         launcherPenster = new LauncherPenster();
 
-//        ActivityComponent.builder()
-//                .activityModule(new ActivityModule(this))
+
+//        DaggerActivityComponent.builder()
+//                .activityModule(new ActivityModule())
 //                .build()
 //                .inject(this);
 
