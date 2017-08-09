@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:onClick="@{onclick.onClick}"
+        android:onClick="@{onclick::onClick}"
         android:paddingBottom="14dp">
         <!-- 需要高斯模精效果,GaussBgBlurLayout 为RelativeLayout的子类 -->
         <com.squareup.code.views.GaussImageView

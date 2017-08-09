@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.text.TextUtils;
 
+import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
+import com.squareup.code.launcher.LauncherMode;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,6 +38,27 @@ public class LauncherPenster {
         }
         launcherCache.getCacheData();
         launcherCache.dowlNewWorkData();
+    }
+
+    public void lanuncher(Handler handler, LauncherLayoutBinding activityMainBinding, LauncherMode launcherMode) {
+        if (launcherMode == null) {
+            return;
+        }
+        if (launcherMode.getItems() != null && launcherMode.getItems().size() > 0) {
+            launcherMode.getItems().get(0).setCounttime(5);
+            if (activityMainBinding != null) {
+                activityMainBinding.setItemsbean(launcherMode.getItems().get(0));
+            }
+            if (handler != null) {
+                handler.sendEmptyMessageDelayed(0, 5000);
+                handler.sendEmptyMessageDelayed(1, 5500);
+            }
+        } else {
+            if (handler != null) {
+                handler.sendEmptyMessageDelayed(0, 1000);
+                handler.sendEmptyMessageDelayed(1, 5500);
+            }
+        }
     }
 
     /**

@@ -54,7 +54,7 @@
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/start_live_bg"
-            android:onClick="@{onclick.onClick}"
+            android:onClick="@{onclick::onClick}"
             android:orientation="horizontal">
 
             <com.facebook.drawee.view.SimpleDraweeView

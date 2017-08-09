@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#04e7d8"
-        android:onClick="@{loginview.onClick}"
+        android:onClick="@{loginview::onClick}"
         android:orientation="horizontal">
 
         <LinearLayout

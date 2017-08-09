@@ -15,6 +15,5 @@ public class TestBaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
-        Fresco.initialize(application);
     }
 }

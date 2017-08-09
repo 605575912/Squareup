@@ -1,27 +1,17 @@
 package com.squareup.code;
 
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.baidu.mobstat.StatService;
 import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
-import com.squareup.code.pay.PayUtils;
 import com.squareup.code.views.RadioTextView;
-import com.squareup.code.wx.WxpayModel;
-import com.squareup.code.wxapi.WXEntryActivity;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.BuildConfig;
 import com.squareup.lib.EventMainObject;
@@ -29,9 +19,6 @@ import com.squareup.lib.utils.LogUtil;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
-import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 
 /**
@@ -48,8 +35,8 @@ public class LauncherActivity extends BaseActivity {
         return true;
     }
 
-    PayUtils payUtils;
     MusicPlayer musicPlayer;
+    LauncherPenster launcherPenster;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +49,12 @@ public class LauncherActivity extends BaseActivity {
 //                .build();
 //        iv_.setController(controller);
         launcherPenster = new LauncherPenster();
+
+//        ActivityComponent.builder()
+//                .activityModule(new ActivityModule(this))
+//                .build()
+//                .inject(this);
+
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -70,8 +63,7 @@ public class LauncherActivity extends BaseActivity {
                     removeCallbacksAndMessages(null);
 //                    YWCom.INSTANCE.login(LauncherActivity.this,"testpro1","taobao1234");
 
-//                    launcherPenster.startHome(LauncherActivity.this);
-//                    ShareNotice.getInstance().show(LauncherActivity.this);
+                    launcherPenster.startHome(LauncherActivity.this);
 
 //                    tencentUtils = new TencentUtils();
 //                    tencentUtils.login(LauncherActivity.this);
@@ -108,11 +100,6 @@ public class LauncherActivity extends BaseActivity {
 
             }
         };
-//        TwinklingRefreshLayout twinklingRefreshLayout;
-        if (payUtils == null) {
-//            payUtils = new PayUtils(LauncherActivity.this);
-//            payUtils.payV2("data", handler);
-        }
 
 // 开发时调用，建议上线前关闭，以免影响性能
         StatService.setDebugOn(BuildConfig.DEBUG);
@@ -125,7 +112,6 @@ public class LauncherActivity extends BaseActivity {
         //开启信鸽的日志输出，线上版本不建议调用
         XGPushConfig.enableDebug(this, true);
         launcherPenster.workCache(launcherCache, new TabsCache());
-
                 /*
         注册信鸽服务的接口
         如果仅仅需要发推送消息调用这段代码即可
@@ -142,9 +128,6 @@ public class LauncherActivity extends BaseActivity {
                     @Override
                     public void onFail(Object data, int errCode, String msg) {
                         LogUtil.i("==============onFail=====");
-//                        Log.w(Constants.LogTag,
-//                                "+++ register push fail. token:" + data
-//                                        + ", errCode:" + errCode + ",msg:");
 
                     }
                 });
@@ -272,49 +255,11 @@ public class LauncherActivity extends BaseActivity {
 //        });
     }
 
-    LauncherPenster launcherPenster;
-
-
-    private void weixinpay(String id) {
-        IWXAPI mapi = null;
-        if (mapi == null) {
-            mapi = WXAPIFactory.createWXAPI(LauncherActivity.this, WXEntryActivity.APP_ID);
-        }
-        if (mapi.isWXAppInstalled()) {
-            mapi.registerApp(WXEntryActivity.APP_ID);
-            boolean isPaySupported = mapi.getWXAppSupportAPI() >= com.tencent.mm.opensdk.constants.Build.PAY_SUPPORTED_SDK_INT;
-            if (!isPaySupported) {
-                //不能支付
-                return;
-            }
-            WxpayModel wxpayModel = new WxpayModel();
-            PayReq req = new PayReq();
-            req.appId = WXEntryActivity.APP_ID;
-            req.partnerId = wxpayModel.getPartnerid();
-            req.prepayId = wxpayModel.getPrepayid();
-            req.nonceStr = wxpayModel.getNoncestr();
-            req.timeStamp = String.valueOf(wxpayModel.getTimestamp());
-            req.packageValue = wxpayModel.getPackageX();
-            req.sign = wxpayModel.getSign();
-            req.extData = "app data"; // optional
-            mapi.sendReq(req);
-
-        }
-    }
-
     @Override
     public void onEventMain(EventMainObject event) {
         if (event.getCommand().equals(launcherCache.getCommand())) {
             if (event.getData() instanceof LauncherMode) {
-                LauncherMode launcherMode = (LauncherMode) event.getData();
-                if (launcherMode.getItems() != null && launcherMode.getItems().size() > 0) {
-                    launcherMode.getItems().get(0).setCounttime(5);
-                    activityMainBinding.setItemsbean(launcherMode.getItems().get(0));
-                    handler.sendEmptyMessageDelayed(0, 5000);
-                    handler.sendEmptyMessageDelayed(1, 5500);
-                } else {
-                    handler.sendEmptyMessageDelayed(0, 1000);
-                }
+                launcherPenster.lanuncher(handler, activityMainBinding, (LauncherMode) event.getData());
             } else {
                 handler.sendEmptyMessageDelayed(0, 1000);
             }
