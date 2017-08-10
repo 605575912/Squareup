@@ -6,20 +6,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 
-import com.baidu.mobstat.StatService;
 import com.squareup.code.databinding.LauncherLayoutBinding;
-import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
 import com.squareup.code.views.RadioTextView;
 import com.squareup.lib.BaseActivity;
-import com.squareup.lib.BuildConfig;
 import com.squareup.lib.EventMainObject;
-import com.squareup.lib.utils.LogUtil;
-import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
-import com.tencent.android.tpush.XGPushManager;
-
 
 
 /**
@@ -43,15 +35,7 @@ public class LauncherActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.launcher_layout);
-
         launcherPenster = new LauncherPenster();
-
-
-//        DaggerActivityComponent.builder()
-//                .activityModule(new ActivityModule())
-//                .build()
-//                .inject(this);
-
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -98,36 +82,7 @@ public class LauncherActivity extends BaseActivity {
             }
         };
 
-// 开发时调用，建议上线前关闭，以免影响性能
-        StatService.setDebugOn(BuildConfig.DEBUG);
-        StatService.start(this);
-//        StatService.setAppChannel();...)
-
-
-        //代码内动态注册access ID
-        //XGPushConfig.setAccessId(this,2100250470);
-        //开启信鸽的日志输出，线上版本不建议调用
-        XGPushConfig.enableDebug(this, true);
-        launcherPenster.workCache(launcherCache, new TabsCache());
-                /*
-        注册信鸽服务的接口
-        如果仅仅需要发推送消息调用这段代码即可
-        */
-        XGPushManager.registerPush(getApplicationContext(),
-                new XGIOperateCallback() {
-                    @Override
-                    public void onSuccess(Object data, int flag) {
-//                        Log.w(Constants.LogTag, "+++ register push sucess. token:" + data+"flag" +flag);
-
-                        LogUtil.i("==============onSuccess=====");
-                    }
-
-                    @Override
-                    public void onFail(Object data, int errCode, String msg) {
-                        LogUtil.i("==============onFail=====");
-
-                    }
-                });
+        launcherPenster.initService(launcherCache);
 
 //        Observable observable = Observable.create(new ObservableOnSubscribe() {
 //            @Override

@@ -9,8 +9,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
+
+import java.lang.reflect.Method;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.verify;
  * Created by Administrator on 2017/08/08 0008.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21, application = TestApplication.class)
+//@Config(constants = BuildConfig.class, sdk = 21, application = TestApplication.class)
 public class LauncherPensterTest {
     @Test
     public void startHome() throws Exception {
@@ -44,18 +45,33 @@ public class LauncherPensterTest {
     }
 
     @Test
+    public void initService() throws Exception {
+        LauncherPenster penster = new LauncherPenster();
+        LauncherCache launcherCache = mock(LauncherCache.class);
+        penster.initService(launcherCache);
+//        Method method = (MethodUtil.getMethod(penster, "workCache", new Class[]{LauncherCache.class, TabsCache.class}));
+//        method.invoke(penster, null, null);
+        verify(launcherCache, times(1)).getCacheData();
+    }
+
+    @Test
     public void workCache() throws Exception {
         LauncherPenster penster = new LauncherPenster();
         LauncherCache launcherCache = mock(LauncherCache.class);
         TabsCache tabsCache = mock(TabsCache.class);
-        penster.workCache(launcherCache, tabsCache);
+
+        Method method = (MethodUtil.getMethod(penster, "workCache", new Class[]{LauncherCache.class, TabsCache.class}));
+        method.invoke(penster, launcherCache, tabsCache);
+//        penster.workCache(launcherCache, tabsCache);
         verify(tabsCache).dowlNewWorkData();
         verify(launcherCache).getCacheData();
         verify(launcherCache).dowlNewWorkData();
-
+//--------------------------------------------------------------------
         LauncherCache nulauncherCache = mock(LauncherCache.class);
         TabsCache nulltabsCache = mock(TabsCache.class);
-        penster.workCache(null, null);
+
+        method.invoke(penster, null, null);
+
         verify(nulltabsCache, times(0)).dowlNewWorkData();
         verify(nulauncherCache, times(0)).getCacheData();
         verify(nulauncherCache, times(0)).dowlNewWorkData();
