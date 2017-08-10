@@ -21,6 +21,7 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -57,7 +58,7 @@ public class LauncherActivityUiTest {
         // Type text and then press the button.
 //        onView(withId(R.id.editTextUserInput))
 //                .perform(typeText(mStringToBetyped), closeSoftKeyboard());
-        onView(withId(R.id.test_tv_radio)).perform(click());
+        onView(allOf(withId(R.id.test_tv_radio))).perform(click());
 //
 //        // Check that the text was changed.
 //        onView(withId(R.id.textToBeChanged))
