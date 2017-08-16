@@ -10,8 +10,10 @@
     </data>
 
     <RelativeLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#d4883d"
         android:orientation="vertical">
 
         <com.facebook.drawee.view.SimpleDraweeView
@@ -19,8 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:launcher="@{itemsbean.imgurl}"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            app:launcher="@{itemsbean.imgurl}" />
 
 
         <com.squareup.code.views.RadioTextView

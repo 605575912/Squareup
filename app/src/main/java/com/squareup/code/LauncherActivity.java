@@ -1,17 +1,42 @@
 package com.squareup.code;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
+import com.facebook.binaryresource.BinaryResource;
+import com.facebook.binaryresource.FileBinaryResource;
+import com.facebook.cache.common.CacheKey;
+import com.facebook.common.executors.CallerThreadExecutor;
+import com.facebook.common.references.CloseableReference;
+import com.facebook.datasource.DataSource;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imageformat.ImageFormat;
+import com.facebook.imageformat.ImageFormatChecker;
+import com.facebook.imagepipeline.cache.DefaultCacheKeyFactory;
+import com.facebook.imagepipeline.core.ImagePipeline;
+import com.facebook.imagepipeline.core.ImagePipelineFactory;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.image.CloseableImage;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
 import com.squareup.code.views.RadioTextView;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
+
+import java.io.File;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 
 /**
@@ -22,6 +47,105 @@ public class LauncherActivity extends BaseActivity {
     LauncherLayoutBinding activityMainBinding;
     LauncherCache launcherCache = new LauncherCache();
     Handler handler;
+
+    private void downLoadImg(final Context context, final String url) {
+//        ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url))
+//                .setProgressiveRenderingEnabled(true).build();
+//
+//        DataSource<CloseableReference<CloseableImage>> dataSource = Fresco.getImagePipeline()
+//                .fetchDecodedImage(imageRequest, context);
+//
+//        DataSubscriber<CloseableReference<CloseableImage>> dataSubscriber =
+//                new BaseDataSubscriber<CloseableReference<CloseableImage>>() {
+//                    @Override
+//                    protected void onNewResultImpl(
+//                            DataSource<CloseableReference<CloseableImage>> dataSource) {
+//                        if (!dataSource.isFinished()) {
+//                            return;
+//                        }
+//                        CloseableReference<CloseableImage> ref = dataSource.getResult();
+//                        if (ref != null) {
+//                            try {
+//                                CloseableImage result = ref.get();
+//                            } finally {
+//                                CloseableReference.closeSafely(ref);
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    protected void onFailureImpl(DataSource<CloseableReference<CloseableImage>> dataSource) {
+//                        Throwable t = dataSource.getFailureCause();
+//                    }
+//
+//                };
+//
+//        dataSource.subscribe(dataSubscriber, CallerThreadExecutor.getInstance());
+
+
+        ImageRequest imageRequest1 = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url)).setProgressiveRenderingEnabled(true).build();
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        DataSource<CloseableReference<CloseableImage>> dataSource1 = imagePipeline.fetchDecodedImage(imageRequest1, this);
+        dataSource1.subscribe(new BaseBitmapDataSubscriber() {
+            @Override
+            public void onNewResultImpl(@Nullable Bitmap bitmap) {
+                if (isImageDownloaded(Uri.parse(url), context)) {
+                    File file1 = getCachedImageOnDisk(Uri.parse(url), context);
+                    ImageFormat imageFormat = ImageFormatChecker.getImageFormat(file1.getPath());
+                    File newfiel = new File(file1.getPath().replace(".cnt", "." + imageFormat.getName()));
+                    file1.renameTo(newfiel);
+                    if (newfiel.exists()) {
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailureImpl(DataSource dataSource) {
+                Log.i("TAG", "==");
+            }
+        }, CallerThreadExecutor.getInstance());
+
+
+//        GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(getResources())
+//                .setFadeDuration(300)
+////                .setPlaceholderImage(defaultDrawable)
+////                .setFailureImage(defaultDrawable)
+//                .setProgressBarImage(new ProgressBarDrawable())
+//                .build();
+//        DraweeHolder<GenericDraweeHierarchy> draweeHolder = DraweeHolder.create(hierarchy, this);
+//
+//        PipelineDraweeController controller = (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+//                .setOldController(draweeHolder.getController())
+//                .setImageRequest(imageRequest)
+//                .build();
+//        controller.onClick();
+
+    }
+
+    public static boolean isImageDownloaded(Uri loadUri, Context context) {
+        if (loadUri == null) {
+            return false;
+        }
+        CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(ImageRequest.fromUri(loadUri), context);
+        return ImagePipelineFactory.getInstance().getMainFileCache().hasKey(cacheKey) || ImagePipelineFactory.getInstance().getSmallImageFileCache().hasKey(cacheKey);
+    }
+
+    //return file or null
+    public static File getCachedImageOnDisk(Uri loadUri, Context context) {
+        File localFile = null;
+        if (loadUri != null) {
+            CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(ImageRequest.fromUri(loadUri), context);
+            if (ImagePipelineFactory.getInstance().getMainFileCache().hasKey(cacheKey)) {
+                BinaryResource resource = ImagePipelineFactory.getInstance().getMainFileCache().getResource(cacheKey);
+                localFile = ((FileBinaryResource) resource).getFile();
+            } else if (ImagePipelineFactory.getInstance().getSmallImageFileCache().hasKey(cacheKey)) {
+                BinaryResource resource = ImagePipelineFactory.getInstance().getSmallImageFileCache().getResource(cacheKey);
+                localFile = ((FileBinaryResource) resource).getFile();
+            }
+        }
+        return localFile;
+    }
 
     @Override
     protected boolean isAllTranslucentStatus() {
@@ -35,7 +159,11 @@ public class LauncherActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.launcher_layout);
+//        ToastUtils.showToast(Build.VERSION.SDK_INT + "=" + Build.VERSION.RELEASE);
+        //http://q.qlogo.cn/qqapp/1105650145/AD0774282F746F5E2E3DEDB4CEA09411/100
         launcherPenster = new LauncherPenster();
+
+
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -43,8 +171,8 @@ public class LauncherActivity extends BaseActivity {
                 if (msg.what == 0) {
                     removeCallbacksAndMessages(null);
 //                    YWCom.INSTANCE.login(LauncherActivity.this,"testpro1","taobao1234");
-
-                    launcherPenster.startHome(LauncherActivity.this);
+                    downLoadImg(getApplicationContext(), "http://q.qlogo.cn/qqapp/1105650145/AD0774282F746F5E2E3DEDB4CEA09411/100");//gif
+//                    launcherPenster.startHome(LauncherActivity.this);
 
 //                    tencentUtils = new TencentUtils();
 //                    tencentUtils.login(LauncherActivity.this);

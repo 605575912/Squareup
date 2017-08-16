@@ -9,12 +9,17 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 import android.widget.Toast;
 
+import com.facebook.cache.disk.DiskCacheConfig;
+import com.facebook.common.internal.Supplier;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.morgoo.droidplugin.PluginHelper;
+import com.squareup.lib.utils.FileUtils;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
+
+import java.io.File;
 
 import okhttp3.Address;
 
@@ -38,10 +43,20 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
+        DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(application)
+                .setBaseDirectoryName("Fresco")
+                .setBaseDirectoryPathSupplier(new Supplier<File>() {
+                    @Override
+                    public File get() {
+                        return new File(FileUtils.getDiskCacheDir());
+                    }
+                }).build();
         ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
                 .newBuilder(application, HttpUtils.INSTANCE.getmOkHttpClient())
 //                . // other setters
 //    . // setNetworkFetchProducer is already called for you
+                .setDownsampleEnabled(true)
+                .setMainDiskCacheConfig(diskCacheConfig)
                 .build();
         Fresco.initialize(application, config);
 //        Fresco.initialize(application);
