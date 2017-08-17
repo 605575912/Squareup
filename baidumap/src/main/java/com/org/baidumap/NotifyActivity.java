@@ -1,4 +1,4 @@
-//package com.squareup.code.baidu;
+package com.org.baidumap;//package com.squareup.code.baidu;
 //import com.baidu.baidulocationdemo.R;
 //import com.baidu.location.BDLocation;
 //import com.baidu.location.BDLocationListener;

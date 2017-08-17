@@ -1,4 +1,4 @@
-package com.squareup.code.utils;
+package com.org.im;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -58,7 +58,6 @@ public enum YWCom {
         imCore.getConversationService().addP2PPushListener(new IYWP2PPushListener() {
             @Override
             public void onPushMessage(IYWContact iywContact, List<YWMessage> list) {
-                LogUtil.i("=================");
             }
         });
         //开始登录
@@ -69,7 +68,7 @@ public enum YWCom {
 
             @Override
             public void onSuccess(Object... arg0) {
-                LogUtil.i("onSuccess=============" + arg0);
+//                LogUtil.i("onSuccess=============" + arg0);
                 Intent intent = mIMKit.getConversationActivityIntent();
                 activity.startActivity(intent);
             }
@@ -77,7 +76,7 @@ public enum YWCom {
             @Override
             public void onProgress(int arg0) {
                 // TODO Auto-generated method stub
-                LogUtil.i("=============" + arg0);
+//                LogUtil.i("=============" + arg0);
             }
 
             @Override

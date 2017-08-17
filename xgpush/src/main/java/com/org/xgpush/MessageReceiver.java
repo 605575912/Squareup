@@ -1,11 +1,10 @@
-package com.squareup.code.receiver;
+package com.org.xgpush;
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.squareup.lib.utils.LogUtil;
 import com.tencent.android.tpush.XGPushBaseReceiver;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushRegisterResult;
@@ -28,7 +27,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onNotifactionShowedResult(Context context,
                                           XGPushShowedResult notifiShowedRlt) {
-        LogUtil.i("====================");
+//        LogUtil.i("====================");
         if (context == null || notifiShowedRlt == null) {
             return;
         }
@@ -46,7 +45,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
 //        NotificationService.getInstance(context).save(notific);
 //        context.sendBroadcast(intent);
         show(context, "您有1条新消息, " + "通知被展示 ， " + notifiShowedRlt.toString());
-        LogUtil.i("===================="+notifiShowedRlt.toString());
+//        LogUtil.i("===================="+notifiShowedRlt.toString());
     }
     //反注册的回调
     @Override
@@ -155,7 +154,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
         } else {
             text = message + "注册失败，错误码：" + errorCode;
         }
-        LogUtil.i("===================="+text);
+//        LogUtil.i("===================="+text);
 //        show(context, text);
     }
 
@@ -163,7 +162,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onTextMessage(Context context, XGPushTextMessage message) {
         // TODO Auto-generated method stub
-        LogUtil.i("====================1");
+//        LogUtil.i("====================1");
         String text = "收到消息:" + message.toString();
 
         // 获取自定义key-value

@@ -1,4 +1,4 @@
-package com.squareup.code.detail;
+package com.org.baidumap;
 
 import android.app.Dialog;
 import android.graphics.Bitmap;
@@ -25,9 +25,7 @@ import com.squareup.code.DataUnit;
 import com.squareup.code.ItemData;
 import com.squareup.code.MineItemData;
 import com.squareup.code.MyApplication;
-import com.squareup.code.R;
 import com.squareup.code.WrapContentLinearLayoutManager;
-import com.squareup.code.baidu.LocationService;
 import com.squareup.code.column.ColumnData;
 import com.squareup.code.column.ColumnView;
 import com.squareup.code.home.ChangedItemView;
@@ -53,7 +51,6 @@ import com.squareup.lib.HttpUtils;
 import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.utils.ToastUtils;
 import com.squareup.lib.viewfactory.BaseViewItem;
-import com.squareup.lib.viewfactory.RecyclerViewAdapter;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXTextObject;

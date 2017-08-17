@@ -196,7 +196,7 @@ public class ShareNotice implements View.OnClickListener {
                 msg.title = "title";
                 msg.description = "des";
                 final int THUMB_SIZE = 150;
-                Bitmap bmp = BitmapFactory.decodeResource(v.getResources(), R.drawable.btn_back_normal);
+                Bitmap bmp = BitmapFactory.decodeResource(v.getResources(), R.drawable.com_shouji);
                 Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, THUMB_SIZE, THUMB_SIZE, true);
                 bmp.recycle();
                 msg.thumbData = bmpToByteArray(thumbBmp, true);

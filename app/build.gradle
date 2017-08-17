@@ -103,28 +103,24 @@ dependencies {
     compile(name: 'palette-v7-25.3.1', ext: 'aar')
     //        compile 'com.android.support:multidex:1.0.1'
     //    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testCompile ('junit:junit:4.12'){
+    testCompile('junit:junit:4.12') {
         exclude group: 'com.google.guava'
     }
-    testCompile ('org.mockito:mockito-core:1.9.5'){
+    testCompile('org.mockito:mockito-core:1.9.5') {
         exclude group: 'com.google.guava'
     }
     testCompile 'org.robolectric:robolectric:3.4-rc4'
     testCompile 'org.robolectric:supportv4:3.4-rc4'
     testCompile 'org.robolectric:resources:3.4-rc4'
     testCompile 'org.robolectric:multidex:3.4-rc4'
-    testCompile ('org.robolectric:annotations:3.4-rc4'){
+    testCompile('org.robolectric:annotations:3.4-rc4') {
         exclude group: 'com.google.guava'
     }
-    compile project(':zxinglibrary')
     compile project(':twinklingRefreshLaoutlibrary')
-    compile project(':tencentcos')
     testCompile 'org.mockito:mockito-core:2.8.47'
-
-//    annotationProcessor  'com.google.dagger:dagger-compiler:2.11'
-//    compile 'com.google.dagger:dagger:2.11'
-//    provided 'org.glassfish:javax.annotation:10.0-b28'
-
+    //    annotationProcessor  'com.google.dagger:dagger-compiler:2.11'
+    //    compile 'com.google.dagger:dagger:2.11'
+    //    provided 'org.glassfish:javax.annotation:10.0-b28'
 }
 // 依赖插件脚本
 //apply from: 'tinker-support.gradle'

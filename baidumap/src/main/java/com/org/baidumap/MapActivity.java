@@ -1,4 +1,4 @@
-package com.squareup.code.map;
+package com.org.baidumap;
 
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -21,7 +21,6 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.Overlay;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.squareup.code.R;
 import com.squareup.lib.BaseActivity;
 
 /**

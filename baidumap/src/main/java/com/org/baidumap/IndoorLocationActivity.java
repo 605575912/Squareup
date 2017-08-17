@@ -1,4 +1,4 @@
-//package com.squareup.code.baidu;
+package com.org.baidumap;//package com.squareup.code.baidu;
 //
 //
 //

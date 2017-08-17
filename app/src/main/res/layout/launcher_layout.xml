@@ -13,7 +13,6 @@
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#d4883d"
         android:orientation="vertical">
 
         <com.facebook.drawee.view.SimpleDraweeView

@@ -14,7 +14,6 @@ import com.facebook.common.internal.Supplier;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
-import com.morgoo.droidplugin.PluginHelper;
 import com.squareup.lib.utils.FileUtils;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
@@ -209,7 +208,7 @@ public class BaseApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         MultiDex.install(base);
-        PluginHelper.getInstance().applicationAttachBaseContext(base);
+//        PluginHelper.getInstance().applicationAttachBaseContext(base);
         super.attachBaseContext(base);
         // you must install multiDex whatever tinker is installed!
         // 安装tinker

@@ -1,4 +1,4 @@
-package com.squareup.code;
+package com.squareup.code.test;
 
 /**
  * Created by Administrator on 2017/08/14 0014.
