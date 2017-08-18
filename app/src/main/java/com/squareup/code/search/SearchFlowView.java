@@ -5,9 +5,15 @@ import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.squareup.code.R;
 import com.squareup.lib.utils.AppLibUtils;
+import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.view.flowlayout.FlowLayout;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewHolder;
@@ -37,7 +43,7 @@ public class SearchFlowView implements BaseViewItem {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        ViewHolder viewHolder = (ViewHolder) holder;
     }
 
     @Override
@@ -50,6 +56,8 @@ public class SearchFlowView implements BaseViewItem {
             textView.setBackgroundColor(Color.WHITE);
             flowLayout.addView(textView);
         }
+
+
         return new ViewHolder(flowLayout);
     }
 
@@ -58,6 +66,7 @@ public class SearchFlowView implements BaseViewItem {
         private ViewHolder(View view) {
             super(view);
         }
+
 
     }
 }

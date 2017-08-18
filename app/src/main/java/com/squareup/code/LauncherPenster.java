@@ -12,6 +12,7 @@ import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
+import com.squareup.code.search.SearchHisActivity;
 import com.squareup.lib.BaseApplication;
 
 import java.io.File;

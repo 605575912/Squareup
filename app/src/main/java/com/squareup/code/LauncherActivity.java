@@ -33,6 +33,7 @@ import com.squareup.code.launcher.LauncherMode;
 import com.squareup.code.views.RadioTextView;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
+import com.squareup.lib.utils.LogUtil;
 
 import java.io.File;
 import java.net.URLDecoder;
@@ -49,40 +50,6 @@ public class LauncherActivity extends BaseActivity {
     Handler handler;
 
     private void downLoadImg(final Context context, final String url) {
-//        ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url))
-//                .setProgressiveRenderingEnabled(true).build();
-//
-//        DataSource<CloseableReference<CloseableImage>> dataSource = Fresco.getImagePipeline()
-//                .fetchDecodedImage(imageRequest, context);
-//
-//        DataSubscriber<CloseableReference<CloseableImage>> dataSubscriber =
-//                new BaseDataSubscriber<CloseableReference<CloseableImage>>() {
-//                    @Override
-//                    protected void onNewResultImpl(
-//                            DataSource<CloseableReference<CloseableImage>> dataSource) {
-//                        if (!dataSource.isFinished()) {
-//                            return;
-//                        }
-//                        CloseableReference<CloseableImage> ref = dataSource.getResult();
-//                        if (ref != null) {
-//                            try {
-//                                CloseableImage result = ref.get();
-//                            } finally {
-//                                CloseableReference.closeSafely(ref);
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    protected void onFailureImpl(DataSource<CloseableReference<CloseableImage>> dataSource) {
-//                        Throwable t = dataSource.getFailureCause();
-//                    }
-//
-//                };
-//
-//        dataSource.subscribe(dataSubscriber, CallerThreadExecutor.getInstance());
-
-
         ImageRequest imageRequest1 = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url)).setProgressiveRenderingEnabled(true).build();
         ImagePipeline imagePipeline = Fresco.getImagePipeline();
         DataSource<CloseableReference<CloseableImage>> dataSource1 = imagePipeline.fetchDecodedImage(imageRequest1, this);
@@ -105,21 +72,6 @@ public class LauncherActivity extends BaseActivity {
                 Log.i("TAG", "==");
             }
         }, CallerThreadExecutor.getInstance());
-
-
-//        GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(getResources())
-//                .setFadeDuration(300)
-////                .setPlaceholderImage(defaultDrawable)
-////                .setFailureImage(defaultDrawable)
-//                .setProgressBarImage(new ProgressBarDrawable())
-//                .build();
-//        DraweeHolder<GenericDraweeHierarchy> draweeHolder = DraweeHolder.create(hierarchy, this);
-//
-//        PipelineDraweeController controller = (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
-//                .setOldController(draweeHolder.getController())
-//                .setImageRequest(imageRequest)
-//                .build();
-//        controller.onClick();
 
     }
 
@@ -171,8 +123,8 @@ public class LauncherActivity extends BaseActivity {
                 if (msg.what == 0) {
                     removeCallbacksAndMessages(null);
 //                    YWCom.INSTANCE.login(LauncherActivity.this,"testpro1","taobao1234");
-                    downLoadImg(getApplicationContext(), "http://q.qlogo.cn/qqapp/1105650145/AD0774282F746F5E2E3DEDB4CEA09411/100");//gif
-//                    launcherPenster.startHome(LauncherActivity.this);
+//                    downLoadImg(getApplicationContext(), "http://q.qlogo.cn/qqapp/1105650145/AD0774282F746F5E2E3DEDB4CEA09411/100");//gif
+                    launcherPenster.startHome(LauncherActivity.this);
 
 //                    tencentUtils = new TencentUtils();
 //                    tencentUtils.login(LauncherActivity.this);
@@ -333,6 +285,42 @@ public class LauncherActivity extends BaseActivity {
 //                ToastUtils.showToast("onDownloadFailed");
 //            }
 //        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LogUtil.e("onpause");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        LogUtil.e("onRestart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtil.e("onResume");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LogUtil.e("onDestroy");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LogUtil.e("onStart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LogUtil.e("1onStop");
     }
 
     @Override

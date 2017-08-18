@@ -13,6 +13,7 @@ import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.common.internal.Supplier;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
+import com.facebook.imagepipeline.cache.MemoryCacheParams;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.squareup.lib.utils.FileUtils;
 import com.tencent.bugly.beta.Beta;
@@ -42,6 +43,24 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
+//        DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(application)
+//                .setBaseDirectoryName("Fresco")
+//                .setBaseDirectoryPathSupplier(new Supplier<File>() {
+//                    @Override
+//                    public File get() {
+//                        return new File(FileUtils.getDiskCacheDir());
+//                    }
+//                }).build();
+//        ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
+//                .newBuilder(application, HttpUtils.INSTANCE.getmOkHttpClient())
+////                . // other setters
+////    . // setNetworkFetchProducer is already called for you
+//                .setDownsampleEnabled(true)
+//                .setMainDiskCacheConfig(diskCacheConfig)
+//                .build();
+//        Fresco.initialize(application, config);
+
+
         DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(application)
                 .setBaseDirectoryName("Fresco")
                 .setBaseDirectoryPathSupplier(new Supplier<File>() {
@@ -50,15 +69,25 @@ public class BaseApplication extends Application {
                         return new File(FileUtils.getDiskCacheDir());
                     }
                 }).build();
-        ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
-                .newBuilder(application, HttpUtils.INSTANCE.getmOkHttpClient())
-//                . // other setters
-//    . // setNetworkFetchProducer is already called for you
-                .setDownsampleEnabled(true)
-                .setMainDiskCacheConfig(diskCacheConfig)
-                .build();
-        Fresco.initialize(application, config);
-//        Fresco.initialize(application);
+        ImagePipelineConfig.Builder configBuilder = ImagePipelineConfig.newBuilder(application);
+        // 设置内存配置
+        int maxMemory = (int) Runtime.getRuntime().maxMemory();
+        int cacheSize = maxMemory / 4;
+        final MemoryCacheParams bitmapCacheParams = new MemoryCacheParams(
+                cacheSize, // Max total size of elements in the cache
+                200,                     // Max entries in the cache
+                10 * 1024 * 1024, // Max total size of elements in eviction queue
+                50,                     // Max length of eviction queue
+                maxMemory / 8);
+        configBuilder.setBitmapMemoryCacheParamsSupplier(
+                new Supplier<MemoryCacheParams>() {
+                    public MemoryCacheParams get() {
+                        return bitmapCacheParams;
+                    }
+                });
+        configBuilder.setMainDiskCacheConfig(diskCacheConfig);
+        configBuilder.setDownsampleEnabled(true);
+        Fresco.initialize(application, configBuilder.build());
 
 //        ViewTarget.setTagId(com.squareup.lib.R.id.glide_id);
 

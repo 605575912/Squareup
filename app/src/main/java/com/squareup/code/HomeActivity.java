@@ -28,6 +28,7 @@ import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
 import com.squareup.lib.ImageUtils;
 import com.squareup.lib.utils.AppLibUtils;
+import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -126,6 +127,41 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LogUtil.e("onpause");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        LogUtil.e("onRestart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtil.e("onResume");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LogUtil.e("onDestroy");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LogUtil.e("onStart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LogUtil.e("onStop");
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
