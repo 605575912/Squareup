@@ -24,6 +24,7 @@ import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.utils.LoadEmptyViewControl;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.BaseApplication;
+import com.squareup.lib.BaseFrament;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
 import com.squareup.lib.ImageUtils;
@@ -41,16 +42,17 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     TabsCache tabsCache;
     ViewPager viewPager;
     TabAdapter tabAdapter;
-    List<TabFragment> fragments;
+
     LoadEmptyViewControl loadEmptyViewControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogUtil.e("onCreate");
         ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(getActivity(), R.layout.activity_main);
         tabs_layout = (LinearLayout) findViewById(R.id.tabs_layout);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        fragments = new ArrayList<TabFragment>();
+        fragments = new ArrayList<BaseFrament>();
         tabAdapter = new TabAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(tabAdapter);
         FrameLayout frameLayout = (FrameLayout) activityMainBinding.getRoot().findViewById(R.id.container);
@@ -89,7 +91,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
             Bundle bundle = new Bundle();
             bundle.putParcelable("TabsBean", tabsBean);
             tabFragment.setArguments(bundle);
-
             fragments.add(tabFragment);
             tabAdapter.notifyDataSetChanged();
 
@@ -104,9 +105,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onEventMain(EventMainObject event) {
-        for (TabFragment tabFragment : fragments) {
-            tabFragment.onEventMain(event);
-        }
         if (tabsCache != null) {
             if (event.getCommand().equals(tabsCache.getCommand())) {
                 if (event.getData() instanceof TabModel) {

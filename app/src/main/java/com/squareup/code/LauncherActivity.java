@@ -290,31 +290,31 @@ public class LauncherActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        LogUtil.e("onpause");
+        LogUtil.e("1onpause");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        LogUtil.e("onRestart");
+        LogUtil.e("1onRestart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        LogUtil.e("onResume");
+        LogUtil.e("1onResume");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LogUtil.e("onDestroy");
+        LogUtil.e("1onDestroy");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        LogUtil.e("onStart");
+        LogUtil.e("1onStart");
     }
 
     @Override

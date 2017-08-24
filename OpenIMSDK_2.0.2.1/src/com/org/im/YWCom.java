@@ -13,7 +13,6 @@ import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.login.IYWConnectionListener;
-import com.squareup.lib.utils.LogUtil;
 
 import java.util.List;
 
@@ -82,7 +81,7 @@ public enum YWCom {
             @Override
             public void onError(int errCode, String description) {
                 //如果登录失败，errCode为错误码,description是错误的具体描述信息
-                LogUtil.i("onError=============" + description);
+//                LogUtil.i("onError=============" + description);
             }
         });
     }

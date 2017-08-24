@@ -29,6 +29,7 @@ public class BaseActivity extends FragmentActivity {
     public View titleView;
     public List<BaseViewItem> list;
     public RecyclerViewAdapter adapter;
+    public List<BaseFrament> fragments;
 
     @Override
     public void setContentView(int layoutResID) {
@@ -110,10 +111,20 @@ public class BaseActivity extends FragmentActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMain(EventMainObject event) {
+        if (fragments != null) {
+            for (BaseFrament tabFragment : fragments) {
+                tabFragment.onEventMain(event);
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEventThread(EventThreadObject event) {
+        if (fragments != null) {
+            for (BaseFrament tabFragment : fragments) {
+                tabFragment.onEventThread(event);
+            }
+        }
     }
 
     @Override
@@ -122,5 +133,16 @@ public class BaseActivity extends FragmentActivity {
         EventBus.getDefault().unregister(this);//反注册EventBus
     }
 
-
+    /**
+     * 就是说Activity类实现了Window的Callback接口。那就是看下Activity实现的onContentChanged方法。如下：
+     * <p>
+     * public void onContentChanged() {
+     * }
+     * 咦？onContentChanged是个空方法。那就说明当Activity的布局改动时，即setContentView()或者addContentView()方法执行完毕时就会调用该方法。
+     * <p>
+     * 所以当我们写App时，Activity的各种View的findViewById()方法等都可以放到该方法中，系统会帮忙回调。
+     */
+    @Override
+    public void onContentChanged() {
+    }
 }

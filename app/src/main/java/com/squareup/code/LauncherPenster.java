@@ -29,7 +29,7 @@ public class LauncherPenster {
         }
         Intent intent = new Intent(activity, HomeActivity.class);
         activity.startActivity(intent);
-        activity.finish();
+//        activity.finish();
     }
 
     public void initService(LauncherCache launcherCache) {

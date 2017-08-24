@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.squareup.lib.BaseFrament;
+
 import java.util.List;
 
 /**
@@ -11,9 +13,9 @@ import java.util.List;
  */
 
 public class TabAdapter extends FragmentPagerAdapter {
-    List<TabFragment> fragments;
+    List<BaseFrament> fragments;
 
-    public TabAdapter(FragmentManager fm, List<TabFragment> fragments) {
+    public TabAdapter(FragmentManager fm, List<BaseFrament> fragments) {
         super(fm);
         this.fragments = fragments;
     }
