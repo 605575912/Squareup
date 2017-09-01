@@ -53,5 +53,15 @@
         <com.squareup.code.views.AllanimationView
             android:layout_width="match_parent"
             android:layout_height="500dp" />
+
+        <com.squareup.code.views.DefinedViewGroup
+            android:layout_width="20dp"
+            android:layout_height="20dp">
+
+            <com.squareup.code.views.DefinedView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.squareup.code.views.DefinedViewGroup>
     </RelativeLayout>
 </layout>

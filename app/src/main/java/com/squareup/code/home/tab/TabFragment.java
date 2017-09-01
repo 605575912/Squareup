@@ -13,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
-import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.squareup.code.BR;
 import com.squareup.code.Card;
 import com.squareup.code.CardUnit;
@@ -22,7 +20,6 @@ import com.squareup.code.DataUnit;
 import com.squareup.code.ItemData;
 import com.squareup.code.MineItemData;
 import com.squareup.code.R;
-import com.squareup.code.WrapContentLinearLayoutManager;
 import com.squareup.code.column.ColumnData;
 import com.squareup.code.column.ColumnView;
 import com.squareup.code.discount.DiscountData;
@@ -44,6 +41,7 @@ import com.squareup.code.utils.LoadEmptyViewControl;
 import com.squareup.lib.BaseFrament;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.HttpUtils;
+import com.squareup.lib.ListFrament;
 import com.squareup.lib.utils.AppLibUtils;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewAdapter;
@@ -55,21 +53,24 @@ import java.util.List;
  * Created by Administrator on 2017/06/09 0009.
  */
 
-public class TabFragment extends BaseFrament {
-    RecyclerView recyclerView;
-    List<BaseViewItem> list;
-    RecyclerViewAdapter adapter;
-    View contentView;
+public class TabFragment extends ListFrament {
+
+
     TabsBean tabsBean;
     LoadEmptyViewControl loadEmptyViewControl;
     FrameLayout frameLayout;
     View titleview;
-    TwinklingRefreshLayout refresh;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    public int getFromLayoutID() {
+        return R.layout.tab_layout;
     }
 
     @Override
@@ -83,37 +84,17 @@ public class TabFragment extends BaseFrament {
         }
     }
 
-    private void onRefresh() {
+    protected void onRefresh() {
         HttpUtils.INSTANCE.getAsynMainHttp(tabsBean.getJumpcontent(), DataUnit.class);//返回根据JSON解析的对象
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        contentView = inflater.inflate(R.layout.tab_layout, container, false);
         frameLayout = (FrameLayout) contentView.findViewById(R.id.container);
-        refresh = (TwinklingRefreshLayout) contentView.findViewById(R.id.refresh);
-        refresh.setEnableRefresh(true);
-        refresh.setEnableLoadmore(false);
-        refresh.setOnRefreshListener(new RefreshListenerAdapter() {
-            @Override
-            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                TabFragment.this.onRefresh();
-            }
-
-            @Override
-            public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
-            }
-        });
         loadEmptyViewControl = new LoadEmptyViewControl(getActivity());
         loadEmptyViewControl.addLoadView(frameLayout);
-        recyclerView = (RecyclerView) contentView.findViewById(R.id.recycler);
-        WrapContentLinearLayoutManager wrapContentLinearLayoutManager = new WrapContentLinearLayoutManager(getActivity());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(wrapContentLinearLayoutManager);
-        list = new ArrayList<BaseViewItem>();
-        adapter = new RecyclerViewAdapter(getActivity(), list);
-        recyclerView.setAdapter(adapter);
+
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -164,7 +145,7 @@ public class TabFragment extends BaseFrament {
 
         if (event.getCommand().equals(tabsBean.getJumpcontent())) {
             if (event.getData() instanceof DataUnit) {
-                refresh.finishRefreshing();
+                finishRefreshing();
                 loadEmptyViewControl.loadcomplete();
                 list.clear();
                 addData((DataUnit) event.getData());
@@ -278,7 +259,7 @@ public class TabFragment extends BaseFrament {
 
             }
         }
-        adapter.notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     public void onClick(View view) {

@@ -117,4 +117,6 @@ dependencies {
     compile('com.facebook.fresco:imagepipeline-okhttp3:1.3.0') {
         exclude group: 'com.squareup.okhttp3'
     }
+    compile project(':viewserver')
+    compile project(':twinklingRefreshLaoutlibrary')
 }

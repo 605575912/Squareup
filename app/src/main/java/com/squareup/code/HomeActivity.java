@@ -9,39 +9,33 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.code.account.APPAccountManager;
 import com.squareup.code.databinding.ActivityMainBinding;
-import com.squareup.code.home.tab.TabAdapter;
 import com.squareup.code.home.tab.TabFragment;
 import com.squareup.code.home.tab.TabModel;
 import com.squareup.code.home.tab.TabsBean;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.utils.LoadEmptyViewControl;
-import com.squareup.lib.BaseActivity;
 import com.squareup.lib.BaseApplication;
-import com.squareup.lib.BaseFrament;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
 import com.squareup.lib.ImageUtils;
+import com.squareup.lib.TabBaseActivity;
 import com.squareup.lib.utils.AppLibUtils;
 import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.utils.ToastUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-public class HomeActivity extends BaseActivity implements View.OnClickListener {
+public class HomeActivity extends TabBaseActivity implements View.OnClickListener {
 
     LinearLayout tabs_layout;
     TabsCache tabsCache;
     ViewPager viewPager;
-    TabAdapter tabAdapter;
+
 
     LoadEmptyViewControl loadEmptyViewControl;
 
@@ -52,8 +46,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(getActivity(), R.layout.activity_main);
         tabs_layout = (LinearLayout) findViewById(R.id.tabs_layout);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        fragments = new ArrayList<BaseFrament>();
-        tabAdapter = new TabAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(tabAdapter);
         FrameLayout frameLayout = (FrameLayout) activityMainBinding.getRoot().findViewById(R.id.container);
         loadEmptyViewControl = new LoadEmptyViewControl(getActivity());

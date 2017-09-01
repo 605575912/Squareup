@@ -1,12 +1,15 @@
 package com.squareup.code;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
+import android.os.Trace;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +36,7 @@ import com.squareup.code.launcher.LauncherMode;
 import com.squareup.code.views.RadioTextView;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
+import com.squareup.lib.ThreadManager;
 import com.squareup.lib.utils.LogUtil;
 
 import java.io.File;
@@ -49,55 +53,6 @@ public class LauncherActivity extends BaseActivity {
     LauncherCache launcherCache = new LauncherCache();
     Handler handler;
 
-    private void downLoadImg(final Context context, final String url) {
-        ImageRequest imageRequest1 = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url)).setProgressiveRenderingEnabled(true).build();
-        ImagePipeline imagePipeline = Fresco.getImagePipeline();
-        DataSource<CloseableReference<CloseableImage>> dataSource1 = imagePipeline.fetchDecodedImage(imageRequest1, this);
-        dataSource1.subscribe(new BaseBitmapDataSubscriber() {
-            @Override
-            public void onNewResultImpl(@Nullable Bitmap bitmap) {
-                if (isImageDownloaded(Uri.parse(url), context)) {
-                    File file1 = getCachedImageOnDisk(Uri.parse(url), context);
-                    ImageFormat imageFormat = ImageFormatChecker.getImageFormat(file1.getPath());
-                    File newfiel = new File(file1.getPath().replace(".cnt", "." + imageFormat.getName()));
-                    file1.renameTo(newfiel);
-                    if (newfiel.exists()) {
-                    }
-
-                }
-            }
-
-            @Override
-            public void onFailureImpl(DataSource dataSource) {
-                Log.i("TAG", "==");
-            }
-        }, CallerThreadExecutor.getInstance());
-
-    }
-
-    public static boolean isImageDownloaded(Uri loadUri, Context context) {
-        if (loadUri == null) {
-            return false;
-        }
-        CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(ImageRequest.fromUri(loadUri), context);
-        return ImagePipelineFactory.getInstance().getMainFileCache().hasKey(cacheKey) || ImagePipelineFactory.getInstance().getSmallImageFileCache().hasKey(cacheKey);
-    }
-
-    //return file or null
-    public static File getCachedImageOnDisk(Uri loadUri, Context context) {
-        File localFile = null;
-        if (loadUri != null) {
-            CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(ImageRequest.fromUri(loadUri), context);
-            if (ImagePipelineFactory.getInstance().getMainFileCache().hasKey(cacheKey)) {
-                BinaryResource resource = ImagePipelineFactory.getInstance().getMainFileCache().getResource(cacheKey);
-                localFile = ((FileBinaryResource) resource).getFile();
-            } else if (ImagePipelineFactory.getInstance().getSmallImageFileCache().hasKey(cacheKey)) {
-                BinaryResource resource = ImagePipelineFactory.getInstance().getSmallImageFileCache().getResource(cacheKey);
-                localFile = ((FileBinaryResource) resource).getFile();
-            }
-        }
-        return localFile;
-    }
 
     @Override
     protected boolean isAllTranslucentStatus() {
@@ -114,8 +69,6 @@ public class LauncherActivity extends BaseActivity {
 //        ToastUtils.showToast(Build.VERSION.SDK_INT + "=" + Build.VERSION.RELEASE);
         //http://q.qlogo.cn/qqapp/1105650145/AD0774282F746F5E2E3DEDB4CEA09411/100
         launcherPenster = new LauncherPenster();
-
-
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -123,7 +76,20 @@ public class LauncherActivity extends BaseActivity {
                 if (msg.what == 0) {
                     removeCallbacksAndMessages(null);
 //                    YWCom.INSTANCE.login(LauncherActivity.this,"testpro1","taobao1234");
-//                    downLoadImg(getApplicationContext(), "http://q.qlogo.cn/qqapp/1105650145/AD0774282F746F5E2E3DEDB4CEA09411/100");//gif
+
+//
+                    ThreadManager.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(1200000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            if (handler!=null)
+                            handler.sendEmptyMessage(1);
+                        }
+                    });
                     launcherPenster.startHome(LauncherActivity.this);
 
 //                    tencentUtils = new TencentUtils();
@@ -320,7 +286,14 @@ public class LauncherActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        handler.removeCallbacksAndMessages(null);
         LogUtil.e("1onStop");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LogUtil.i("============");
     }
 
     @Override

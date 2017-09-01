@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.android.debug.hv.ViewServer;
 import com.squareup.lib.utils.AppLibUtils;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewAdapter;
@@ -63,6 +64,10 @@ public class BaseActivity extends FragmentActivity {
     public void setContentView(View view) {
         super.setContentView(view);
         setStatus(isAllTranslucentStatus());
+        if (BuildConfig.DEBUG) {
+
+            ViewServer.get(this).addWindow(this);
+        }
     }
 
     public boolean NeedEventBus() {
@@ -127,9 +132,22 @@ public class BaseActivity extends FragmentActivity {
         }
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (BuildConfig.DEBUG) {
+            ViewServer.get(this).setFocusedWindow(this);
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (BuildConfig.DEBUG) {
+
+            ViewServer.get(this).removeWindow(this);
+        }
         EventBus.getDefault().unregister(this);//反注册EventBus
     }
 

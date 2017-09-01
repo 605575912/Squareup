@@ -6,12 +6,12 @@
     android:orientation="vertical">
 
     <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
-        android:id="@+id/refresh"
+        android:id="@+id/RefreshLayoutid"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
+            android:id="@+id/RecyclerViewid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/bg_gray"></android.support.v7.widget.RecyclerView>

@@ -1,14 +1,33 @@
 package com.squareup.lib;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Handler;
 import android.widget.ImageView;
 
+import com.facebook.binaryresource.BinaryResource;
+import com.facebook.binaryresource.FileBinaryResource;
+import com.facebook.cache.common.CacheKey;
+import com.facebook.common.executors.CallerThreadExecutor;
+import com.facebook.common.references.CloseableReference;
+import com.facebook.datasource.DataSource;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imageformat.ImageFormat;
+import com.facebook.imageformat.ImageFormatChecker;
+import com.facebook.imagepipeline.cache.DefaultCacheKeyFactory;
+import com.facebook.imagepipeline.core.ImagePipeline;
+import com.facebook.imagepipeline.core.ImagePipelineFactory;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.image.CloseableImage;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
+
+import java.io.File;
 
 
 public class ImageUtils {
@@ -410,4 +429,91 @@ public class ImageUtils {
 //            return getClass().getName();
 //        }
 //    }
+
+
+    /**
+     * @param context
+     * @param url
+     * @param handler
+     */
+    public static File download(Context context, String url, Handler handler) {
+//        download(context, url, handler, Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+        return downLoadImg(context, url, handler);
+    }
+
+    private static File downLoadImg(final Context context, final String url, final Handler handler) {
+        if (isImageDownloaded(Uri.parse(url), context)) {
+            File file1 = getCachedImageOnDisk(Uri.parse(url), context);
+            if (file1 == null) {
+                return null;
+            }
+            ImageFormat imageFormat = ImageFormatChecker.getImageFormat(file1.getPath());
+            File newfiel = new File(file1.getPath().replace(".cnt", "." + imageFormat.getName()));
+            if (!newfiel.exists()) {
+                file1.renameTo(newfiel);
+            }
+            if (newfiel.exists()) {
+                if (handler != null) {
+                    handler.obtainMessage(0, newfiel.getAbsolutePath()).sendToTarget();
+                }
+                return newfiel;
+            }
+        } else {
+            ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url)).setProgressiveRenderingEnabled(true).build();
+            ImagePipeline imagePipeline = Fresco.getImagePipeline();
+            DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, context);
+            dataSource.subscribe(new BaseBitmapDataSubscriber() {
+                @Override
+                public void onNewResultImpl(Bitmap bitmap) {
+                    if (isImageDownloaded(Uri.parse(url), context)) {
+                        File file1 = getCachedImageOnDisk(Uri.parse(url), context);
+                        if (file1 != null) {
+                            ImageFormat imageFormat = ImageFormatChecker.getImageFormat(file1.getPath());
+                            File newfiel = new File(file1.getPath().replace(".cnt", "." + imageFormat.getName()));
+                            file1.renameTo(newfiel);
+                            if (newfiel.exists() && handler != null) {
+                                handler.obtainMessage(0, newfiel.getAbsolutePath()).sendToTarget();
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailureImpl(DataSource dataSource) {
+
+                }
+            }, CallerThreadExecutor.getInstance());
+        }
+        return null;
+    }
+
+    private static boolean isImageDownloaded(Uri loadUri, Context context) {
+        if (loadUri == null) {
+            return false;
+        }
+        CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(ImageRequest.fromUri(loadUri), context);
+        return ImagePipelineFactory.getInstance().getMainFileCache().hasKey(cacheKey) || ImagePipelineFactory.getInstance().getSmallImageFileCache().hasKey(cacheKey);
+    }
+
+    //return file or null
+    private static File getCachedImageOnDisk(Uri loadUri, Context context) {
+        File localFile = null;
+        if (loadUri != null) {
+            CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(ImageRequest.fromUri(loadUri), context);
+            if (ImagePipelineFactory.getInstance().getMainFileCache().hasKey(cacheKey)) {
+                BinaryResource resource = ImagePipelineFactory.getInstance().getMainFileCache().getResource(cacheKey);
+                if (resource == null) {
+                    return null;
+                }
+                localFile = ((FileBinaryResource) resource).getFile();
+            } else if (ImagePipelineFactory.getInstance().getSmallImageFileCache().hasKey(cacheKey)) {
+                BinaryResource resource = ImagePipelineFactory.getInstance().getSmallImageFileCache().getResource(cacheKey);
+                if (resource == null) {
+                    return null;
+                }
+                localFile = ((FileBinaryResource) resource).getFile();
+            }
+        }
+        return localFile;
+    }
 }

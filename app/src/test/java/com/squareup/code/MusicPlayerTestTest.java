@@ -11,6 +11,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -23,8 +24,6 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Administrator on 2017/07/21 0021.
  */
-@RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21, application = TestApplication.class)
 public class MusicPlayerTestTest {
     @Before
     public void setUp() throws Exception {
@@ -41,6 +40,9 @@ public class MusicPlayerTestTest {
     public void testList() throws Exception {
         //mock creation
         List mockedList = mock(List.class);
+
+
+//        System.out.println("结束一个案例："+list.s(0));
 // using mock object
 //        mockedList.add("one");
 //        mockedList.clear();

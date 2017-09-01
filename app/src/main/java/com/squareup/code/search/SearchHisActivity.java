@@ -7,10 +7,10 @@ import android.view.View;
 
 import com.squareup.code.BR;
 import com.squareup.code.R;
-import com.squareup.code.WrapContentLinearLayoutManager;
 import com.squareup.code.databinding.SearchHisLayoutBinding;
 import com.squareup.lib.BaseActivity;
 import com.squareup.lib.ThreadManager;
+import com.squareup.lib.WrapContentLinearLayoutManager;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewAdapter;
 

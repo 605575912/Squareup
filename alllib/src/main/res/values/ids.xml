@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="glide_id" type="id"></item>
+    <item name="RefreshLayoutid" type="id"></item>
+    <item name="RecyclerViewid" type="id"></item>
+
 
 </resources>
