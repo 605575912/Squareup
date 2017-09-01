@@ -22,7 +22,6 @@ import com.squareup.lib.utils.LogUtil;
  */
 
 public class LauncherActivity extends BaseActivity {
-    LauncherLayoutBinding activityMainBinding;
     LauncherCache launcherCache = new LauncherCache();
     Handler handler;
 
@@ -36,9 +35,13 @@ public class LauncherActivity extends BaseActivity {
     LauncherPenster launcherPenster;
 
     @Override
+    public int setFromLayoutID() {
+        return R.layout.launcher_layout;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.launcher_layout);
 //        ToastUtils.showToast(Build.VERSION.SDK_INT + "=" + Build.VERSION.RELEASE);
         //http://q.qlogo.cn/qqapp/1105650145/AD0774282F746F5E2E3DEDB4CEA09411/100
         launcherPenster = new LauncherPenster();
@@ -59,8 +62,8 @@ public class LauncherActivity extends BaseActivity {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            if (handler!=null)
-                            handler.sendEmptyMessage(1);
+                            if (handler != null)
+                                handler.sendEmptyMessage(1);
                         }
                     });
                     launcherPenster.startHome(LauncherActivity.this);
@@ -273,7 +276,7 @@ public class LauncherActivity extends BaseActivity {
     public void onEventMain(EventMainObject event) {
         if (event.getCommand().equals(launcherCache.getCommand())) {
             if (event.getData() instanceof LauncherMode) {
-                launcherPenster.lanuncher(handler, activityMainBinding, (LauncherMode) event.getData());
+                launcherPenster.lanuncher(handler, viewDataBinding, (LauncherMode) event.getData());
             } else {
                 handler.sendEmptyMessageDelayed(0, 1000);
             }

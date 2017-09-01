@@ -2,6 +2,7 @@ package com.squareup.code;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -56,14 +57,14 @@ public class LauncherPenster {
         launcherCache.dowlNewWorkData();
     }
 
-    public void lanuncher(Handler handler, LauncherLayoutBinding activityMainBinding, LauncherMode launcherMode) {
+    public void lanuncher(Handler handler, ViewDataBinding viewDataBinding, LauncherMode launcherMode) {
         if (launcherMode == null) {
             return;
         }
         if (launcherMode.getItems() != null && launcherMode.getItems().size() > 0) {
             launcherMode.getItems().get(0).setCounttime(5);
-            if (activityMainBinding != null) {
-                activityMainBinding.setItemsbean(launcherMode.getItems().get(0));
+            if (viewDataBinding != null) {
+                viewDataBinding.setVariable(BR.itemsbean, launcherMode.getItems().get(0));
             }
             if (handler != null) {
                 handler.sendEmptyMessageDelayed(0, 5000);

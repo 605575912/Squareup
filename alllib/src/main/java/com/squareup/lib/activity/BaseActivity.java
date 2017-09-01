@@ -1,6 +1,8 @@
 package com.squareup.lib.activity;
 
 import android.app.Activity;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,18 +35,12 @@ import java.util.List;
 public class BaseActivity extends FragmentActivity implements LayoutInterFace {
     public View titleView;
     public List<BaseFrament> fragments;
-
+    protected ViewDataBinding viewDataBinding;
 
     public
     @LayoutRes
     int setFromLayoutID() {
         return R.layout.layout;
-    }
-
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        setStatus(isAllTranslucentStatus());
     }
 
     protected Activity getActivity() {
@@ -69,13 +65,6 @@ public class BaseActivity extends FragmentActivity implements LayoutInterFace {
     }
 
 
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
-
-
-    }
-
     public boolean NeedEventBus() {
         return true;
     }
@@ -87,6 +76,7 @@ public class BaseActivity extends FragmentActivity implements LayoutInterFace {
             ViewServer.get(this).addWindow(this);
         }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        viewDataBinding = DataBindingUtil.setContentView(this, setFromLayoutID());
         if (isTranslucentStatus()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();

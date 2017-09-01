@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 
 /**

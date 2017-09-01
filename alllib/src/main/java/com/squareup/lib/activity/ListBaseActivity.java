@@ -1,7 +1,5 @@
 package com.squareup.lib.activity;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
@@ -20,7 +18,7 @@ public abstract class ListBaseActivity extends BaseActivity {
     protected ArrayList<BaseViewItem> list;
     protected RecyclerView recyclerView;
     protected RecyclerViewAdapter adapter;
-    protected ViewDataBinding viewDataBinding;
+
 
     @Override
     public int setFromLayoutID() {
@@ -30,7 +28,6 @@ public abstract class ListBaseActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewDataBinding = DataBindingUtil.setContentView(this, setFromLayoutID());
         recyclerView = (RecyclerView) viewDataBinding.getRoot().findViewById(R.id.RecyclerViewid);
         list = new ArrayList<BaseViewItem>();
         adapter = new RecyclerViewAdapter(getActivity(), list);
