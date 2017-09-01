@@ -1,4 +1,4 @@
-package com.squareup.lib;
+package com.squareup.lib.http;
 
 import android.content.Context;
 

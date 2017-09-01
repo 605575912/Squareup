@@ -24,7 +24,7 @@ import com.squareup.lib.BaseApplication;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
 import com.squareup.lib.ImageUtils;
-import com.squareup.lib.TabBaseActivity;
+import com.squareup.lib.activity.TabBaseActivity;
 import com.squareup.lib.utils.AppLibUtils;
 import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.utils.ToastUtils;

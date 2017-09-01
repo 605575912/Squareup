@@ -1,4 +1,4 @@
-package com.squareup.lib;
+package com.squareup.lib.frament;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.squareup.lib.EventMainObject;
+import com.squareup.lib.EventThreadObject;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

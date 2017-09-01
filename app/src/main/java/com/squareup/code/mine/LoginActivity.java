@@ -8,7 +8,7 @@ import android.view.View;
 import com.squareup.code.R;
 import com.squareup.code.account.APPAccountManager;
 import com.squareup.code.databinding.LoginLayoutBinding;
-import com.squareup.lib.BaseActivity;
+import com.squareup.lib.activity.BaseActivity;
 
 /**
  * Created by Administrator on 2017/07/03 0003.

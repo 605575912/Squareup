@@ -1,30 +1,20 @@
 package com.squareup.code.search;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.squareup.code.BR;
 import com.squareup.code.R;
-import com.squareup.code.databinding.SearchHisLayoutBinding;
-import com.squareup.lib.BaseActivity;
+import com.squareup.lib.activity.ListBaseActivity;
 import com.squareup.lib.ThreadManager;
-import com.squareup.lib.WrapContentLinearLayoutManager;
-import com.squareup.lib.viewfactory.BaseViewItem;
-import com.squareup.lib.viewfactory.RecyclerViewAdapter;
-
-import java.util.ArrayList;
 
 
 /**
  * Created by Administrator on 2017/06/24 0024.
  */
 
-public class SearchHisActivity extends BaseActivity {
-    ArrayList<BaseViewItem> list;
-    RecyclerView recyclerView;
-    RecyclerViewAdapter adapter;
+public class SearchHisActivity extends ListBaseActivity {
+
 
     @Override
     protected boolean isAllTranslucentStatus() {
@@ -36,17 +26,14 @@ public class SearchHisActivity extends BaseActivity {
     }
 
     @Override
+    public int setFromLayoutID() {
+        return R.layout.search_his_layout;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SearchHisLayoutBinding searchHisLayoutBinding = DataBindingUtil.setContentView(this, R.layout.search_his_layout);
-        searchHisLayoutBinding.setVariable(BR.onclick, this);
-        recyclerView = (RecyclerView) searchHisLayoutBinding.getRoot().findViewById(R.id.recycler);
-        WrapContentLinearLayoutManager wrapContentLinearLayoutManager = new WrapContentLinearLayoutManager(getActivity());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(wrapContentLinearLayoutManager);
-        list = new ArrayList<BaseViewItem>();
-        adapter = new RecyclerViewAdapter(getActivity(), list);
-        recyclerView.setAdapter(adapter);
+        viewDataBinding.setVariable(BR.onclick, this);
         String[] a = new String[]{"1", "2"};
         SearchFlowView searchFlowView = new SearchFlowView(getActivity(), a);
         list.add(searchFlowView);

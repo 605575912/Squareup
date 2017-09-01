@@ -1,47 +1,20 @@
 package com.squareup.code;
 
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.os.Trace;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 
-import com.facebook.binaryresource.BinaryResource;
-import com.facebook.binaryresource.FileBinaryResource;
-import com.facebook.cache.common.CacheKey;
-import com.facebook.common.executors.CallerThreadExecutor;
-import com.facebook.common.references.CloseableReference;
-import com.facebook.datasource.DataSource;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.imageformat.ImageFormat;
-import com.facebook.imageformat.ImageFormatChecker;
-import com.facebook.imagepipeline.cache.DefaultCacheKeyFactory;
-import com.facebook.imagepipeline.core.ImagePipeline;
-import com.facebook.imagepipeline.core.ImagePipelineFactory;
-import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
-import com.facebook.imagepipeline.image.CloseableImage;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
 import com.squareup.code.views.RadioTextView;
-import com.squareup.lib.BaseActivity;
+import com.squareup.lib.activity.BaseActivity;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.ThreadManager;
 import com.squareup.lib.utils.LogUtil;
-
-import java.io.File;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 
 
 /**

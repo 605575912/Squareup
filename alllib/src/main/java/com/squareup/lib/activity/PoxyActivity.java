@@ -9,10 +9,8 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Window;
 
-import com.squareup.lib.BaseActivity;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
-import com.squareup.lib.R;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

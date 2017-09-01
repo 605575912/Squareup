@@ -38,15 +38,11 @@ import com.squareup.code.mine.MineLineView;
 import com.squareup.code.mine.MineSpaceView;
 import com.squareup.code.search.SearchHisActivity;
 import com.squareup.code.utils.LoadEmptyViewControl;
-import com.squareup.lib.BaseFrament;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.HttpUtils;
-import com.squareup.lib.ListFrament;
+import com.squareup.lib.frament.ListFrament;
 import com.squareup.lib.utils.AppLibUtils;
-import com.squareup.lib.viewfactory.BaseViewItem;
-import com.squareup.lib.viewfactory.RecyclerViewAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

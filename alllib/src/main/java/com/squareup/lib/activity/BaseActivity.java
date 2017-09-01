@@ -1,9 +1,10 @@
-package com.squareup.lib;
+package com.squareup.lib.activity;
 
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
@@ -11,26 +12,34 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.android.debug.hv.ViewServer;
+import com.squareup.lib.BuildConfig;
+import com.squareup.lib.EventMainObject;
+import com.squareup.lib.EventThreadObject;
+import com.squareup.lib.LayoutInterFace;
+import com.squareup.lib.R;
+import com.squareup.lib.frament.BaseFrament;
 import com.squareup.lib.utils.AppLibUtils;
-import com.squareup.lib.viewfactory.BaseViewItem;
-import com.squareup.lib.viewfactory.RecyclerViewAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/05/25 0025.
  */
 
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends FragmentActivity implements LayoutInterFace {
     public View titleView;
-    public List<BaseViewItem> list;
-    public RecyclerViewAdapter adapter;
     public List<BaseFrament> fragments;
+
+
+    public
+    @LayoutRes
+    int setFromLayoutID() {
+        return R.layout.layout;
+    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -63,11 +72,8 @@ public class BaseActivity extends FragmentActivity {
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        setStatus(isAllTranslucentStatus());
-        if (BuildConfig.DEBUG) {
 
-            ViewServer.get(this).addWindow(this);
-        }
+
     }
 
     public boolean NeedEventBus() {
@@ -77,6 +83,9 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (BuildConfig.DEBUG) {
+            ViewServer.get(this).addWindow(this);
+        }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (isTranslucentStatus()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -97,11 +106,10 @@ public class BaseActivity extends FragmentActivity {
             }
 
         }
+        setStatus(isAllTranslucentStatus());
         if (NeedEventBus()) {
             EventBus.getDefault().register(this);
         }
-        list = new ArrayList<BaseViewItem>();
-        adapter = new RecyclerViewAdapter(getActivity(), list);
     }
 
     //是否透明状态栏
