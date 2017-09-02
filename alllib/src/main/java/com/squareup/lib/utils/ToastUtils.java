@@ -11,6 +11,7 @@ import com.squareup.lib.BaseApplication;
 
 public class ToastUtils {
     static Toast toast;
+    static Handler handler;
 
     public static void showToast(final CharSequence text) {
         if (text == null) {
@@ -26,7 +27,9 @@ public class ToastUtils {
                 toast.show();
             }
         };
-        Handler handler = new Handler(BaseApplication.getApplication().getMainLooper());
+        if (handler == null) {
+            handler = new Handler(BaseApplication.getApplication().getMainLooper());
+        }
         handler.post(toastRunnable);
     }
 

@@ -53,19 +53,6 @@ public class LauncherActivity extends BaseActivity {
                     removeCallbacksAndMessages(null);
 //                    YWCom.INSTANCE.login(LauncherActivity.this,"testpro1","taobao1234");
 
-//
-                    ThreadManager.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(1200000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            if (handler != null)
-                                handler.sendEmptyMessage(1);
-                        }
-                    });
                     launcherPenster.startHome(LauncherActivity.this);
 
 //                    tencentUtils = new TencentUtils();

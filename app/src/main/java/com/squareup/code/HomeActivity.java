@@ -35,19 +35,20 @@ public class HomeActivity extends TabBaseActivity implements View.OnClickListene
     LinearLayout tabs_layout;
     TabsCache tabsCache;
     ViewPager viewPager;
-
-
     LoadEmptyViewControl loadEmptyViewControl;
 
+    @Override
+    public int setFromLayoutID() {
+        return R.layout.activity_main;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogUtil.e("onCreate");
-        ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(getActivity(), R.layout.activity_main);
         tabs_layout = (LinearLayout) findViewById(R.id.tabs_layout);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(tabAdapter);
-        FrameLayout frameLayout = (FrameLayout) activityMainBinding.getRoot().findViewById(R.id.container);
+        FrameLayout frameLayout = (FrameLayout) viewDataBinding.getRoot().findViewById(R.id.container);
         loadEmptyViewControl = new LoadEmptyViewControl(getActivity());
         loadEmptyViewControl.addLoadView(frameLayout);
         tabsCache = new TabsCache();

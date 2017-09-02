@@ -28,7 +28,7 @@ public class LauncherPenster {
         if (activity == null) {
             return;
         }
-        Intent intent = new Intent(activity, SearchHisActivity.class);
+        Intent intent = new Intent(activity, HomeActivity.class);
         activity.startActivityForResult(intent, -1, null);
         activity.finish();
     }
