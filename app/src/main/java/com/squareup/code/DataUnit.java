@@ -2,6 +2,7 @@ package com.squareup.code;
 
 import com.squareup.code.detail.DetailCard;
 import com.squareup.code.mine.MineCard;
+import com.squareup.code.Card;
 import com.squareup.lib.utils.IProguard;
 
 import java.util.List;

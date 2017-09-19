@@ -1,5 +1,6 @@
 package com.squareup.lib;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -8,14 +9,15 @@ import java.util.concurrent.Executors;
  */
 
 public class ThreadManager {
-    static ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
+    static ExecutorService fixedThreadPool = Executors.newFixedThreadPool(5);
 
 
     public static void execute(Runnable runnable) {
         fixedThreadPool.execute(runnable);
     }
 
-    public static void submit(Runnable runnable) {
-        fixedThreadPool.submit(runnable);
+    public static void submit(final Runnable runnable) {
+        WeakReference<Runnable> s = new WeakReference<Runnable>(runnable);
+        fixedThreadPool.submit(s.get());
     }
 }

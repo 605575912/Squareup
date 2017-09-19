@@ -23,7 +23,7 @@ import java.io.FileInputStream;
  * Created by Administrator on 2017/08/08 0008.
  */
 
-public class LauncherPenster {
+public  class LauncherPenster {
     public void startHome(Activity activity) {
         if (activity == null) {
             return;

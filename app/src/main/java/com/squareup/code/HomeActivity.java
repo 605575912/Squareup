@@ -19,6 +19,7 @@ import com.squareup.code.home.tab.TabFragment;
 import com.squareup.code.home.tab.TabModel;
 import com.squareup.code.home.tab.TabsBean;
 import com.squareup.code.home.tab.TabsCache;
+import com.squareup.code.search.SearchActivity;
 import com.squareup.code.utils.LoadEmptyViewControl;
 import com.squareup.lib.BaseApplication;
 import com.squareup.lib.EventMainObject;

@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.squareup.code.BR;
-import com.squareup.code.Card;
 import com.squareup.code.CardUnit;
 import com.squareup.code.DataUnit;
 import com.squareup.code.ItemData;
@@ -38,6 +37,7 @@ import com.squareup.code.mine.MineLineView;
 import com.squareup.code.mine.MineSpaceView;
 import com.squareup.code.search.SearchHisActivity;
 import com.squareup.code.utils.LoadEmptyViewControl;
+import com.squareup.code.Card;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.HttpUtils;
 import com.squareup.lib.frament.ListFrament;

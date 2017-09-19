@@ -19,13 +19,16 @@ import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
 import com.squareup.lib.LayoutInterFace;
 import com.squareup.lib.R;
+import com.squareup.lib.ThreadManager;
 import com.squareup.lib.frament.BaseFrament;
 import com.squareup.lib.utils.AppLibUtils;
+import com.squareup.lib.utils.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -128,6 +131,38 @@ public class BaseActivity extends FragmentActivity implements LayoutInterFace {
                 tabFragment.onEventThread(event);
             }
         }
+    }
+
+    public static class MyRunnable implements Runnable {
+        public WeakReference<BaseActivity> weakReference;
+
+        public MyRunnable(BaseActivity baseActivity, int type) {
+            weakReference = new WeakReference<BaseActivity>(baseActivity);
+        }
+
+        @Override
+        public void run() {
+            LogUtil.i("1111111111111");
+            try {
+                Thread.sleep(30000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (weakReference.get() != null) {
+                weakReference.get().fragments.clear();
+                LogUtil.i(1 + "==========");
+            }
+            LogUtil.i("==========");
+        }
+    }
+
+    public void run(int type) {
+
+    }
+
+    public void submit(int type, MyRunnable runnable) {
+//        MyRunnable w = new MyRunnable(runnable, type);
+        ThreadManager.submit(runnable);
     }
 
 

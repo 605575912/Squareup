@@ -37,28 +37,53 @@
 -keepclassmembers class * implements com.squareup.lib.utils.IProguard$ProtectClassAndMembers {*;}
 #-keepclassmembers class * implements android.view.View$* {*;}
 
-#��������Ա��������
+
 -keepclassmembers class * implements com.squareup.lib.utils.IProguard$ProtectMembers {*;}
 
-#������������������
+
 
 -keep class * implements com.squareup.lib.utils.IProguard$ProtectClassAndConstruct
 -keepclassmembers class * implements com.squareup.lib.utils.IProguard$ProtectClassAndConstruct{
 	<init>(...);
 }
 
-#������������, ������...)��ʾ���������Ĳ���; *** -- ��ʾ�������ͣ���һ������; **��ʾ�����������ַ�;
-#*��ʾ�����������ַ��������������ķָ��; ? ��ʾ�����ַ��� %��ʾ�����������
+
 -keepclassmembers class * implements com.squareup.lib.utils.IProguard$ProtectConstructs{
 	<init>(...);
 }
 
-#����������
 -keep class * implements com.squareup.lib.utils.IProguard$ProtectClass {*;}
 -keep interface * extends com.squareup.lib.utils.IProguard$ProtectClass {*;}
 
 
 -keep public class * implements com.bumptech.glide.module.GlideModule
+
+-dontwarn android.net.**
+-keep class android.net.SSLCertificateSocketFactory{*;}
+
+#支付宝
+-keep class com.alipay.android.app.IAlixPay{*;}
+-keep class com.alipay.android.app.IAlixPay$Stub{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
+-keep class com.alipay.sdk.app.PayTask{ public *;}
+-keep class com.alipay.sdk.app.AuthTask{ public *;}
+-keep class com.alipay.sdk.app.H5PayCallback {
+    <fields>;
+    <methods>;
+}
+-keep class com.alipay.android.phone.mrpc.core.** { *; }
+-keep class com.alipay.apmobilesecuritysdk.** { *; }
+-keep class com.alipay.mobile.framework.service.annotation.** { *; }
+-keep class com.alipay.mobilesecuritysdk.face.** { *; }
+-keep class com.alipay.tscenter.biz.rpc.** { *; }
+-keep class org.json.alipay.** { *; }
+-keep class com.alipay.tscenter.** { *; }
+-keep class com.ta.utdid2.** { *;}
+-keep class com.ut.device.** { *;}
+#
+
+
 
 #百度统计
 -keep class com.baidu.bottom.** { *; }
@@ -74,9 +99,18 @@
 -dontwarn com.squareup.lip.**
 -keep class com.squareup.lip.**{*;}
 -keep class android.support.**{*;}
+
+#Tkrefreshlayout
+-dontwarn  com.lcodecore.tkrefreshlayout.RefreshListenerAdapter
+-keep public class com.lcodecore.tkrefreshlayout.RefreshListenerAdapter{*;}
+-dontwarn  com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+-keep public class com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout{*;}
+#
+
 #bugly
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
+#
 
 -dontwarn com.squareup.okhttp.**
 -keep class com.squareup.okhttp.**{*;}
@@ -106,6 +140,28 @@
 -keep enum org.greenrobot.eventbus.ThreadMode { *; }
 -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
     <init>(java.lang.Throwable);
+}
+
+
+##################fresco库不混淆################
+#fresco
+-keep class com.facebook.** {*;}
+-dontwarn okio.**
+-dontwarn com.squareup.okhttp.**
+-dontwarn okhttp3.**
+-dontwarn javax.annotation.**
+-dontwarn com.android.volley.toolbox.**
+-dontwarn com.facebook.**
+-keep,allowobfuscation @interface com.facebook.common.internal.DoNotStrip
+
+# Do not strip any method/class that is annotated with @DoNotStrip
+-keep @com.facebook.common.internal.DoNotStrip class *
+-keepclassmembers class * {
+    @com.facebook.common.internal.DoNotStrip *;
+}
+# Works around a bug in the animated GIF module which will be fixed in 0.12.0
+-keep class com.facebook.imagepipeline.animated.factory.AnimatedFactoryImpl {
+    public AnimatedFactoryImpl(com.facebook.imagepipeline.bitmaps.PlatformBitmapFactory,com.facebook.imagepipeline.core.ExecutorSupplier);
 }
 
 -optimizationpasses 5

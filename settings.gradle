@@ -1,1 +1,1 @@
-include ':app',':qqshare'
+include ':app',':qqshare','alllib','viewserver'

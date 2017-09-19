@@ -43,24 +43,6 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
-//        DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(application)
-//                .setBaseDirectoryName("Fresco")
-//                .setBaseDirectoryPathSupplier(new Supplier<File>() {
-//                    @Override
-//                    public File get() {
-//                        return new File(FileUtils.getDiskCacheDir());
-//                    }
-//                }).build();
-//        ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
-//                .newBuilder(application, HttpUtils.INSTANCE.getmOkHttpClient())
-////                . // other setters
-////    . // setNetworkFetchProducer is already called for you
-//                .setDownsampleEnabled(true)
-//                .setMainDiskCacheConfig(diskCacheConfig)
-//                .build();
-//        Fresco.initialize(application, config);
-
-
         DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(application)
                 .setBaseDirectoryName("Fresco")
                 .setBaseDirectoryPathSupplier(new Supplier<File>() {
@@ -89,10 +71,6 @@ public class BaseApplication extends Application {
         configBuilder.setDownsampleEnabled(true);
         Fresco.initialize(application, configBuilder.build());
 
-//        ViewTarget.setTagId(com.squareup.lib.R.id.glide_id);
-
-
-        setStrictMode();
         // 设置是否关闭热更新能力，默认为true
         Beta.enableHotfix = true;
         // 设置是否自动下载补丁
