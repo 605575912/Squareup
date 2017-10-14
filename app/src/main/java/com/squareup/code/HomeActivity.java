@@ -223,9 +223,9 @@ public class HomeActivity extends TabBaseActivity implements View.OnClickListene
                 transtatus = tabsBean.isTranstatus();
                 setStatus(transtatus);
                 viewPager.setCurrentItem(i, false);
-                ImageUtils.loadImage(getActivity(), tabsBean.getPressedimgurl(), imageView);
+                ImageUtils.loadImage(tabsBean.getPressedimgurl(), imageView);
             } else {
-                ImageUtils.loadImage(getActivity(), tabsBean.getNormalimgurl(), imageView);
+                ImageUtils.loadImage(tabsBean.getNormalimgurl(), imageView);
             }
         }
     }

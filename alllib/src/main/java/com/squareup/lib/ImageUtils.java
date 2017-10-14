@@ -39,30 +39,15 @@ public class ImageUtils {
      * @param url
      * @param imageView
      */
-    public static void loadImage(Context context, String url, SimpleDraweeView imageView) {
-        loadImage(url, imageView, 0);
+    public static void loadImage(String url, SimpleDraweeView imageView) {
+        loadImage(url, imageView, 0, null);
     }
 
-    public static void loadImage(String url, SimpleDraweeView imageView, int defaultResId) {
-//        if (defaultResId == 0) {
-//            if (TextUtils.isEmpty(url)) {
-//                imageView.setImageResource(defaultResId);
-//                return;
-//            }
-//            Glide.with(context).load(url).into(imageView);
-//        } else {
-//            try {
-//                Drawable drawable = context.getResources().getDrawable(defaultResId);
-//                loadImage(context, url, imageView, drawable);
-//            } catch (Exception e) {
-//                if (TextUtils.isEmpty(url)) {
-//                    return;
-//                }
-//                Glide.with(context).load(url).into(imageView);
-//            }
-//
-//        }
+    public static void loadImage(String url, SimpleDraweeView imageView, Drawable drawable) {
+        loadImage(url, imageView, 0, drawable);
+    }
 
+    private static void loadImage(String url, SimpleDraweeView imageView, int defaultResId, Drawable drawable) {
         if (imageView == null) {
             return;
         }
@@ -71,9 +56,17 @@ public class ImageUtils {
                     .setAutoPlayAnimations(true)
                     .build();
             GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
-            if (hierarchy != null && defaultResId != 0) {
-                hierarchy.setPlaceholderImage(defaultResId);
-            }
+            if (hierarchy != null)
+                if (drawable != null) {
+                    hierarchy.setPlaceholderImage(drawable);
+                } else if (defaultResId != 0) {
+                    try {
+                        drawable = BaseApplication.getApplication().getResources().getDrawable(defaultResId);
+                        hierarchy.setPlaceholderImage(drawable);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             imageView.setController(controller);
             return;
         }
@@ -82,12 +75,6 @@ public class ImageUtils {
             imageView.setImageURI(uri);
             return;
         }
-
-//        if (url != null && url.startsWith("/")) {
-//            Uri uri = Uri.parse(url);
-//            imageView.setImageURI(uri);
-//            return;
-//        }
         if (url.startsWith("file://")) {
             Uri uri = Uri.parse(url);
             imageView.setImageURI(uri);
@@ -112,8 +99,6 @@ public class ImageUtils {
             Uri uri = Uri.parse("file://" + url);
             imageView.setImageURI(uri);
         }
-
-
     }
 
     public static void loadCircleImage(Context context, String url, ImageView imageView, int defaultResId) {
@@ -183,6 +168,7 @@ public class ImageUtils {
 //                .priority(Priority.HIGH).dontAnimate().transform(new GlideCircleTransform(context));
 //        Glide.with(context).load(url).apply(options).into(imageView);
     }
+
     public static void loadImage(Context context, String url, SimpleDraweeView imageView, Drawable defaultResId) {
 //        if (TextUtils.isEmpty(url)) {
 //            imageView.setImageDrawable(drawable);
@@ -210,6 +196,7 @@ public class ImageUtils {
 //        }
         imageView.setController(controller);
     }
+
     public static void loadImage(Context context, String url, SimpleDraweeView imageView, int defaultResId) {
 //        if (TextUtils.isEmpty(url)) {
 //            imageView.setImageDrawable(drawable);

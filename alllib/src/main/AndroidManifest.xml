@@ -25,6 +25,16 @@
         <!--android:value="GlideModule"/>-->
 
         <activity
+            android:name=".activity.PermissionsGrantActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|mcc|mnc|locale|screenLayout|smallestScreenSize"
+            android:exported="false"
+            android:label=""
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
             android:noHistory="true">
