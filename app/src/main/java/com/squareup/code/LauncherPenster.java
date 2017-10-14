@@ -13,6 +13,7 @@ import com.squareup.code.databinding.LauncherLayoutBinding;
 import com.squareup.code.home.tab.TabsCache;
 import com.squareup.code.launcher.LauncherCache;
 import com.squareup.code.launcher.LauncherMode;
+import com.squareup.code.search.SearchActivity;
 import com.squareup.code.search.SearchHisActivity;
 import com.squareup.lib.BaseApplication;
 
@@ -28,7 +29,7 @@ public  class LauncherPenster {
         if (activity == null) {
             return;
         }
-        Intent intent = new Intent(activity, HomeActivity.class);
+        Intent intent = new Intent(activity, SearchActivity.class);
         activity.startActivityForResult(intent, -1, null);
         activity.finish();
     }

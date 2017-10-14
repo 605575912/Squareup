@@ -37,6 +37,8 @@ import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.Interceptor;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -55,27 +57,6 @@ public enum HttpUtils {
     public OkHttpClient getmOkHttpClient() {
         return mOkHttpClient;
     }
-
-//    public static OkHttpClient.Builder enableTls12OnPreLollipop(OkHttpClient.Builder client) {
-//        if (Build.VERSION.SDK_INT >= 16 && Build.VERSION.SDK_INT < 22) {
-//            try {
-//                SSLContext sc = SSLContext.getInstance("TLSv1.2");
-//                sc.init(null, null, null);
-//                client.sslSocketFactory(new Tls12SocketFactory(sc.getSocketFactory()));
-//                ConnectionSpec cs = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
-//                        .tlsVersions(TlsVersion.TLS_1_2)
-//                        .build();
-//                List specs = new ArrayList<>();
-//                specs.add(cs);
-//                specs.add(ConnectionSpec.COMPATIBLE_TLS);
-//                specs.add(ConnectionSpec.CLEARTEXT);
-//                client.connectionSpecs(specs);
-//            } catch (Exception exc) {
-//            }
-//        }
-//        return client;
-//    }
-
 
     private static class TrustAllManager implements X509TrustManager {
         @Override
@@ -155,7 +136,15 @@ public enum HttpUtils {
                 .hostnameVerifier(new TrustAllHostnameVerifier())
                 .cache(new Cache(FileUtils.getFile("cache"), 1000 * 1024))
                 .addInterceptor(new CaheInterceptor(BaseApplication.getApplication()))
-                .addNetworkInterceptor(new CaheInterceptor(BaseApplication.getApplication())).build();
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request().newBuilder().addHeader("TOKEN", AppLibUtils.getToken()).build();
+                        return chain.proceed(request);
+                    }
+                })
+                .addNetworkInterceptor(new CaheInterceptor(BaseApplication.getApplication()))
+                .build();
 
     }
 
@@ -225,8 +214,8 @@ public enum HttpUtils {
         getAsynHttp(1, url, null);
     }
 
-    private void JSONfor(int type, final String url, final Class jsonmodel, String result) {
-        Object model;
+    private void JSONfor(int type, String url, final Class jsonmodel, String result) {
+        Object model = null;
         boolean success = false;
         HttpListener httpListener = httpListeners.get(url);
         if (jsonmodel == null || jsonmodel.getName().equals("java.lang.String")) {
@@ -240,12 +229,16 @@ public enum HttpUtils {
             Gson gson = new Gson();
             try {
                 model = gson.fromJson(result, jsonmodel);
+            } catch (JsonSyntaxException exception) {
+
+            }
+            if (model != null) {
                 success = true;
                 if (httpListener != null) {
                     httpListener.success(model, result);
                     httpListeners.remove(url);
                 }
-            } catch (JsonSyntaxException exception) {
+            } else {
                 model = result;
                 if (httpListener != null) {
                     httpListener.failed(model);
@@ -253,8 +246,9 @@ public enum HttpUtils {
                 }
             }
         }
-
-
+        if (url == null) {
+            url = "";
+        }
         if (type == 0) {
             EventMainObject mainObject = new EventMainObject(model);
             mainObject.setCommand(url);
@@ -330,7 +324,17 @@ public enum HttpUtils {
 
         } else if (url.startsWith("https://") || url.startsWith("http://")) {
             Request.Builder requestBuilder = new Request.Builder().url(url);
+//            requestBuilder.addHeader("TOKEN", AppLibUtils.getToken());
+//            requestBuilder.addHeader("token", AppLibUtils.getToken());
+//            requestBuilder.header("TOKEN",AppLibUtils.getToken());
+
+//            RequestBody requestBody = new MultipartBody.Builder()
+//                    .setType(MultipartBody.FORM).addFormDataPart("cuserUid", AppLibUtils.getToken())
+//                    .build();
+//            requestBuilder.post(requestBody);
+
             Request request = requestBuilder.build();
+
             Call mcall = mOkHttpClient.newCall(request);
             mcall.enqueue(new
 
@@ -351,11 +355,11 @@ public enum HttpUtils {
 //                                                  str = response.networkResponse().body().string();
                                           }
 //                                          }
-                                          if (TextUtils.isEmpty(str)) {
-                                              LogUtil.i("read failed");
+                                          if (TextUtils.isEmpty(str) || response.code() != 200) {
+                                              LogUtil.w("read failed");
                                               failed(type, url, "read failed");
                                           } else {
-                                              LogUtil.i(str);
+                                              LogUtil.w(str);
                                               JSONfor(type, url, jsonmodel, str);
                                           }
                                       }
@@ -407,8 +411,7 @@ public enum HttpUtils {
             });
         } else if (url.startsWith("https://") || url.startsWith("http://")) {
             if (builder == null) {
-                failed(type, url, "builder failed");
-                return;
+                builder = new FormBody.Builder();
             }
             RequestBody formBody = builder
                     .build();
@@ -470,6 +473,46 @@ public enum HttpUtils {
 
     private String getTempName(String url) {
         return AppLibUtils.getMd5(url);
+    }
+
+    public void upAsynMain(final String url, MultipartBody.Builder builder, final Class jsonmodel) {
+        //上传文件：
+//            FileShowModel fileShowModel = (FileShowModel) eventObject.getValue();
+//            MultipartBody.Builder multipartBody = new MultipartBody.Builder();
+//            multipartBody.addFormDataPart("fileType", "jpg");
+//            multipartBody.addFormDataPart("fileId", fileShowModel.getParent());
+//            multipartBody.addFormDataPart("fileName", fileShowModel.getName());
+//            File file = new File(fileShowModel.getPath());
+//            multipartBody.addFormDataPart("fileName", fileShowModel.getName(), RequestBody.create(MediaType.parse("image/png"), file));
+//
+        builder.setType(MultipartBody.FORM);
+        final Request request = new Request.Builder()
+                .url(url)
+                .post(builder.build())
+                .build();
+        Call call = mOkHttpClient.newCall(request);
+        final int type = 0;
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                failed(type, url, "read failed");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String str = null;
+                ResponseBody responseBody = response.body();
+                if (null != responseBody) {
+                    str = responseBody.string();
+                }
+                if (TextUtils.isEmpty(str)) {
+                    failed(type, url, "read failed");
+                } else {
+                    JSONfor(type, url, jsonmodel, str);
+                }
+            }
+        });
+
     }
 
     /**

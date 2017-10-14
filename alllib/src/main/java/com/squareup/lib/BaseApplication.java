@@ -21,8 +21,6 @@ import com.tencent.bugly.beta.interfaces.BetaPatchListener;
 
 import java.io.File;
 
-import okhttp3.Address;
-
 import static android.os.Build.VERSION.SDK_INT;
 
 /**
@@ -51,7 +49,7 @@ public class BaseApplication extends Application {
                         return new File(FileUtils.getDiskCacheDir());
                     }
                 }).build();
-        ImagePipelineConfig.Builder configBuilder = ImagePipelineConfig.newBuilder(application);
+        ImagePipelineConfig.Builder configBuilder = OkHttpImagePipelineConfigFactory.newBuilder(application, HttpUtils.INSTANCE.getmOkHttpClient());
         // 设置内存配置
         int maxMemory = (int) Runtime.getRuntime().maxMemory();
         int cacheSize = maxMemory / 4;

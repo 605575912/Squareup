@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +45,7 @@ public class HomeActivity extends TabBaseActivity implements View.OnClickListene
     public int setFromLayoutID() {
         return R.layout.activity_main;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,36 @@ public class HomeActivity extends TabBaseActivity implements View.OnClickListene
         loadEmptyViewControl.addLoadView(frameLayout);
         tabsCache = new TabsCache();
         tabsCache.getCacheData();
+
+        long lasttime = 2 * 24 * 3600 + 10 * 3600 + 12 * 60 + 30;
+        Message msg = handler.obtainMessage(1);
+        msg.obj = lasttime;
+        handler.sendMessage(msg);
+    }
+
+    final Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                long lasttime = (long) msg.obj;
+                Log.i("===", showtime(lasttime));
+                Message msg0 = handler.obtainMessage(1);
+                msg0.obj = --lasttime;
+                handler.sendMessageDelayed(msg0, 1000);
+            }
+        }
+    };
+
+    public String showtime(long lasttime) {
+        int day = (int) (lasttime / (3600 * 24));
+        lasttime = (lasttime % (3600 * 24));
+        int hour = (int) (lasttime / (3600));
+        lasttime = (lasttime % (3600));
+        int min = (int) (lasttime / (60));
+        int second = (int) (lasttime % (60));
+        String text = (day + "天" + hour + "时" + min + "分" + second + "秒");
+        return text;
     }
 
     boolean transtatus;
@@ -154,6 +188,7 @@ public class HomeActivity extends TabBaseActivity implements View.OnClickListene
         super.onStop();
         LogUtil.e("onStop");
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

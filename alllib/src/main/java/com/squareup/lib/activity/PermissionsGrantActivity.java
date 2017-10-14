@@ -55,7 +55,7 @@ public class PermissionsGrantActivity extends Activity {
 
     public static void grantPermissions(Context context, String[] permissions, PermissionHandler handler) {
         int targetSDKVer = 0; //只有目标SDK大于等于23的才会有授权
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.DONUT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT) {
             targetSDKVer = context.getApplicationInfo().targetSdkVersion;
         }
         if (targetSDKVer < 23) {
@@ -90,7 +90,7 @@ public class PermissionsGrantActivity extends Activity {
 
     public static void grantSystemWriteSettings(Context context, PermissionHandler handler) {
         int targetSDKVer = 0; //只有目标SDK大于等于23的才会有授权
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.DONUT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT) {
             targetSDKVer = context.getApplicationInfo().targetSdkVersion;
         }
         if (targetSDKVer < 23 || systemCanWrite(context)) {
@@ -146,7 +146,7 @@ public class PermissionsGrantActivity extends Activity {
 
     public static boolean checkAllPermissionsGranted(Context context, String[] permissions) {
         int targetSDK = 0;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.DONUT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT) {
             targetSDK = context.getApplicationInfo().targetSdkVersion;
         }
         if (targetSDK < 23) { //低于23不用检查权限

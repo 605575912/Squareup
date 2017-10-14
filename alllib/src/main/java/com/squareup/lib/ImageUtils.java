@@ -36,15 +36,14 @@ public class ImageUtils {
     /**
      * 加载网络图片
      *
-     * @param context
      * @param url
      * @param imageView
      */
     public static void loadImage(Context context, String url, SimpleDraweeView imageView) {
-        loadImage(context, url, imageView, 0);
+        loadImage(url, imageView, 0);
     }
 
-    public static void loadImage(Context context, String url, SimpleDraweeView imageView, int defaultResId) {
+    public static void loadImage(String url, SimpleDraweeView imageView, int defaultResId) {
 //        if (defaultResId == 0) {
 //            if (TextUtils.isEmpty(url)) {
 //                imageView.setImageResource(defaultResId);
@@ -67,23 +66,51 @@ public class ImageUtils {
         if (imageView == null) {
             return;
         }
-
-        if (url != null && url.startsWith("asset://")) {
-            Uri uri = Uri.parse(url);
-            imageView.setImageURI(uri);
-        } else {
+        if (url == null) {
             DraweeController controller = Fresco.newDraweeControllerBuilder()
-                    .setUri(url)
                     .setAutoPlayAnimations(true)
                     .build();
             GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
             if (hierarchy != null && defaultResId != 0) {
                 hierarchy.setPlaceholderImage(defaultResId);
+            }
+            imageView.setController(controller);
+            return;
+        }
+        if (url.startsWith("asset://")) {
+            Uri uri = Uri.parse(url);
+            imageView.setImageURI(uri);
+            return;
+        }
+
+//        if (url != null && url.startsWith("/")) {
+//            Uri uri = Uri.parse(url);
+//            imageView.setImageURI(uri);
+//            return;
+//        }
+        if (url.startsWith("file://")) {
+            Uri uri = Uri.parse(url);
+            imageView.setImageURI(uri);
+            return;
+        } else if (url.startsWith("http:")) {
+            {
+                DraweeController controller = Fresco.newDraweeControllerBuilder()
+                        .setUri(url)
+                        .setAutoPlayAnimations(true)
+                        .build();
+                GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
+                if (hierarchy != null && defaultResId != 0) {
+                    hierarchy.setPlaceholderImage(defaultResId);
 //            RoundingParams roundingParams = new RoundingParams();
 //            roundingParams.setCornersRadius(Resources.getSystem().getDisplayMetrics().density * radius);
 //            hierarchy.setRoundingParams(roundingParams);
+                }
+                imageView.setController(controller);
             }
-            imageView.setController(controller);
+            return;
+        } else {
+            Uri uri = Uri.parse("file://" + url);
+            imageView.setImageURI(uri);
         }
 
 
@@ -144,7 +171,7 @@ public class ImageUtils {
 //        Glide.with(context).load(url).apply(options).into(imageView);
     }
 
-    public static void loadCircleImage(Context context, String url, ImageView imageView, Drawable drawable) {
+    public static void loadCircleImage(Context context, String url, SimpleDraweeView imageView, Drawable drawable) {
 //        if (TextUtils.isEmpty(url)) {
 //            imageView.setImageDrawable(drawable);
 //            return;
@@ -156,8 +183,34 @@ public class ImageUtils {
 //                .priority(Priority.HIGH).dontAnimate().transform(new GlideCircleTransform(context));
 //        Glide.with(context).load(url).apply(options).into(imageView);
     }
-
-    public static void loadImage(Context context, String url, SimpleDraweeView imageView, Drawable drawable) {
+    public static void loadImage(Context context, String url, SimpleDraweeView imageView, Drawable defaultResId) {
+//        if (TextUtils.isEmpty(url)) {
+//            imageView.setImageDrawable(drawable);
+//            return;
+//        }
+//        RequestOptions options = new RequestOptions()
+//                .centerCrop()
+//                .placeholder(drawable)
+//                .error(drawable)
+//                .priority(Priority.HIGH).dontAnimate();
+//        Glide.with(context).load(url).apply(options).into(imageView);
+        if (imageView == null) {
+            return;
+        }
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(url)
+                .setAutoPlayAnimations(true)
+                .build();
+        GenericDraweeHierarchy hierarchy = imageView.getHierarchy();
+//        if (hierarchy != null && defaultResId != 0) {
+//            hierarchy.setPlaceholderImage(defaultResId);
+////            RoundingParams roundingParams = new RoundingParams();
+////            roundingParams.setCornersRadius(Resources.getSystem().getDisplayMetrics().density * radius);
+////            hierarchy.setRoundingParams(roundingParams);
+//        }
+        imageView.setController(controller);
+    }
+    public static void loadImage(Context context, String url, SimpleDraweeView imageView, int defaultResId) {
 //        if (TextUtils.isEmpty(url)) {
 //            imageView.setImageDrawable(drawable);
 //            return;

@@ -1,6 +1,7 @@
 package com.squareup.code;
 
 import android.app.Application;
+import android.os.Handler;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,7 +12,9 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -36,13 +39,18 @@ public class MusicPlayerTestTest {
         System.out.println("结束一个案例：");
     }
 
+
     @Test
     public void testList() throws Exception {
         //mock creation
         List mockedList = mock(List.class);
+//        Handler handler = new Handler();
+        long time = 1506702456;
+
+//        simpleDateFormat.format(new Date());
 
 
-//        System.out.println("结束一个案例："+list.s(0));
+        System.out.println("结束一个案例：" + new Date().getTime());
 // using mock object
 //        mockedList.add("one");
 //        mockedList.clear();
@@ -88,9 +96,9 @@ public class MusicPlayerTestTest {
     @Test
     public void testResources() {
         Application application = RuntimeEnvironment.application;
-        String appName = application.getString(R.string.app_name);
-        String activityTitle = application.getString(R.string.str_loading);
-        assertEquals("Squareup", appName);
+//        String appName = application.getString(R.string.app_name);
+//        String activityTitle = application.getString(R.string.str_loading);
+//        assertEquals("Squareup", appName);
 //        assertEquals("SimpleActivity",activityTitle);
     }
 

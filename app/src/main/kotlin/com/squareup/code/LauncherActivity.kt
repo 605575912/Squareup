@@ -11,6 +11,7 @@ import com.squareup.code.views.RadioTextView
 import com.squareup.lib.EventMainObject
 import com.squareup.lib.activity.BaseActivity
 import com.squareup.lib.utils.LogUtil
+import kotlinx.android.synthetic.main.launcher_layout.*
 
 /**
  * Created by Administrator on 2017/05/31 0031.
@@ -46,7 +47,7 @@ class LauncherActivity : BaseActivity() {
                     //                    YWCom.INSTANCE.login(LauncherActivity.this,"testpro1","taobao1234");
                     //                    MyRunnable runnable = new MyRunnable(LauncherActivity.this, 1);
                     //                    submit(1, runnable);
-
+                    test_tv_radio.text = "out";
                     launcherPenster.startHome(this@LauncherActivity)
 
                     //                    tencentUtils = new TencentUtils();

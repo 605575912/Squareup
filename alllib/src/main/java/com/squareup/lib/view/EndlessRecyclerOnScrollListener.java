@@ -1,4 +1,4 @@
-//package com.squareup.lib.view;
+package com.squareup.lib.view;//package com.squareup.lib.view;
 //
 //import android.support.v7.widget.LinearLayoutManager;
 //import android.support.v7.widget.RecyclerView;

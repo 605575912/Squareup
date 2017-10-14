@@ -4,6 +4,7 @@ import android.Manifest;
 import android.os.Environment;
 import android.text.TextUtils;
 
+
 import com.squareup.lib.BaseApplication;
 
 import java.io.File;
@@ -52,18 +53,22 @@ public class FileUtils {
      */
 
     public static File getFile(String name) {
-        File file = new File(getDiskCacheDir() + File.separator + name);
+        String path = getDiskCacheDir() + File.separator + name;
+        File file = new File(path);
         if (file.exists()) {
             return file;
         } else {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
             }
-            if (file.exists()) {
-                return file;
-            }
+//            try {
+//                file.createNewFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            if (file.exists()) {
+//                return file;
+//            }
         }
         return file;
     }
@@ -134,6 +139,23 @@ public class FileUtils {
                     fos.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    public static void delFile(File file) {
+        if (file != null) {
+            if (file.exists()) {
+                if (file.isDirectory()) {
+                    File[] files = file.listFiles();
+                    if (files != null) {
+                        for (File file1 : files) {
+                            delFile(file1);
+                        }
+                    }
+                } else {
+                    file.delete();
+                }
             }
         }
     }

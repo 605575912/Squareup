@@ -40,7 +40,7 @@ public class CaheInterceptor implements Interceptor {
         } else {
 //                Log.e("Tamic", " no network load cahe");
             request = request.newBuilder()
-                    .cacheControl(CacheControl.FORCE_CACHE)
+//                    .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
             Response response = chain.proceed(request);
             //set cahe times is 3 days

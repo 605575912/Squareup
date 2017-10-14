@@ -3,7 +3,7 @@ package com.squareup.lib.utils;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -15,14 +15,11 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.RemoteException;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-//import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.squareup.lib.BaseApplication;
 
@@ -33,6 +30,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
+
+//import android.support.v7.graphics.Palette;
 
 /**
  * Created by Administrator on 2017/05/26 0026.
@@ -42,6 +42,44 @@ public class AppLibUtils {
 
     private static String appVersionName;
     private static int currentVersionCode;
+    private static String token;
+
+
+    public static String RECORDFILE = "record";
+    public static String IMAGEFILE = "image";
+    public static String VIDEOFILE = "video";
+
+
+    public static String getTodaty(String SuperDate) {
+        long time = Long.valueOf(SuperDate);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        int year = calendar.get(Calendar.YEAR);
+        int day = calendar.get(Calendar.DAY_OF_YEAR);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(year);
+        stringBuilder.append(day);
+        String today = stringBuilder.toString();
+        return today;
+    }
+
+    public static String getToken() {
+        if (TextUtils.isEmpty(token)) {
+            SharedPreferences sharedPreferences = CryptSharedPreferences.getDefaultSharedPreferences(BaseApplication.getApplication());
+            token = sharedPreferences.getString("token", "");
+        }
+        return token;
+    }
+
+    public static void setToken(String token) {
+        AppLibUtils.token = token;
+        if (!TextUtils.isEmpty(token)) {
+            SharedPreferences sharedPreferences = CryptSharedPreferences.getDefaultSharedPreferences(BaseApplication.getApplication());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("token", token);
+            editor.apply();
+        }
+    }
 
     public static int getversionCode(Context ctx) {
         if (currentVersionCode > 0) {
@@ -58,47 +96,6 @@ public class AppLibUtils {
         return currentVersionCode;
     }
 
-//    /**
-//     * 360 插件化
-//     *
-//     * @param apkpath
-//     */
-//    public static void startOutApk(Context context, final String apkpath) {
-//        File apk = new File(apkpath);
-//        if (apk.exists() && apk.getPath().toLowerCase().endsWith(".apk")) {
-//            if (!PluginManager.getInstance().isConnected()) {
-//                Toast.makeText(context, "插件服务正在初始化，请稍后再试。。。", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//            PackageManager pm = context.getPackageManager();
-//            final PackageInfo info = pm.getPackageArchiveInfo(apk.getPath(), 0);
-//            if (info != null) {
-//                String packageName = info.packageName;
-//                try {
-//                    if (PluginManager.getInstance().getPackageInfo(packageName, 0) != null) {
-//                        Intent intent = pm.getLaunchIntentForPackage(packageName);//包名
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        context.startActivity(intent);
-//                    } else {
-//                        new Thread() {
-//                            @Override
-//                            public void run() {
-//                                try {
-//                                    int re = PluginManager.getInstance().installPackage(apkpath, 0);
-//                                } catch (RemoteException e) {
-//                                    e.printStackTrace();
-//                                }
-//
-//                            }
-//                        }.start();
-//                    }
-//                } catch (RemoteException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//
-//    }
 
     public static String getMd5(String plainText) {
         try {
@@ -292,7 +289,7 @@ public class AppLibUtils {
     private String getImageAbsolutePath(Activity context, Uri imageUri) {
         if (context == null || imageUri == null)
             return null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, imageUri)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, imageUri)) {
             if (isExternalStorageDocument(imageUri)) {
                 String docId = DocumentsContract.getDocumentId(imageUri);
                 String[] split = docId.split(":");
