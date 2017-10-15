@@ -4,12 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.lib.utils.IProguard;
+
 /**
  * Created by liangzhenxiong on 2017/4/6 0006.
  * 视图Item
  */
 
-public interface BaseViewItem {
+public interface BaseViewItem extends IProguard.ProtectClassAndMembers {
     int getViewType();
 
     View createView(ViewGroup parent);

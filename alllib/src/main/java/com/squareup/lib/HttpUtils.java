@@ -7,9 +7,11 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.squareup.lib.activity.PermissionsGrantActivity;
+import com.squareup.lib.annotation.KeepNotProguard;
 import com.squareup.lib.http.CaheInterceptor;
 import com.squareup.lib.utils.AppLibUtils;
 import com.squareup.lib.utils.FileUtils;
+import com.squareup.lib.utils.IProguard;
 import com.squareup.lib.utils.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,7 +52,7 @@ import okhttp3.ResponseBody;
  * Created by Administrator on 2017/05/25 0025.
  */
 
-public enum HttpUtils {
+public enum HttpUtils implements IProguard.ProtectClassAndMembers {
     INSTANCE;
     private OkHttpClient mOkHttpClient = new OkHttpClient();
 
@@ -151,6 +153,7 @@ public enum HttpUtils {
 
     HashMap<String, HttpListener> httpListeners = new HashMap<String, HttpListener>();
 
+    @KeepNotProguard
     public interface HttpListener {
         void success(Object model, String data);
 

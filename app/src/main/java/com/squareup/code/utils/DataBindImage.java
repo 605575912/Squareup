@@ -68,7 +68,7 @@ public class DataBindImage {
             public View getview(ViewGroup container, int position) {
                 SimpleDraweeView imageView = new SimpleDraweeView(container.getContext());
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                ImageUtils.loadImage(container.getContext(), bannerModels.get(position).getImgurl(), imageView);
+                ImageUtils.loadImage(bannerModels.get(position).getImgurl(), imageView);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

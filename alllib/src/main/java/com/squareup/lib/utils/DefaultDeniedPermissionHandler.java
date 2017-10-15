@@ -3,75 +3,77 @@ package com.squareup.lib.utils;
 import android.content.Context;
 import android.content.DialogInterface;
 
-
+import com.squareup.lib.activity.PermissionHandler;
 import com.squareup.lib.activity.PermissionsGrantActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class DefaultDeniedPermissionHandler implements PermissionsGrantActivity.PermissionHandler {
+public class DefaultDeniedPermissionHandler implements PermissionHandler, IProguard.ProtectClassAndMembers {
     private Context mContext;
     private final static String DLG_REQ_SHOW_PERMISSION_HINT = "show.perms.hints";
     private final static String EXTRA_REQ_PERMISSIONS = "permissions";
     private final static String EXTRA_POSITIVE_BTN_TEXT = "positive_btn_text";
     private final static String EXTRA_NEGATIVE_BTN_TEXT = "negative_btn_text";
     private final static String EXTRA_DIALOG_STYLE = "dialog_style";
-    public final static  int      DIALOG_STYLE_HINT1 = 0;
-    public final static  int	   DIALOG_STYLE_HINT2 = 1;
-    
+    public final static int DIALOG_STYLE_HINT1 = 0;
+    public final static int DIALOG_STYLE_HINT2 = 1;
+
     protected Context getContext() {
-	return mContext;
+        return mContext;
     }
 
     public DefaultDeniedPermissionHandler(Context context) {
-	mContext = context;
+        mContext = context;
     }
 
     @Override
     public void onPermissionsResult(String[] grantedpermissions, String[] denied_permissions) {
-	String []required_perms = getReqiredPermissions(denied_permissions);
-	if (required_perms != null){
+        String[] required_perms = getReqiredPermissions(denied_permissions);
+        if (required_perms != null) {
 //	    showRequestedPermissionsHint(required_perms,R.string.perm_continue, R.string.perm_quit , DIALOG_STYLE_HINT2);
-	}
+        }
     }
 
-    private String[] getReqiredPermissions(String []permissions){
-	if (permissions == null){
-	    return null ;
-	}
-	List<String> rets = new ArrayList<String>();
-	for (String s:permissions){
-	    if (isRequestedPermission(s)){
-		rets.add(s);
-	    }
-	}
-	if (rets.size() > 0){
-	    String [] sa = new String[rets.size()];
-	    rets.toArray(sa);
-	    return sa ;
-	}else{
-	    return null ;
-	}
+    private String[] getReqiredPermissions(String[] permissions) {
+        if (permissions == null) {
+            return null;
+        }
+        List<String> rets = new ArrayList<String>();
+        for (String s : permissions) {
+            if (isRequestedPermission(s)) {
+                rets.add(s);
+            }
+        }
+        if (rets.size() > 0) {
+            String[] sa = new String[rets.size()];
+            rets.toArray(sa);
+            return sa;
+        } else {
+            return null;
+        }
     }
+
     /**
      * 判断是否为必需使用的权限
-     * 
+     *
      * @param permission
      * @return
      */
     protected boolean isRequestedPermission(String permission) {
-	return false;
+        return false;
     }
 
     /**
      * 弹窗选择
+     *
      * @param choice DialogInterface.BUTTON_POSITIVE or   BUTTON_NEGATIVE
      */
-    protected void onDialogChoice( int choice){
-    	if(choice == DialogInterface.BUTTON_NEGATIVE){
+    protected void onDialogChoice(int choice) {
+        if (choice == DialogInterface.BUTTON_NEGATIVE) {
 //    	    ToastUtil.show(mContext, "权限不足，无法使用该功能。");
-    	}
+        }
     }
     // @Override
     // public void onSystemWriteSettings(boolean success) {
@@ -85,7 +87,7 @@ public class DefaultDeniedPermissionHandler implements PermissionsGrantActivity.
 //    protected void showRequestedPermissionsHint(String[] required_permissions, int positive_btn_text_id, int negative_btn_text_id){
 //	showRequestedPermissionsHint(required_permissions, positive_btn_text_id, negative_btn_text_id, DIALOG_STYLE_HINT2);
 //    }
-    
+
 //    protected void showRequestedPermissionsHint(String[] required_permissions, int positive_btn_text_id, int negative_btn_text_id, int dlg_style){
 //	String positive_btn_text=null;
 //	String negative_btn_text = null;
@@ -97,7 +99,7 @@ public class DefaultDeniedPermissionHandler implements PermissionsGrantActivity.
 //	}
 //	showRequestedPermissionsHint(required_permissions, positive_btn_text, negative_btn_text, dlg_style);
 //    }
-    
+
 //    protected void showRequestedPermissionsHint(String[] required_permissions, String positive_btn_text, String negative_btn_text, int dlg_style) {
 //	DialogChoiceReceiver receiver = new DialogChoiceReceiver(this);
 //	IntentFilter filter = new IntentFilter(MMIntent.ACTION_SERVICE_DLG_CHOICE);
@@ -118,11 +120,11 @@ public class DefaultDeniedPermissionHandler implements PermissionsGrantActivity.
 //	    getContext().startActivity(intent);
 //	}
 //    }
-    
+
 //    protected void showMyApplicationInfo(){
 //	showMyApplicationInfo(mContext);
 //    }
-    
+
 //    private static void formatAppPermissionsInfo(Context context, String[] required_perms, LinearLayout parent) {
 //	List<String> perms = new ArrayList<String>(Arrays.asList(required_perms));
 //	// 去重，将相似的权限去掉，剩下一条即可
@@ -150,7 +152,7 @@ public class DefaultDeniedPermissionHandler implements PermissionsGrantActivity.
 //	    parent.addView(view);
 //	}
 //    }
-    
+
 //    private static void showRequestedPermissionsHintInUI(final Activity activity , String[] required_permissions, String positive_btn_text,
 //		String negative_btn_text, final boolean from_service, int dlg_style) {
 //	    MMAlertDialogBuilder builder = new MMAlertDialogBuilder(activity); // 先得到构造器
@@ -288,7 +290,7 @@ public class DefaultDeniedPermissionHandler implements PermissionsGrantActivity.
 //       i.putExtra("extra_package_uid", info.uid);
 //       context.startActivity(i);
 //   }
-    
+
 //    static class PermissionDialogFactory extends AbstractDialogFactory{
 //	String	[] mRequiredPermissions ;
 //	String	mPositiveBtnText ;

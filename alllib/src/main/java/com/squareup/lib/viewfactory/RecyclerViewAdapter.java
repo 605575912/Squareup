@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.lib.utils.IProguard;
 import com.squareup.lib.utils.LogUtil;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  * 主适配器
  */
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements  IProguard.ProtectClassAndMembers {
     private List<BaseViewItem> mdata;
     private Context mContext;
 //    private LongSparseArray sparseArray = new LongSparseArray();

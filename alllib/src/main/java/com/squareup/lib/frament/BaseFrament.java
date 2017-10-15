@@ -10,19 +10,22 @@ import android.view.ViewGroup;
 
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
-
+import com.squareup.lib.annotation.KeepNotProguard;
 
 
 /**
  * Created by Administrator on 2017/06/09 0009.
  */
-
+@KeepNotProguard
 public abstract class BaseFrament extends Fragment {
+    @KeepNotProguard
     protected View contentView;
 
+    @KeepNotProguard
     protected void onRefresh() {
     }
 
+    @KeepNotProguard
     protected void onLoadMore() {
     }
 
@@ -44,10 +47,10 @@ public abstract class BaseFrament extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
-
+    @KeepNotProguard
     public void onEventMain(EventMainObject event) {
     }
-
+    @KeepNotProguard
     public void onEventThread(EventThreadObject event) {
 
     }

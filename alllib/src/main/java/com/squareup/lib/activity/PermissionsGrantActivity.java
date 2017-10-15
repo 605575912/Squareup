@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.squareup.lib.annotation.KeepNotProguard;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -45,14 +47,8 @@ public class PermissionsGrantActivity extends Activity {
     private int mReqCode; // 记录请求码
     private int[] mGrantResults;
 
-    public interface PermissionHandler {
-        /**
-         * @param grantedpermissions 获得授权的权限
-         * @param denied_permissions 被拒的权限
-         */
-        void onPermissionsResult(String[] grantedpermissions, String[] denied_permissions);
-    }
 
+    @KeepNotProguard
     public static void grantPermissions(Context context, String[] permissions, PermissionHandler handler) {
         int targetSDKVer = 0; //只有目标SDK大于等于23的才会有授权
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT) {

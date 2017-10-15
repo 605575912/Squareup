@@ -17,7 +17,7 @@ import java.io.IOException;
  * Created by Administrator on 2017/05/26 0026.
  */
 
-public class FileUtils {
+public class FileUtils implements IProguard.ProtectClassAndMembers{
     /**
      * 不需要权限
      *

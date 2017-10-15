@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Vector;
 
-public class ReflectHelper implements IProguard {
+public class ReflectHelper implements IProguard.ProtectClassAndMembers {
     private static final String TAG = "ReflectHelper";
 
     /*

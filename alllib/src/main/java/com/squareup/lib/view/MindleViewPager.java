@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
 import com.squareup.lib.R;
+import com.squareup.lib.annotation.KeepNotProguard;
 import com.squareup.lib.utils.AppLibUtils;
 
 import java.lang.reflect.Field;
@@ -320,12 +321,14 @@ public class MindleViewPager extends RelativeLayout {
     };
     private LunAdapter lunAdapter;
 
+    @KeepNotProguard
     public void setAdapter(LunAdapter lunAdapter, List list) {
         setAdapter(lunAdapter, list, 0, 0);
     }
 
     private int selected, normal;
 
+    @KeepNotProguard
     public void setAdapter(LunAdapter lunAdapter, List list, int selected, int normal) {
         this.lunAdapter = lunAdapter;
         this.list = list;
@@ -352,6 +355,7 @@ public class MindleViewPager extends RelativeLayout {
         }
     }
 
+    @KeepNotProguard
     public interface LunAdapter {
         View getview(ViewGroup container, int position);
     }

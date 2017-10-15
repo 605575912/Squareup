@@ -1,10 +1,12 @@
 package com.squareup.lib;
 
+import com.squareup.lib.utils.IProguard;
+
 /**
  * Created by Administrator on 2017/05/25 0025.
  */
 
-public class EventThreadObject<T> {
+public class EventThreadObject<T> implements IProguard.ProtectClassAndMembers {
     private  T data;
     private  String command;
     private boolean success;

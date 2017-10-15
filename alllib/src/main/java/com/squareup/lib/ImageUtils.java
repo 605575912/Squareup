@@ -26,11 +26,12 @@ import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.squareup.lib.utils.IProguard;
 
 import java.io.File;
 
 
-public class ImageUtils {
+public class ImageUtils implements IProguard.ProtectClassAndMembers {
 
 
     /**

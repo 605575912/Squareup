@@ -11,6 +11,7 @@ import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.squareup.lib.R;
 import com.squareup.lib.WrapContentLinearLayoutManager;
+import com.squareup.lib.annotation.KeepNotProguard;
 import com.squareup.lib.viewfactory.BaseViewItem;
 import com.squareup.lib.viewfactory.RecyclerViewAdapter;
 
@@ -63,13 +64,13 @@ public class ListFrament extends BaseFrament {
         }
         return contentView;
     }
-
+    @KeepNotProguard
     protected void finishRefreshing() {
         if (recyclerView != null) {
             twinklingRefreshLayout.finishRefreshing();
         }
     }
-
+    @KeepNotProguard
     protected final void notifyDataSetChanged() {
         if (adapter != null) {
             adapter.notifyDataSetChanged();

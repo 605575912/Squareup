@@ -38,7 +38,7 @@ import java.util.Calendar;
  * Created by Administrator on 2017/05/26 0026.
  */
 
-public class AppLibUtils {
+public class AppLibUtils implements IProguard.ProtectClassAndMembers {
 
     private static String appVersionName;
     private static int currentVersionCode;

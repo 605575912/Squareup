@@ -1,5 +1,7 @@
 package com.squareup.lib;
 
+import com.squareup.lib.utils.IProguard;
+
 import java.lang.ref.WeakReference;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -8,7 +10,7 @@ import java.util.concurrent.Executors;
  * Created by Administrator on 2017/05/25 0025.
  */
 
-public class ThreadManager {
+public class ThreadManager implements IProguard.ProtectClassAndMembers {
     static ExecutorService fixedThreadPool = Executors.newFixedThreadPool(5);
 
 
