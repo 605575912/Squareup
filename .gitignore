@@ -1,0 +1,17 @@
+
+*.bin
+
+*.lock
+
+.idea/compiler.xml
+
+.idea/copyright/profiles_settings.xml
+
+.idea/*
+
+*.apk
+
+*.iml
+*/build/*
+build/*
+captures/*

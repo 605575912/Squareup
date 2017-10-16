@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.squareup.code.search.SearchActivity" />
+
+
+        <variable
+            name="activity"
+            type="com.squareup.code.search.SearchActivity" />
+
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#04e7d8"
+        android:onClick="@{activity::onClick}"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="80dp"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

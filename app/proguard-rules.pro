@@ -29,13 +29,21 @@
 #-keepclassmembers class android.util.**{*;}
 
 
-
 -keep interface com.squareup.lib.utils.IProguard {*;}
 -keep interface com.squareup.lib.utils.IProguard$* {*;}
 
+# keep annotated by KeepNotProguard
+-keep @com.squareup.lib.annotation.KeepNotProguard class * {*;}
+-keep class * {
+@com.squareup.lib.annotation.KeepNotProguard <fields>;
+}
+-keepclassmembers class * {
+@com.squareup.lib.annotation.KeepNotProguard <methods>;
+}
+
+
 -keep class * implements com.squareup.lib.utils.IProguard$ProtectClassAndMembers {*;}
 -keepclassmembers class * implements com.squareup.lib.utils.IProguard$ProtectClassAndMembers {*;}
-#-keepclassmembers class * implements android.view.View$* {*;}
 
 
 -keepclassmembers class * implements com.squareup.lib.utils.IProguard$ProtectMembers {*;}
@@ -56,7 +64,6 @@
 -keep interface * extends com.squareup.lib.utils.IProguard$ProtectClass {*;}
 
 
--keep public class * implements com.bumptech.glide.module.GlideModule
 
 -dontwarn android.net.**
 -keep class android.net.SSLCertificateSocketFactory{*;}
@@ -96,15 +103,17 @@
 -keep interface com.morgoo.**{*;}
 -keepclassmembers interface com.morgoo.**{*;}
 
--dontwarn com.squareup.lip.**
--keep class com.squareup.lip.**{*;}
--keep class android.support.**{*;}
+#-dontwarn com.squareup.lip.**
+#-keep class com.squareup.lip.**{*;}
+#-keep class android.support.**{*;}
 
 #Tkrefreshlayout
 -dontwarn  com.lcodecore.tkrefreshlayout.RefreshListenerAdapter
 -keep public class com.lcodecore.tkrefreshlayout.RefreshListenerAdapter{*;}
+-keepclassmembers public class com.lcodecore.tkrefreshlayout.RefreshListenerAdapter{*;}
 -dontwarn  com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
 -keep public class com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout{*;}
+-keepclassmembers public class com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout{*;}
 #
 
 #bugly
@@ -127,16 +136,32 @@
 -keep class okio.**{*;}
 -keep interface okio.**{*;}
 -keepclassmembers interface okio.**{*;}
-
+#retrofit2
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
 -keepclassmembers class retrofit2.** { *; }
+
+#GSON
+-dontwarn com.google.gson.**
+-keep class com.google.gson.**{*;}
+-keep interface com.google.gson.**{*;}
+-keepclassmembers interface com.google.gson.**{*;}
+
+#DataBinding
+-dontwarn android.databinding.**
+-keep class android.databinding.**{*;}
+-keep interface android.databinding.**{*;}
+-keepclassmembers interface android.databinding.**{*;}
 
 #eventBus
 -keepattributes *Annotation*
 -keepclassmembers class ** {
     @org.greenrobot.eventbus.Subscribe <methods>;
 }
+-dontwarn org.greenrobot.eventbus.**
+-keep class org.greenrobot.eventbus.**{*;}
+-keep interface org.greenrobot.eventbus.**{*;}
+-keepclassmembers interface org.greenrobot.eventbus.**{*;}
 -keep enum org.greenrobot.eventbus.ThreadMode { *; }
 -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
     <init>(java.lang.Throwable);
@@ -176,6 +201,7 @@
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.AppCompatActivity
 -keep public class * extends android.app.Application
+-keepclassmembers public class * extends android.app.Application{*;}
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver
 -keep public class * extends android.content.ContentProvider
@@ -188,6 +214,7 @@
 
 -keep public class * extends android.support.v4.app.Fragment
 -keep public class * extends android.support.v4.app.FragmentActivity
+-keepclassmembers public class * extends android.support.v4.app.Fragment{*;}
 
 -keepclasseswithmembernames class * {
      native <methods>;
