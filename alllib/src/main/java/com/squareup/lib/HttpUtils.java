@@ -4,13 +4,13 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.squareup.lib.activity.PermissionsGrantActivity;
 import com.squareup.lib.annotation.KeepNotProguard;
 import com.squareup.lib.http.CaheInterceptor;
 import com.squareup.lib.utils.AppLibUtils;
 import com.squareup.lib.utils.FileUtils;
+import com.squareup.lib.utils.GsonUtil;
 import com.squareup.lib.utils.IProguard;
 import com.squareup.lib.utils.LogUtil;
 
@@ -68,8 +68,8 @@ public enum HttpUtils implements IProguard.ProtectClassAndMembers {
 
         @Override
         public void checkServerTrusted(X509Certificate[] chain, String authType)
-
                 throws CertificateException {
+
         }
 
         @Override
@@ -229,9 +229,8 @@ public enum HttpUtils implements IProguard.ProtectClassAndMembers {
                 httpListeners.remove(url);
             }
         } else {
-            Gson gson = new Gson();
             try {
-                model = gson.fromJson(result, jsonmodel);
+                model = GsonUtil.INSTANCE.getGson().fromJson(result, jsonmodel);
             } catch (JsonSyntaxException exception) {
 
             }

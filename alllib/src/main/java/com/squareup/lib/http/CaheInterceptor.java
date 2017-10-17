@@ -2,11 +2,11 @@ package com.squareup.lib.http;
 
 import android.content.Context;
 
+import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.utils.NetWorkManager;
 
 import java.io.IOException;
 
-import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -26,6 +26,10 @@ public class CaheInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
+        if (request.url().toString().contains("act=Login")) {
+            return chain.proceed(request);
+        }
+        LogUtil.i("=====" + request.url());
         if (NetWorkManager.isNetworkAvailable(context)) {
             Response response = chain.proceed(request);
             // read from cache for 60 s
