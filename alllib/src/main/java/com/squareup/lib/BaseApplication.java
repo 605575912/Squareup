@@ -15,11 +15,14 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.cache.MemoryCacheParams;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.squareup.lib.activity.BaseActivity;
 import com.squareup.lib.utils.FileUtils;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.interfaces.BetaPatchListener;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.os.Build.VERSION.SDK_INT;
 
@@ -29,13 +32,15 @@ import static android.os.Build.VERSION.SDK_INT;
  * @author wenjiewu
  * @since 2017/1/3
  */
-public class BaseApplication extends Application {
-    private static Application application;
+public class BaseApplication extends Application implements Application.ActivityLifecycleCallbacks {
+    private static BaseApplication application;
 
-    public static Application getApplication() {
+    public static BaseApplication getApplication() {
 //        return TestBaseApplication.application;
         return application;
     }
+
+    List<BaseActivity> activities = new ArrayList<BaseActivity>();
 
     @Override
     public void onCreate() {
@@ -155,42 +160,7 @@ public class BaseApplication extends Application {
 
         // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId,调试时将第三个参数设置为true
 //        Bugly.init(this, "b5f9e8654b", true);
-        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-            }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-
-            }
-        });
+        registerActivityLifecycleCallbacks(this);
     }
 
     /**
@@ -198,6 +168,20 @@ public class BaseApplication extends Application {
      */
     static {
         Beta.loadLibrary("mylib");
+    }
+
+    private synchronized void change(BaseActivity baseActivity, boolean isadd) {
+        if (isadd) {
+            activities.add(baseActivity);
+        } else {
+            activities.remove(baseActivity);
+        }
+    }
+
+    public void clearAllActivity() {
+        for (BaseActivity baseActivity : activities) {
+            baseActivity.finish();
+        }
     }
 
     protected void enabledStrictMode() {
@@ -229,10 +213,55 @@ public class BaseApplication extends Application {
 
     public static void Exit() {
         try {
+            BaseApplication.getApplication().unregisterActivityLifecycleCallbacks(BaseApplication.getApplication());
             System.exit(0);
         } catch (
                 Exception e) {
         }
     }
 
+    @Override
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+        if (activity instanceof BaseActivity) {
+            BaseActivity baseActivity = (BaseActivity) activity;
+            if (baseActivity.isAddLifecycle()) {
+                change(baseActivity, true);
+            }
+        }
+    }
+
+    @Override
+    public void onActivityStarted(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityStopped(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(Activity activity) {
+        if (activity instanceof BaseActivity) {
+            BaseActivity baseActivity = (BaseActivity) activity;
+            if (baseActivity.isAddLifecycle()) {
+                change(baseActivity, false);
+            }
+        }
+    }
 }

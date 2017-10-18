@@ -40,6 +40,10 @@ public class BaseActivity extends FragmentActivity implements LayoutInterFace {
     public List<BaseFrament> fragments;
     protected ViewDataBinding viewDataBinding;
 
+    public boolean isAddLifecycle() {
+        return true;
+    }
+
     public
     @LayoutRes
     int setFromLayoutID() {

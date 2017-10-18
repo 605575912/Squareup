@@ -85,6 +85,11 @@ public class AppLibUtils implements IProguard.ProtectClassAndMembers {
         if (currentVersionCode > 0) {
             return currentVersionCode;
         }
+        getPackageInfo(ctx);
+        return currentVersionCode;
+    }
+
+    private static void getPackageInfo(Context ctx) {
         PackageManager manager = ctx.getPackageManager();
         try {
             PackageInfo info = manager.getPackageInfo(ctx.getPackageName(), 0);
@@ -93,9 +98,15 @@ public class AppLibUtils implements IProguard.ProtectClassAndMembers {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        return currentVersionCode;
     }
 
+    public static String getAppVersionName(Context ctx) {
+        if (!TextUtils.isEmpty(appVersionName)) {
+            return appVersionName;
+        }
+        getPackageInfo(ctx);
+        return appVersionName;
+    }
 
     public static String getMd5(String plainText) {
         try {
