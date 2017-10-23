@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Theme.Translucent" parent="android:style/Theme.Translucent">
         <item name="android:windowNoTitle">false</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -11,4 +12,13 @@
         <item name="android:colorForeground">@color/background_transparent</item>
          -->
     </style>
+
+    <declare-styleable name="CustomImageView">
+        <attr name="min_scale_factor" format="float" />
+        <attr name="max_scale_factor" format="float" />
+        <attr name="can_back_translate" format="boolean" />
+        <attr name="can_back_rotate" format="boolean" />
+        <attr name="can_back_scale" format="boolean" />
+        <attr name="animator_time" format="integer" />
+    </declare-styleable>
 </resources>

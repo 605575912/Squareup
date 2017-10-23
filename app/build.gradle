@@ -115,6 +115,7 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:multidex:1.0.1'
 //    compile(name: 'alllib-release', ext: 'aar')
+    compile(name: 'twinklingRefreshLaoutlibrary-release', ext: 'aar')
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     //    //必选

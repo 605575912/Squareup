@@ -50,10 +50,9 @@ public class AppLibUtils implements IProguard.ProtectClassAndMembers {
     public static String VIDEOFILE = "video";
 
 
-    public static String getTodaty(String SuperDate) {
-        long time = Long.valueOf(SuperDate);
+    public static String getTodaty(long SuperDate) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(time);
+        calendar.setTimeInMillis(SuperDate);
         int year = calendar.get(Calendar.YEAR);
         int day = calendar.get(Calendar.DAY_OF_YEAR);
         StringBuilder stringBuilder = new StringBuilder();

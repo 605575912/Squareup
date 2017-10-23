@@ -29,7 +29,7 @@ public  class LauncherPenster {
         if (activity == null) {
             return;
         }
-        Intent intent = new Intent(activity, HomeActivity.class);
+        Intent intent = new Intent(activity, ImageViewActivity.class);
         activity.startActivityForResult(intent, -1, null);
         activity.finish();
     }

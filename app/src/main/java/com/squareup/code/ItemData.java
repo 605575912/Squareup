@@ -1,6 +1,7 @@
 package com.squareup.code;
 
 import android.databinding.BaseObservable;
+import android.os.Parcelable;
 
 /**
  * Created by Administrator on 2017/05/31 0031.

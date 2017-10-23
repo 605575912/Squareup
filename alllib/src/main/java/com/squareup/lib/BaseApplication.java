@@ -213,7 +213,8 @@ public class BaseApplication extends Application implements Application.Activity
 
     public static void Exit() {
         try {
-            BaseApplication.getApplication().unregisterActivityLifecycleCallbacks(BaseApplication.getApplication());
+            getApplication().unregisterActivityLifecycleCallbacks(getApplication());
+            getApplication().clearAllActivity();
             System.exit(0);
         } catch (
                 Exception e) {

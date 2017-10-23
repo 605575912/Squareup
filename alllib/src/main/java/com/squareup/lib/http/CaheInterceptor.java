@@ -26,10 +26,9 @@ public class CaheInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        if (request.url().toString().contains("act=Login")) {
+        if (request.url().toString().contains("act=Login")) {//过滤登录缓存
             return chain.proceed(request);
         }
-        LogUtil.i("=====" + request.url());
         if (NetWorkManager.isNetworkAvailable(context)) {
             Response response = chain.proceed(request);
             // read from cache for 60 s
