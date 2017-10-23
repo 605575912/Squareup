@@ -63,8 +63,12 @@ public class AllanimationView extends SurfaceView implements SurfaceHolder.Callb
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        mPlayed = false;
-        mPlayThread.interrupt();
+        synchronized (this) {
+            mPlayed = false;
+            mPlayThread.interrupt();
+        }
+
+
     }
 
     SurfaceHolder mHolder;
@@ -160,52 +164,55 @@ public class AllanimationView extends SurfaceView implements SurfaceHolder.Callb
 
     List<Bady> list;
     List<Rain> listrains;
+    Canvas canvas;
 
     private class PlayThread extends Thread {
 
         @Override
         public void run() {
-            while (mPlayed) {
-                Canvas canvas = mHolder.lockCanvas();
-                if (canvas == null) {
-                    mPlayed = false;
-                    break;
-                }
-                Paint paint = new Paint();
-                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-                canvas.drawPaint(paint);
-                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
-                if (bitmap == null) {
-                    bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-                }
-                if (list == null) {
-                    list = new ArrayList<>();
-                    for (int i = 0; i < 15; i++) {
-                        Bady bady = new Bady(bitmap, (int) (Math.random() * getWidth()), (int) (Math.random() * -getHeight()), (int) (200 + Math.random() * 150));
-                        list.add(bady);
+            synchronized (AllanimationView.this) {
+                while (mPlayed) {
+                    canvas = mHolder.lockCanvas();
+                    if (canvas == null) {
+                        mPlayed = false;
+                        break;
                     }
-                }
-                for (Bady bady : list) {
-                    bady.draw(canvas);
-                }
+                    Paint paint = new Paint();
+                    paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+                    canvas.drawPaint(paint);
+                    paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
+                    if (bitmap == null) {
+                        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+                    }
+                    if (list == null) {
+                        list = new ArrayList<>();
+                        for (int i = 0; i < 15; i++) {
+                            Bady bady = new Bady(bitmap, (int) (Math.random() * getWidth()), (int) (Math.random() * -getHeight()), (int) (200 + Math.random() * 150));
+                            list.add(bady);
+                        }
+                    }
+                    for (Bady bady : list) {
+                        bady.draw(canvas);
+                    }
 
-                if (listrains == null) {
-                    listrains = new ArrayList<>();
-                    for (int i = 0; i < 10; i++) {
-                        double r = Math.random() * 10;
-                        Rain bady = new Rain(bitmap, (int) (Math.random() * getWidth()), (int) (Math.random() * -getHeight()), r > 5);
-                        listrains.add(bady);
+                    if (listrains == null) {
+                        listrains = new ArrayList<>();
+                        for (int i = 0; i < 10; i++) {
+                            double r = Math.random() * 10;
+                            Rain bady = new Rain(bitmap, (int) (Math.random() * getWidth()), (int) (Math.random() * -getHeight()), r > 5);
+                            listrains.add(bady);
+                        }
                     }
-                }
-                for (Rain bady : listrains) {
-                    bady.draw(canvas);
-                }
-                try {
-                    Thread.sleep(50);
-                    mHolder.unlockCanvasAndPost(canvas);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return;
+                    for (Rain bady : listrains) {
+                        bady.draw(canvas);
+                    }
+                    try {
+                        mHolder.unlockCanvasAndPost(canvas);
+                        Thread.sleep(50);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return;
+                    }
                 }
             }
         }
