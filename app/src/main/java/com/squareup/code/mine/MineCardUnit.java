@@ -1,7 +1,5 @@
 package com.squareup.code.mine;
 
-import com.squareup.code.CardUnit;
-import com.squareup.code.ItemData;
 import com.squareup.code.MineItemData;
 
 import java.util.List;

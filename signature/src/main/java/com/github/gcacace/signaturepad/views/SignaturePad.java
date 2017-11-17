@@ -105,7 +105,7 @@ public class SignaturePad extends View {
     protected Parcelable onSaveInstanceState() {
         Bundle bundle = new Bundle();
         bundle.putParcelable("superState", super.onSaveInstanceState());
-        if(this.mHasEditState == null || this.mHasEditState){
+        if (this.mHasEditState == null || this.mHasEditState) {
             this.mBitmapSavedState = this.getTransparentSignatureBitmap();
         }
         bundle.putParcelable("signatureBitmap", this.mBitmapSavedState);
@@ -114,10 +114,9 @@ public class SignaturePad extends View {
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-        if (state instanceof Bundle)
-        {
+        if (state instanceof Bundle) {
             Bundle bundle = (Bundle) state;
-            this.setSignatureBitmap((Bitmap)bundle.getParcelable("signatureBitmap"));
+            this.setSignatureBitmap((Bitmap) bundle.getParcelable("signatureBitmap"));
             this.mBitmapSavedState = bundle.getParcelable("signatureBitmap");
             state = bundle.getParcelable("superState");
         }
@@ -212,7 +211,7 @@ public class SignaturePad extends View {
                 mLastTouchX = eventX;
                 mLastTouchY = eventY;
                 addPoint(getNewPoint(eventX, eventY));
-                if(mOnSignedListener != null) mOnSignedListener.onStartSigning();
+                if (mOnSignedListener != null) mOnSignedListener.onStartSigning();
 
             case MotionEvent.ACTION_MOVE:
                 resetDirtyRect(eventX, eventY);
@@ -427,7 +426,7 @@ public class SignaturePad extends View {
             timedPoint = new TimedPoint();
         } else {
             // Get point from cache
-            timedPoint = mPointsCache.remove(mCacheSize-1);
+            timedPoint = mPointsCache.remove(mCacheSize - 1);
         }
 
         return timedPoint.set(x, y);
@@ -604,20 +603,22 @@ public class SignaturePad extends View {
     }
 
     private void ensureSignatureBitmap() {
-        if (mSignatureBitmap == null) {
+        if (mSignatureBitmap == null && getWidth() > 0 && getHeight()>0) {
             mSignatureBitmap = Bitmap.createBitmap(getWidth(), getHeight(),
                     Bitmap.Config.ARGB_8888);
             mSignatureBitmapCanvas = new Canvas(mSignatureBitmap);
         }
     }
 
-    private int convertDpToPx(float dp){
+    private int convertDpToPx(float dp) {
         return Math.round(getContext().getResources().getDisplayMetrics().density * dp);
     }
 
     public interface OnSignedListener {
         void onStartSigning();
+
         void onSigned();
+
         void onClear();
     }
 

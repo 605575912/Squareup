@@ -16,9 +16,8 @@ import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFact
 import com.facebook.imagepipeline.cache.MemoryCacheParams;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.squareup.lib.activity.BaseActivity;
+import com.squareup.lib.utils.CrashHandler;
 import com.squareup.lib.utils.FileUtils;
-import com.tencent.bugly.beta.Beta;
-import com.tencent.bugly.beta.interfaces.BetaPatchListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,6 +45,9 @@ public class BaseApplication extends Application implements Application.Activity
     public void onCreate() {
         super.onCreate();
         application = this;
+        if (BuildConfig.DEBUG) {
+            CrashHandler.getInstance().init(getApplication());
+        }
         DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(application)
                 .setBaseDirectoryName("Fresco")
                 .setBaseDirectoryPathSupplier(new Supplier<File>() {
@@ -74,14 +76,14 @@ public class BaseApplication extends Application implements Application.Activity
         configBuilder.setDownsampleEnabled(true);
         Fresco.initialize(application, configBuilder.build());
 
-        // 设置是否关闭热更新能力，默认为true
-        Beta.enableHotfix = true;
-        // 设置是否自动下载补丁
-        Beta.canAutoDownloadPatch = true;
-        // 设置是否提示用户重启
-        Beta.canNotifyUserRestart = false;
-        // 设置是否自动合成补丁
-        Beta.canAutoPatch = true;
+//        // 设置是否关闭热更新能力，默认为true
+//        Beta.enableHotfix = true;
+//        // 设置是否自动下载补丁
+//        Beta.canAutoDownloadPatch = true;
+//        // 设置是否提示用户重启
+//        Beta.canNotifyUserRestart = false;
+//        // 设置是否自动合成补丁
+//        Beta.canAutoPatch = true;
 //        PluginHelper.getInstance().applicationOnCreate(getBaseContext());
         /**
          *  全量升级状态回调
@@ -113,49 +115,49 @@ public class BaseApplication extends Application implements Application.Activity
             }
         };*/
 
-        /**
-         * 补丁回调接口，可以监听补丁接收、下载、合成的回调
-         */
-        Beta.betaPatchListener = new BetaPatchListener() {
-            @Override
-            public void onPatchReceived(String patchFileUrl) {
-//                Toast.makeText(getApplicationContext(), patchFileUrl, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onDownloadReceived(long savedLength, long totalLength) {
-//                Toast.makeText(getApplicationContext(), String.format(Locale.getDefault(),
-//                        "%s %d%%",
-//                        Beta.strNotificationDownloading,
-//                        (int) (totalLength == 0 ? 0 : savedLength * 100 / totalLength)), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onDownloadSuccess(String patchFilePath) {
-//                Toast.makeText(getApplicationContext(), patchFilePath, Toast.LENGTH_SHORT).show();
-                Beta.applyDownloadedPatch();
-            }
-
-            @Override
-            public void onDownloadFailure(String msg) {
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onApplySuccess(String msg) {
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onApplyFailure(String msg) {
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onPatchRollback() {
-
-            }
-        };
+//        /**
+//         * 补丁回调接口，可以监听补丁接收、下载、合成的回调
+//         */
+//        Beta.betaPatchListener = new BetaPatchListener() {
+//            @Override
+//            public void onPatchReceived(String patchFileUrl) {
+////                Toast.makeText(getApplicationContext(), patchFileUrl, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onDownloadReceived(long savedLength, long totalLength) {
+////                Toast.makeText(getApplicationContext(), String.format(Locale.getDefault(),
+////                        "%s %d%%",
+////                        Beta.strNotificationDownloading,
+////                        (int) (totalLength == 0 ? 0 : savedLength * 100 / totalLength)), Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onDownloadSuccess(String patchFilePath) {
+////                Toast.makeText(getApplicationContext(), patchFilePath, Toast.LENGTH_SHORT).show();
+//                Beta.applyDownloadedPatch();
+//            }
+//
+//            @Override
+//            public void onDownloadFailure(String msg) {
+//                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onApplySuccess(String msg) {
+//                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onApplyFailure(String msg) {
+//                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onPatchRollback() {
+//
+//            }
+//        };
 
 
         // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId,调试时将第三个参数设置为true
@@ -163,12 +165,12 @@ public class BaseApplication extends Application implements Application.Activity
         registerActivityLifecycleCallbacks(this);
     }
 
-    /**
-     * 如果想更新so，可以将System.loadLibrary替换成Beta.loadLibrary
-     */
-    static {
-        Beta.loadLibrary("mylib");
-    }
+//    /**
+//     * 如果想更新so，可以将System.loadLibrary替换成Beta.loadLibrary
+//     */
+//    static {
+//        Beta.loadLibrary("mylib");
+//    }
 
     private synchronized void change(BaseActivity baseActivity, boolean isadd) {
         if (isadd) {
@@ -181,6 +183,23 @@ public class BaseApplication extends Application implements Application.Activity
     public void clearAllActivity() {
         for (BaseActivity baseActivity : activities) {
             baseActivity.finish();
+        }
+    }
+
+    public boolean IndexActivity(String activityname) {
+        for (BaseActivity baseActivity : activities) {
+            if (baseActivity.getClass().equals(activityname)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getActivitySize() {
+        if (activities == null) {
+            return 0;
+        } else {
+            return activities.size();
         }
     }
 
@@ -200,8 +219,8 @@ public class BaseApplication extends Application implements Application.Activity
 //        PluginHelper.getInstance().applicationAttachBaseContext(base);
         super.attachBaseContext(base);
         // you must install multiDex whatever tinker is installed!
-        // 安装tinker
-        Beta.installTinker();
+//        // 安装tinker
+//        Beta.installTinker();
     }
 
 

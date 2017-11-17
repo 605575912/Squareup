@@ -3,6 +3,7 @@ package com.squareup.code;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -30,8 +32,12 @@ import com.squareup.lib.EventThreadObject;
 import com.squareup.lib.ImageUtils;
 import com.squareup.lib.activity.TabBaseActivity;
 import com.squareup.lib.utils.AppLibUtils;
+import com.squareup.lib.utils.FileUtils;
 import com.squareup.lib.utils.LogUtil;
 import com.squareup.lib.utils.ToastUtils;
+
+import java.io.File;
+import java.io.IOException;
 
 
 public class HomeActivity extends TabBaseActivity implements View.OnClickListener {
@@ -58,11 +64,6 @@ public class HomeActivity extends TabBaseActivity implements View.OnClickListene
         loadEmptyViewControl.addLoadView(frameLayout);
         tabsCache = new TabsCache();
         tabsCache.getCacheData();
-
-        long lasttime = 2 * 24 * 3600 + 10 * 3600 + 12 * 60 + 30;
-        Message msg = handler.obtainMessage(1);
-        msg.obj = lasttime;
-        handler.sendMessage(msg);
     }
 
     final Handler handler = new Handler() {
@@ -71,7 +72,6 @@ public class HomeActivity extends TabBaseActivity implements View.OnClickListene
             super.handleMessage(msg);
             if (msg.what == 1) {
                 long lasttime = (long) msg.obj;
-                Log.i("===", showtime(lasttime));
                 Message msg0 = handler.obtainMessage(1);
                 msg0.obj = --lasttime;
                 handler.sendMessageDelayed(msg0, 1000);
@@ -79,16 +79,6 @@ public class HomeActivity extends TabBaseActivity implements View.OnClickListene
         }
     };
 
-    public String showtime(long lasttime) {
-        int day = (int) (lasttime / (3600 * 24));
-        lasttime = (lasttime % (3600 * 24));
-        int hour = (int) (lasttime / (3600));
-        lasttime = (lasttime % (3600));
-        int min = (int) (lasttime / (60));
-        int second = (int) (lasttime % (60));
-        String text = (day + "天" + hour + "时" + min + "分" + second + "秒");
-        return text;
-    }
 
     boolean transtatus;
 

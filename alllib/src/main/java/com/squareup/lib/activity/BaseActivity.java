@@ -13,7 +13,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import com.android.debug.hv.ViewServer;
 import com.squareup.lib.BuildConfig;
 import com.squareup.lib.EventMainObject;
 import com.squareup.lib.EventThreadObject;
@@ -80,7 +79,7 @@ public class BaseActivity extends FragmentActivity implements LayoutInterFace {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (BuildConfig.DEBUG) {
-            ViewServer.get(this).addWindow(this);
+//            ViewServer.get(this).addWindow(this);
         }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         viewDataBinding = DataBindingUtil.setContentView(this, setFromLayoutID());
@@ -127,7 +126,9 @@ public class BaseActivity extends FragmentActivity implements LayoutInterFace {
             }
         }
     }
-
+    public void onCloseBack(View view) {
+        finish();
+    }
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEventThread(EventThreadObject event) {
         if (fragments != null) {
@@ -137,44 +138,16 @@ public class BaseActivity extends FragmentActivity implements LayoutInterFace {
         }
     }
 
-    public static class MyRunnable implements Runnable {
-        public WeakReference<BaseActivity> weakReference;
 
-        public MyRunnable(BaseActivity baseActivity, int type) {
-            weakReference = new WeakReference<BaseActivity>(baseActivity);
-        }
 
-        @Override
-        public void run() {
-            LogUtil.i("1111111111111");
-            try {
-                Thread.sleep(30000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (weakReference.get() != null) {
-                weakReference.get().fragments.clear();
-                LogUtil.i(1 + "==========");
-            }
-            LogUtil.i("==========");
-        }
-    }
 
-    public void run(int type) {
-
-    }
-
-    public void submit(int type, MyRunnable runnable) {
-//        MyRunnable w = new MyRunnable(runnable, type);
-        ThreadManager.submit(runnable);
-    }
 
 
     @Override
     protected void onResume() {
         super.onResume();
         if (BuildConfig.DEBUG) {
-            ViewServer.get(this).setFocusedWindow(this);
+//            com.android.debug.hv.ViewServer.get(this).setFocusedWindow(this);
         }
     }
 
@@ -183,7 +156,7 @@ public class BaseActivity extends FragmentActivity implements LayoutInterFace {
         super.onDestroy();
         if (BuildConfig.DEBUG) {
 
-            ViewServer.get(this).removeWindow(this);
+//            com.android.debug.hv.ViewServer.get(this).removeWindow(this);
         }
         EventBus.getDefault().unregister(this);//反注册EventBus
     }

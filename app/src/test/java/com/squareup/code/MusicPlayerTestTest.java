@@ -3,6 +3,9 @@ package com.squareup.code;
 import android.app.Application;
 import android.os.Handler;
 
+import com.squareup.lib.utils.FileSplitter;
+import com.squareup.lib.utils.FileUnifier;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +15,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,6 +52,28 @@ public class MusicPlayerTestTest {
         long time = 1506702456;
 
 //        simpleDateFormat.format(new Date());
+
+
+        String lsSrcFile = "D:\\奔腾年代.rmvb";
+        String lsDstDir = "D:\\parts";
+        String lsDstFile = "D:\\parts\\dst.rmvb";
+        File loDstFile = new File(lsDstDir);
+        if (!loDstFile.exists()) {
+            loDstFile.mkdir();
+        }
+
+        long liStartTime = System.currentTimeMillis();
+        FileSplitter loSplitter = new FileSplitter(lsSrcFile, lsDstDir, "test_cut");
+        String[] laPartFiles = loSplitter.start();
+        while (loSplitter.isBusy()) {
+            Thread.sleep(200);
+        }
+        FileUnifier loUnifier = new FileUnifier(laPartFiles, lsDstFile);
+        loUnifier.start();
+        while (loUnifier.isBusy()) {
+            Thread.sleep(200);
+        }
+        System.out.println("done, spend " + (System.currentTimeMillis() - liStartTime) + " milsecs");
 
 
         System.out.println("结束一个案例：" + new Date().getTime());

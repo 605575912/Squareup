@@ -12,6 +12,7 @@ public class MyApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+//        Stetho.initializeWithDefaults(this);
         URLUtils.getInstance();
     }
 }
