@@ -22,6 +22,7 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.squareup.lib.BaseApplication;
+import com.squareup.lib.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -557,5 +558,19 @@ public class AppLibUtils implements IProguard.ProtectClassAndMembers {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean isTablet(Context context) {
+        return context.getResources().getBoolean(R.bool.isTablet);
+    }
+
+    public static long getDayTime(long time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTimeInMillis();
+//        long max = calendar.getTimeInMillis() + 24 * 60 * 60 * 1000;
     }
 }
