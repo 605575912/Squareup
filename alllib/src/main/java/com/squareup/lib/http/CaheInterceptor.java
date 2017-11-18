@@ -26,7 +26,7 @@ public class CaheInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        if (NetWorkManager.isNetworkAvailable(context)) {
+        if (NetWorkManager.INSTANCE.isNetworkAvailable(context)) {
             Response response = chain.proceed(request);
             // read from cache for 60 s
             int maxAge = 300;

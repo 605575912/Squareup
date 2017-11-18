@@ -25,10 +25,10 @@ public class FileUtils implements IProguard.ProtectClassAndMembers{
      */
     public static String getDiskCacheDir() {
         String cachePath;
-        if (!PermissionUtil.selfPermissionGranted(BaseApplication.getApplication(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if (!PermissionUtil.INSTANCE.selfPermissionGranted(BaseApplication.getApplication(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             return BaseApplication.getApplication().getCacheDir().getPath();
         }
-        if (!PermissionUtil.selfPermissionGranted(BaseApplication.getApplication(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        if (!PermissionUtil.INSTANCE.selfPermissionGranted(BaseApplication.getApplication(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
             return BaseApplication.getApplication().getCacheDir().getPath();
         }
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
