@@ -37,7 +37,7 @@ public class SearchHisActivity extends ListBaseActivity {
         String[] a = new String[]{"1", "2"};
         SearchFlowView searchFlowView = new SearchFlowView(getActivity(), a);
         list.add(searchFlowView);
-        ThreadManager.execute(new Runnable() {
+        ThreadManager.Companion.execute(new Runnable() {
             @Override
             public void run() {
 

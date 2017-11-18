@@ -1,1 +1,2 @@
-include  'alllib', 'viewserver'
+include ':SVGVector'
+include  'alllib', 'viewserver','app','qqshare'

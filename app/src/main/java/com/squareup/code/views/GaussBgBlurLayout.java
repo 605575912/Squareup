@@ -133,7 +133,7 @@ public class GaussBgBlurLayout extends RelativeLayout {
             if (mGaussBlurAction == null) {
                 Runnable action = new GaussBlurAction(mImageView, mUIHandler);
                 mGaussBlurAction = action;
-                ThreadManager.execute(action);
+                ThreadManager.Companion.execute(action);
             }
 //		    mGaussBlurThread.post(action);
 //		} else if (AspLog.isPrintLog){

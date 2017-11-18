@@ -27,7 +27,7 @@ class RecyclerViewAdapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var viewHolder: RecyclerView.ViewHolder? = null
         for (viewItem in mdata) {
-            if (viewItem != null && viewItem.viewType == viewType) {
+            if (viewItem.viewType == viewType) {
                 viewHolder = viewItem.createViewHolder(parent)
                 if (viewHolder == null) {
                     val contentview = viewItem.createView(parent)

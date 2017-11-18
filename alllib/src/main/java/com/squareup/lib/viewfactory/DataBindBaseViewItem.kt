@@ -14,7 +14,7 @@ import com.squareup.lib.annotation.KeepNotProguard
  * 视图Item
  */
 @KeepNotProguard
-class DataBindBaseViewItem : BaseViewItem {
+open class DataBindBaseViewItem : BaseViewItem {
 
     override val viewType: Int
         get() = javaClass.hashCode()
@@ -23,7 +23,7 @@ class DataBindBaseViewItem : BaseViewItem {
         return View(parent.context)
     }
 
-    fun createViewID(parent: ViewGroup): Int {
+    open fun createViewID(parent: ViewGroup): Int {
         return 0
     }
 

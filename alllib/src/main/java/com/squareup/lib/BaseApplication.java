@@ -46,7 +46,7 @@ public class BaseApplication extends Application implements Application.Activity
         super.onCreate();
         application = this;
         if (BuildConfig.DEBUG) {
-            CrashHandler.getInstance().init(getApplication());
+            CrashHandler.Companion.getInstance().init(getApplication());
         }
         DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(application)
                 .setBaseDirectoryName("Fresco")

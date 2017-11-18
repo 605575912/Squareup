@@ -100,7 +100,7 @@ public class PayUtils {
                 mHandler.sendMessage(msg);
             }
         };
-        ThreadManager.execute(payRunnable);
+        ThreadManager.Companion.execute(payRunnable);
     }
 
     /**
@@ -121,7 +121,7 @@ public class PayUtils {
                 mHandler.sendMessage(msg);
             }
         };
-        ThreadManager.execute(authRunnable);
+        ThreadManager.Companion.execute(authRunnable);
     }
 
 
