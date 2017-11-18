@@ -311,7 +311,7 @@ public enum HttpUtils implements IProguard.ProtectClassAndMembers {
         }
         int index = url.indexOf("file:///android_asset/");
         if (index == 0) {
-            ThreadManager.submit(new Runnable() {
+            ThreadManager.Companion.submit(new Runnable() {
                 @Override
                 public void run() {
                     InputStream inputStream = null;
@@ -398,7 +398,7 @@ public enum HttpUtils implements IProguard.ProtectClassAndMembers {
         int index = url.indexOf("file:///android_asset/");
 
         if (index == 0) {
-            ThreadManager.submit(new Runnable() {
+            ThreadManager.Companion.submit(new Runnable() {
                 @Override
                 public void run() {
                     InputStream inputStream = null;
@@ -673,7 +673,7 @@ public enum HttpUtils implements IProguard.ProtectClassAndMembers {
     }
 
     private void readFile(final int type, final String url, final Class jsonmodel) {
-        ThreadManager.submit(new Runnable() {
+        ThreadManager.Companion.submit(new Runnable() {
             @Override
             public void run() {
                 InputStream inputStream = null;
